@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<script type="text/javascript" src="../lib/jquery-1.3.2.js"></script>
+<script type="text/javascript" src="../lib/jsdeferred.js"></script>
+<script type="text/javascript" src="../lib/jsdeferred.jquery.js"></script>
+<script type="text/javascript" src="../lib/jsdeferred.googlechrome.js"></script>
+<script type="text/javascript" src="../lib/02-Utils.js"></script>
+<script type="text/javascript" src="../lib/05-Config.js"></script>
+<script type="text/javascript" src="config-setting.js"></script>
+<script type="text/javascript" src="config.js"></script>
+<title>はてなブックマーク設定</title>
+<link rel="stylesheet" href="config.css" type="text/css" />
+</head>
+<body style="display:none">
+<form onsubmit="return false;">
+  <h1>はてなブックマーク設定</h1>
+  <h2>全般</h2>
+  <div class="notice">※設定は自動で保存されます</div>
+  <table>
+    <tr>
+      <th>全体サイズ</th>
+      <td>
+        <input type="radio" value="1" id="popup.window.autosize-enable" name="popup.window.autosize"/>
+        <label for="popup.window.autosize-enable">自動調整する</label><br />
+        <input type="radio" value="0" id="popup.window.autosize-disable" name="popup.window.autosize"/>
+        <label for="popup.window.autosize-disable">サイズを指定する</label>
+        <!--
+        縦: <input class="popup-input-size" type="text" id="popup.window.height" name="popup.window.height" />px
+        -->
+        横: <input class="popup-input-size" type="text" id="popup.window.width" name="popup.window.width" />px
+      </td>
+    </tr>
+    <tr>
+      <th>コメントビューワー</th>
+      <td>
+        <input type="radio" value="1" id="popup.commentviewer.autodetect.enabled-enable" name="popup.commentviewer.autodetect.enabled"/>
+        <label for="popup.commentviewer.autodetect.enabled-enable"><input type="text" class="commentviewer-autodetect-input" id="popup.commentviewer.autodetect.threshold" name="popup.commentviewer.autodetect.threshold" />件以下なら、コメントをすべて表示する</label>
+        <br>
+        <input type="radio" value="0" id="popup.commentviewer.autodetect.enabled-disable" name="popup.commentviewer.autodetect.enabled"/>
+        <label for="popup.commentviewer.autodetect.enabled-disable">コメントの表示・非表示は手動で行う</label>
+      </td>
+    </tr>
+    <tr>
+      <th>検索</th>
+      <td>
+        最大検索件数: <input type="text" id="popup.search.result.threshold" name="popup.search.result.threshold" />件
+
+        <br>
+        <input type="radio" value="1" id="popup.search.incsearch-enable" name="popup.search.incsearch"/>
+        <label for="popup.search.incsearch-enable">自動絞り込み(インクリメンタル検索)を利用する</label>
+        <br>
+        <input type="radio" value="0" id="popup.search.incsearch-disable" name="popup.search.incsearch"/>
+        <label for="popup.search.incsearch-disable">自動絞り込み(インクリメンタル検索)を利用しない</label>
+      </td>
+    </tr>
+    <tr>
+      <th>タグ</th>
+      <td>
+        <input type="radio" value="1" id="popup.tags.allTags.enabled-enable" name="popup.tags.allTags.enabled"/>
+        <label for="popup.tags.allTags.enabled-enable">タグを表示する</label>
+        <br>
+        <input type="radio" value="0" id="popup.tags.allTags.enabled-disable" name="popup.tags.allTags.enabled"/>
+        <label for="popup.tags.allTags.enabled-disable">タグを表示しない</label>
+      </td>
+    </tr>
+    <tr>
+      <th>おすすめタグ</th>
+      <td>
+        <input type="radio" value="1" id="popup.tags.recommendTags.enabled-enable" name="popup.tags.recommendTags.enabled"/>
+        <label for="popup.tags.recommendTags.enabled-enable">おすすめタグを表示する</label>
+        <br>
+        <input type="radio" value="0" id="popup.tags.recommendTags.enabled-disable" name="popup.tags.recommendTags.enabled"/>
+        <label for="popup.tags.recommendTags.enabled-disable">おすすめタグを表示しない</label>
+      </td>
+    </tr>
+    <tr>
+      <th>タグ補完</th>
+      <td>
+        <input type="radio" value="1" id="popup.tags.complete.enabled-enable" name="popup.tags.complete.enabled"/>
+        <label for="popup.tags.complete.enabled-enable">タグ補完機能を利用する</label>
+        <br>
+        <input type="radio" value="0" id="popup.tags.complete.enabled-disable" name="popup.tags.complete.enabled"/>
+        <label for="popup.tags.complete.enabled-disable">タグ補完機能を利用しない</label>
+      </td>
+    </tr>
+    <tr>
+      <th>情報表示</th>
+      <td>
+        <input type="radio" value="1" id="content.webinfo.enabled-enable" name="content.webinfo.enabled"/>
+        <label for="content.webinfo.enabled-enable">Web ページにはてなブックマークの情報を表示する</label>
+        <br>
+        <input type="radio" value="0" id="content.webinfo.enabled-disable" name="content.webinfo.enabled"/>
+        <label for="content.webinfo.enabled-disable">Web ページにはてなブックマークの情報を表示しない</label>
+      </td>
+    </tr>
+    <tr>
+      <th>ブックマークカウンター</th>
+      <td>
+        <p class="notice">※B! アイコン上のカウンターの設定です。https のページでは、『表示する』を選択してもサーバに情報を送信しません。</p>
+        <input type="radio" value="1" id="background.bookmarkcounter.enabled-enable" name="background.bookmarkcounter.enabled"/>
+        <label for="background.bookmarkcounter.enabled-enable">ブックマークカウンターを表示する</label>
+        <br>
+        <input type="radio" value="0" id="background.bookmarkcounter.enabled-disable" name="background.bookmarkcounter.enabled"/>
+        <label for="background.bookmarkcounter.enabled-disable">ブックマークカウンターを表示しない</label>
+      </td>
+    </tr>
+  </table>
+
+  <h2>初期化</h2>
+  <table>
+    <tr>
+      <th>初期設定に戻す</th>
+      <td>
+        <p class="notice">※設定項目全般をデフォルト値に戻します</p>
+        <input type="button" onclick="resetAll();" value="初期設定に戻す" />
+      </td>
+    </tr>
+    <tr id="init-db">
+      <th>データの同期</th>
+      <td>
+        <p class="notice">※ユーザー 『<span id="db-username"></span>』 のはてなブックマークのデータを再同期します。Web 上のはてなブックマークとのデータに差違が出た場合にご利用ください。</p>
+        <input type="button" onclick="resetDB();" value="再同期する" />
+      </td>
+    </tr>
+  </table>
+
+</form>
+</body>
+</html>
