@@ -221,6 +221,10 @@ $(document).ready(function() {
     }
 });
 
+if (false) {  // commentout out-----------------------------------------------
+    // TODO: documentのfocus, blurイベントを取れなくて困ってる これが取れないと，横のタブに行って戻っても出たままになってしまう activeTabを50msごとに取ってはどうか，とか言ってた
+
+
 Abstract.tabs.onUpdated.addListener(function(tabId, opt) {
     if (opt.status === 'loading')
         Manager.updateTabById(tabId);
@@ -285,6 +289,8 @@ chrome.self.onConnect.addListener(function(port, name) {
           ConnectMessenger.trigger(info.message, [info.data, con]);
   });
 });
+
+}                               // commentout end-----------------------------------------------
 
 // login check
 setInterval(function() {
