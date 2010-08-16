@@ -28,3 +28,32 @@ Abstract.tabs = {
     onSelectionChanged: function () {
     }
 };
+
+Abstract.windows = {
+    get: function (windowId, callback) {
+    },
+
+    // ウィンドウの位置を変更する
+    update: function (windowId, position) {
+    },
+
+    getLastFocused: function (callback) {
+    }
+};
+
+Abstract.self = {
+    // injected スクリプトなどから接続要求があった場合, 呼び出される.
+    // Abstract.self.onConnect.addListener(...)
+    onConnect: {
+        addListener: function (port, name) {
+        }
+    }
+};
+
+Abstract.extension = {
+    // var _port = Abstract.extension.connect();
+    // port を返す
+    connect: function () {
+    }
+};
+

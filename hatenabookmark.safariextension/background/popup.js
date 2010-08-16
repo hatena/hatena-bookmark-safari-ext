@@ -1,7 +1,7 @@
 
 
 Deferred.debug = true;
-var BG = chrome.extension.getBackgroundPage();
+var BG = this;
 import(BG, ['UserManager', 'User', 'HTTPCache', 'URI', 'Manager', 'Model']);
 
 var request_uri = URI.parse('http://chrome/' + location.href);
@@ -14,8 +14,8 @@ if (popupMode) {
     }
 } else if (request_uri.param('debug')) {
 } else {
-    chrome.tabs.getSelected(null, function(tab) {
-        chrome.windows.get(tab.windowId, function(win) {
+    Abstract.tabs.getSelected(null, function(tab) {
+        Abstract.windows.get(tab.windowId, function(win) {
             window.currentWin = win;
             BG.popupWinInfo = {
                 windowId: win.id,
@@ -24,12 +24,12 @@ if (popupMode) {
             loadWindowPosition(win);
         });
     });
-    chrome.windows.onRemoved.addListener(function(windowId) {
+    Abstract.windows.onRemoved.addListener(function(windowId) {
         if (BG.popupWinInfo)
             delete BG.popupWinInfo;
         delete window.currentWin;
     });
-    chrome.self.onConnect.addListener(function(port, name) {
+    Abstract.self.onConnect.addListener(function(port, name) {
         port.onMessage.addListener(function(info, con) {
             if (info.message == 'popup-reload') {
                 if (info.data.url) {
@@ -41,7 +41,7 @@ if (popupMode) {
     });
     if (window.currentWin) {
         setInterval(function() {
-            chrome.windows.get(currentWin.id, function(win) {
+            Abstract.windows.get(currentWin.id, function(win) {
                 saveWindowPositions(win);
             });
         }, 50);
@@ -52,13 +52,13 @@ if (popupMode) {
 function closeWin() {
     if (popupMode) {
         window.close();
-        // BG.chrome.experimental.extension.getPopupView().close();
+        // BG.Abstract.experimental.extension.getPopupView().close();
     } else {
         // if (window.currentWin) {
-        //     chrome.windows.get(currentWin.id, function(win) {
+        //     Abstract.windows.get(currentWin.id, function(win) {
         //         delete BG.popupWinInfo;
         //         saveWindowPositions(win);
-        //         chrome.windows.remove(currentWin.id);
+        //         Abstract.windows.remove(currentWin.id);
         //     });
         // } else {
             window.close();
@@ -87,13 +87,13 @@ function loadWindowPosition(win) {
         }
     }
 
-    chrome.windows.update(win.id, pos);
+    Abstract.windows.update(win.id, pos);
 };
 
 function getInformation() {
     var d = new Deferred();
     if (popupMode) {
-        BG.chrome.tabs.getSelected(null, function(tab) {
+        BG.Abstract.tabs.getSelected(null, function(tab) {
             d.call({
                 url: tab.url,
                 faviconUrl: tab.faviconUrl,
@@ -440,7 +440,7 @@ var View = {
         get port() {
             if (!this._port) {
                 var self = this;
-                var _port = chrome.extension.connect();
+                var _port = Abstract.extension.connect();
                 // ToDO もう一段階簡略化できそう
                 _port.onMessage.addListener(function(info, con) {
                     if (info.message == 'bookmarkedit_bridge_recieve')
@@ -996,7 +996,7 @@ var ViewManager = {
 
 /*
 if (popupMode) {
-    chrome.windows.getCurrent(function(win) {
+    Abstract.windows.getCurrent(function(win) {
         BG.console.log(win);
         var height = Math.max(300, win.height - 150);
         document.getElementById('comment-list').style.maxHeight = sprintf('%spx', height);
@@ -1056,7 +1056,7 @@ var ready = function() {
             }, 35);
             /*
             if (Config.get('popup.window.autosize')) {
-                chrome.windows.getLastFocused(function(w) {
+                Abstract.windows.getLastFocused(function(w) {
                     var width = 500;
                     var height = w.height - 300;
                     height = Math.max(height, 300);
