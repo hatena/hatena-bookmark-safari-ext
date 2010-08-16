@@ -9,7 +9,7 @@ $.extend(Manager, {
     editBookmark: function(url, options) {
         if (!UserManager.user) {
             // XXX:
-            chrome.tabs.create({
+            chromeWrap.tabs.create({
                 url: 'http://www.hatena.ne.jp/login'
             });
             return;
@@ -18,6 +18,11 @@ $.extend(Manager, {
         if (options) uri.param(options);
         uri.param({
             url: url
+        });
+
+        chromeWrap.tabs.create({
+            url  : uri.pathQuery,
+            name : 'bookmarkedit'
         });
         window.open(uri.pathQuery, 'bookmarkedit');
     },
