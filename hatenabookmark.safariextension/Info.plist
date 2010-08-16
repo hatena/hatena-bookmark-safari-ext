@@ -16,6 +16,8 @@
 	<string>1</string>
 	<key>Chrome</key>
 	<dict>
+		<key>Database Quota</key>
+		<real>104857600</real>
 		<key>Global Page</key>
 		<string>background/global.html</string>
 		<key>Toolbar Items</key>
