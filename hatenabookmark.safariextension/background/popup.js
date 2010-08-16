@@ -8,27 +8,38 @@ var request_uri = URI.parse('http://chrome/' + location.href);
 var popupMode = request_uri.param('url') ? false : true;
 
 if (popupMode) {
-    // XXX
+    // パラメータ URL が定義されていないとき
     p = function(msg) {
         BG.console.log(JSON.stringify(Array.prototype.slice.call(arguments, 0, arguments.length)));
     }
 } else if (request_uri.param('debug')) {
 } else {
+    // パラメータ URL が定義されているとき
+
+    // アクティブなタブを取得
     Abstract.tabs.getSelected(null, function(tab) {
+        // アクティブなウィンドウを取得
         Abstract.windows.get(tab.windowId, function(win) {
+            // win => アクティブなウィンドウ (Safari の ContentWindow)
             window.currentWin = win;
             BG.popupWinInfo = {
                 windowId: win.id,
                 tabId: tab.id,
             }
+
+            // 位置を指定してウィンドウをロード
             loadWindowPosition(win);
         });
     });
+
+    // ウィンドウが削除されたときに呼ばれる
     Abstract.windows.onRemoved.addListener(function(windowId) {
         if (BG.popupWinInfo)
             delete BG.popupWinInfo;
         delete window.currentWin;
     });
+
+    // ポートの接続要求が来たとき
     Abstract.self.onConnect.addListener(function(port, name) {
         port.onMessage.addListener(function(info, con) {
             if (info.message == 'popup-reload') {
@@ -39,6 +50,7 @@ if (popupMode) {
             }
         });
     });
+
     if (window.currentWin) {
         setInterval(function() {
             Abstract.windows.get(currentWin.id, function(win) {
@@ -90,6 +102,7 @@ function loadWindowPosition(win) {
     Abstract.windows.update(win.id, pos);
 };
 
+// 今見ているページの情報を返す (Deferred).
 function getInformation() {
     var d = new Deferred();
     if (popupMode) {
@@ -116,6 +129,7 @@ function getInformation() {
     return d;
 }
 
+// 今見ているページのブックマークを削除
 function deleteBookmark() {
     getInformation().next(function(info) {
         var url = info.url;
@@ -123,6 +137,7 @@ function deleteBookmark() {
         closeWin();
     });
 }
+
 
 function formSubmitHandler(ev) {
     var form = $('#form');
@@ -134,6 +149,8 @@ function formSubmitHandler(ev) {
     url = url.replace(new RegExp('\\+', 'g'), '%20'); // for title
     console.log(url);
     user.saveBookmark(url);
+
+    // iframe でやる.
     setTimeout(function() {
         closeWin();
     }, 0);

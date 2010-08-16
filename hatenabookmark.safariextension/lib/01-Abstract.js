@@ -1,7 +1,7 @@
 var Abstract = {};
 
 Abstract.tabs = {
-    // ƒ^ƒu‚ğV‹Kì¬
+    // ã‚¿ãƒ–ã‚’æ–°è¦ä½œæˆ
     create: function (createProperties, callback) {
         var bw  = safari.application.activeBrowserWindow;
         var tab = isNewTab ? bw.openTab() : bw.activeTab;
@@ -13,13 +13,19 @@ Abstract.tabs = {
         return tab;
     },
 
-    // ƒ^ƒu ID ‚ğw’è‚µ‚Äƒ^ƒu‚ğæ“¾
+    // ã‚¿ãƒ– ID ã‚’æŒ‡å®šã—ã¦ã‚¿ãƒ–ã‚’å–å¾—
     get: function (tabid, callback) {
 
     },
 
-    // ‘I‘ğ’†‚Ìƒ^ƒu‚ğæ“¾‚·‚é
-    getSelected: function () {
+    // é¸æŠä¸­ã®ã‚¿ãƒ–ã‚’å–å¾—ã™ã‚‹
+    getSelected: function (_, callback) {
+        var tab = safari.application.activeBrowserWindow.activeTab;
+
+        if (typeof callback === "function")
+            callback(tab);
+
+        return tab;
     },
 
     onUpdated: function () {
@@ -33,7 +39,7 @@ Abstract.windows = {
     get: function (windowId, callback) {
     },
 
-    // ƒEƒBƒ“ƒhƒE‚ÌˆÊ’u‚ğ•ÏX‚·‚é
+    // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ä½ç½®ã‚’å¤‰æ›´ã™ã‚‹
     update: function (windowId, position) {
     },
 
@@ -42,7 +48,7 @@ Abstract.windows = {
 };
 
 Abstract.self = {
-    // injected ƒXƒNƒŠƒvƒg‚È‚Ç‚©‚çÚ‘±—v‹‚ª‚ ‚Á‚½ê‡, ŒÄ‚Ño‚³‚ê‚é.
+    // injected ã‚¹ã‚¯ãƒªãƒ—ãƒˆãªã©ã‹ã‚‰æ¥ç¶šè¦æ±‚ãŒã‚ã£ãŸå ´åˆ, å‘¼ã³å‡ºã•ã‚Œã‚‹.
     // Abstract.self.onConnect.addListener(...)
     onConnect: {
         addListener: function (port, name) {
@@ -52,7 +58,7 @@ Abstract.self = {
 
 Abstract.extension = {
     // var _port = Abstract.extension.connect();
-    // port ‚ğ•Ô‚·
+    // port ã‚’è¿”ã™
     connect: function () {
     }
 };
