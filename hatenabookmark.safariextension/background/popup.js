@@ -1,10 +1,13 @@
-
-
 Deferred.debug = true;
 var BG = this;
-import(BG, ['UserManager', 'User', 'HTTPCache', 'URI', 'Manager', 'Model']);
+//Utils.inject(BG, ['UserManager', 'User', 'HTTPCache', 'URI', 'Manager', 'Model']);
 
-var request_uri = URI.parse('http://chrome/' + location.href);
+var UserManager = { };
+
+var request_uri = URI.parse('http://example.com/' + location.href);
+console.log(request_uri.param('title'));
+console.log(request_uri.param('uri'));
+console.log(request_uri.param('faviconUrl'));
 var popupMode = request_uri.param('url') ? false : true;
 
 if (popupMode) {
@@ -16,48 +19,50 @@ if (popupMode) {
 } else {
     // パラメータ URL が定義されているとき
 
-    // アクティブなタブを取得
-    Abstract.tabs.getSelected(null, function(tab) {
-        // アクティブなウィンドウを取得
-        Abstract.windows.get(tab.windowId, function(win) {
-            // win => アクティブなウィンドウ (Safari の ContentWindow)
-            window.currentWin = win;
-            BG.popupWinInfo = {
-                windowId: win.id,
-                tabId: tab.id,
-            }
+    // TODO: ここじゃないところで，tabのfocusでglobalPageにfocusされたというイベントを投げるようにする．それによって数字を変えるとかやってる．
+    // Abstract.tabs.getSelected(null, function(tab) {
+    //     // アクティブなウィンドウを取得
+    //     Abstract.windows.get(tab.windowId, function(win) {
+    //         // win => アクティブなウィンドウ (Safari の ContentWindow)
+    //         window.currentWin = win;
+    //         BG.popupWinInfo = {
+    //             windowId: win.id,
+    //             tabId: tab.id,
+    //         }
 
-            // 位置を指定してウィンドウをロード
-            loadWindowPosition(win);
-        });
-    });
+    //         // 位置を指定してウィンドウをロード
+    //         loadWindowPosition(win);
+    //     });
+    // });
 
-    // ウィンドウが削除されたときに呼ばれる
-    Abstract.windows.onRemoved.addListener(function(windowId) {
-        if (BG.popupWinInfo)
-            delete BG.popupWinInfo;
-        delete window.currentWin;
-    });
+    // TODO: このへん書き換える iframeからやるべきことではない
+    // // ウィンドウが削除されたときに呼ばれる
+    // Abstract.windows.onRemoved.addListener(function(windowId) {
+    //     if (BG.popupWinInfo)
+    //         delete BG.popupWinInfo;
+    //     delete window.currentWin;
+    // });
 
+    // TODO: これは？？？？
     // ポートの接続要求が来たとき
-    Abstract.self.onConnect.addListener(function(port, name) {
-        port.onMessage.addListener(function(info, con) {
-            if (info.message == 'popup-reload') {
-                if (info.data.url) {
-                    // XXX
-                    location.href = '/background/popup.html?url=' + encodeURIComponent(info.data.url);
-                }
-            }
-        });
-    });
+    // Abstract.self.onConnect.addListener(function(port, name) {
+    //     port.onMessage.addListener(function(info, con) {
+    //         if (info.message == 'popup-reload') {
+    //             if (info.data.url) {
+    //                 // XXX
+    //                 location.href = '/background/popup.html?url=' + encodeURIComponent(info.data.url);
+    //             }
+    //         }
+    //     });
+    // });
 
-    if (window.currentWin) {
-        setInterval(function() {
-            Abstract.windows.get(currentWin.id, function(win) {
-                saveWindowPositions(win);
-            });
-        }, 50);
-    }
+    // if (window.currentWin) {
+    //     setInterval(function() {
+    //         Abstract.windows.get(currentWin.id, function(win) {
+    //             saveWindowPositions(win);
+    //         });
+    //     }, 50);
+    // }
 }
 
 
@@ -1124,6 +1129,4 @@ var ready = function() {
 };
 
 $(document).bind('ready', ready);
-
-
 

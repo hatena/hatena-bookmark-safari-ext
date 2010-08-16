@@ -291,22 +291,22 @@ ul.tab-ui li.tab-link img {
 
 #bookmark-tab,
 #comment-tab {
-  background-image: url(/images/chrome-b-append_off.png);
+  background-image: url(../images/chrome-b-append_off.png);
   background-position: 3px 5px;
   background-repeat: no-repeat;
   padding-left: 25px;
 }
 
 #comment-tab {
-  background-image: url(/images/serif_list_off.png);
+  background-image: url(../images/serif_list_off.png);
 }
 
 #bookmark-tab.current {
-  background-image: url(/images/chrome-b-append.png);
+  background-image: url(../images/chrome-b-append.png);
 }
 
 #comment-tab.current {
-  background-image: url(/images/serif_list.png);
+  background-image: url(../images/serif_list.png);
 }
 
 ul.tab-ui li.current {
@@ -609,11 +609,11 @@ a.username {
 }
 
 #post-twitter-label .label-text {
-    background-image: url(/images/add-twitter.png);
+    background-image: url(../images/add-twitter.png);
 }
 
 #private-label .label-text {
-    background-image: url(/images/add-private.png);
+    background-image: url(../images/add-private.png);
 }
 
 #asin-container {
@@ -627,7 +627,7 @@ a.username {
 }
 
 #option-help-container {
-    background: #f3f3f3 url(/images/option-help-marker.png) left center no-repeat;
+    background: #f3f3f3 url(../images/option-help-marker.png) left center no-repeat;
     margin: 5px 3px 0px 0px;
     padding: 2px 4px 2px 22px;
     -webkit-border-radius: 3px;

@@ -1,4 +1,3 @@
-
 // consts
 var GLOBAL = this;
 var B_HOST = 'b.hatena.ne.jp';
@@ -30,21 +29,20 @@ sprintf._SPRINTF_HASH = {
     '%f': parseFloat
 };
 
-var import = function(source, names, target) {
-    if (!target) target = GLOBAL;
-    for (var i = 0;  i < names.length; i++) {
-        var name = names[i];
-        if (source[name]) {
-            target[name] = source[name];
-        } else {
-            throw new Error('' + name + ' is not found');
-        }
-    }
-}
-
 var $K = function(i) { return function() { return i } };
 
 var Utils = {
+    inject: function(source, names, target) {
+        if (!target) target = GLOBAL;
+        for (var i = 0;  i < names.length; i++) {
+            var name = names[i];
+            if (source[name]) {
+                target[name] = source[name];
+            } else {
+                throw new Error('' + name + ' is not found');
+            }
+        }
+    },
     truncate: function(str, size, suffix) {
         if (!str) str = '';
         if (!size) size = 32;
@@ -291,4 +289,3 @@ if (typeof jQuery != 'undefined') {
     };
 
 }
-

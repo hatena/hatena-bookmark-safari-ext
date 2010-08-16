@@ -23,13 +23,15 @@
     function performInsertIframe(event) {
         console.log('performInsertIframe');
         iframe = document.createElement('iframe');
-        iframe.src = safari.extension.baseURI + event.message;
+        iframe.src = safari.extension.baseURI + event.message + '?uri=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(document.title) +'&faviconUrl=' + encodeURIComponent((document.querySelector('link[rel~="icon"]')|| { href: '' }).href);
 
         with (iframe.style) {
             position = 'fixed';
             right = '0px';
             top = '0px';
-            background = 'red';
+            height = '100%';
+            width = '500px';
+            background = 'white';
         }
 
         document.body.appendChild(iframe);
@@ -39,7 +41,7 @@
         with(iframe.style) {
             display = 'block';
         }
-        iframe.src = safari.extension.baseURI + event.message;
+        iframe.src = safari.extension.baseURI + event.message + '?uri=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(document.title);
     }
 
     function performClick(event) {

@@ -5,11 +5,15 @@
 <script type="text/javascript" src="../lib/jquery-1.3.2.js"></script>
 <script type="text/javascript" src="../lib/jsdeferred.js"></script>
 <script type="text/javascript" src="../lib/jsdeferred.jquery.js"></script>
-<script type="text/javascript" src="../lib/jsdeferred.googlechrome.js"></script>
+<script type="text/javascript" src="../lib/jsdeferred.safari.js"></script>
+<!-- <script type="text/javascript" src="../lib/01-Abstract.js"></script> -->
 <script type="text/javascript" src="../lib/02-Utils.js"></script>
+<script type="text/javascript" src="../lib/03-URI.js"></script>
 <script type="text/javascript" src="../lib/05-Config.js"></script>
+<script type="text/javascript" src="../lib/15-UserManager.js"></script>
 <script type="text/javascript" src="config-setting.js"></script>
 <script type="text/javascript" src="popup.js"></script>
+
 <script type="text/javascript" src="../lib/50-HatenaStar.js"></script>
 <script type="text/javascript" src="../lib/51-HatenaStarLoader.js"></script>
 <script type="text/javascript" src="../lib/60-TagCompleter.js"></script>
@@ -88,9 +92,9 @@
         <li onclick="ViewManager.show('bookmark');" id="bookmark-tab">ブックマークする</li>
         <li onclick="ViewManager.show('comment');" id="comment-tab">コメント</li>
         <li class="tab-link">
-        <a id="hatena-bookmark-link-top" title="はてなブックマークトップページ" alt="はてなブックマークトップページ" href="http://b.hatena.ne.jp/"><img src="/images/link-bookmark.png" /></a>
+        <a id="hatena-bookmark-link-top" title="はてなブックマークトップページ" alt="はてなブックマークトップページ" href="http://b.hatena.ne.jp/"><img src="../images/link-bookmark.png" /></a>
         <a id="header-usericon" href="http://b.hatena.ne.jp/my"></a>
-        <a id="header-helpicon" href="http://b.hatena.ne.jp/help/chrome_extentions"><img alt="help" title="help" width=16 height=16 src="/images/help.png" /></a>
+        <a id="header-helpicon" href="http://b.hatena.ne.jp/help/chrome_extentions"><img alt="help" title="help" width=16 height=16 src="../images/help.png" /></a>
         </li>
       </ul>
     </div>
@@ -98,7 +102,7 @@
       <ul class="tab-ui">
         <li id="search-tab">
         <form id="search-form">
-          <input type="image" src="/images/searchbutton.png" width=19 height=19 />
+          <input type="image" src="../images/searchbutton.png" width=19 height=19 />
           <input placeholder="検索ワードを入力" id="search-word" type="text" />
         </form>
         </li>
@@ -113,13 +117,13 @@
   <div id="bookmark-register">
     <p class="center">
     はてなブックマークに追加するには、はてなへのユーザ登録(無料)が必要です。<br /><br />
-    <a id="register-link" href="https://www.hatena.ne.jp/register?via=200048&location=http%3A%2F%2Fb.hatena.ne.jp%2Fguide%2Fchrome_register"><img src="/images/register-button.png"></a>
+    <a id="register-link" href="https://www.hatena.ne.jp/register?via=200048&location=http%3A%2F%2Fb.hatena.ne.jp%2Fguide%2Fchrome_register"><img src="../images/register-button.png"></a>
     <br /><br />
     すでにユーザー登録がお済みの場合は<a href="http://www.hatena.ne.jp/login?location=http%3A%2F%2Fb.hatena.ne.jp%2Fguide%2Fchrome_logined">こちらからログイン</a>して下さい
     </p>
 
     <p id="bookmark-register-intro">
-    <span class="image"><img src="/images/register-title.png" alt="" /></span>
+    <span class="image"><img src="../images/register-title.png" alt="" /></span>
     はてなブックマークはオンラインでブックマークを保存・管理・共有できる、オンラインブックマークサービスです。自宅のブラウザに保存するだけだったブックマークを、インターネット上に保存して管理・公開することができます。
     <span class="more"><a href="http://b.hatena.ne.jp/guide?via=200048">もっとくわしく</a></span>
     </p>
@@ -129,7 +133,7 @@
 <div id="bookmark-container">
   <div id="bookmark-edit-container">
     <div id="bookmark-edit-header">
-      <div class="edit-cell"><a href="http://b.hatena.ne.jp"><img src="/images/logo-text.png" alt="Hatena::Bookmark" /></a></div>
+      <div class="edit-cell"><a href="http://b.hatena.ne.jp"><img src="../images/logo-text.png" alt="Hatena::Bookmark" /></a></div>
       <div class="edit-cell">
         ようこそ<img width="16" height="16" id="usericon"><a id="username" href="http://b.hatena.ne.jp/my"></a>さん
       </div>
@@ -140,7 +144,7 @@
          <div class="table-left" id="canonical-tips">このページには別のURLが提示されています。</div><div class="table-right"><input type="button" onclick="View.bookmark.canonicalClick();" value=" 以下の URL に変更 " /></div>
       </div>
       <div class="table-row">
-        <div class="table-left"><a id="link-canonical"></a></div><div class="table-right"><img src="/images/page.gif"> <a id="canonical-users"></a></div>
+        <div class="table-left"><a id="link-canonical"></a></div><div class="table-right"><img src="../images/page.gif"> <a id="canonical-users"></a></div>
       </div>
     </div>
     <div id="bookmarked-notice" class="none"></div>
@@ -148,12 +152,12 @@
 
     <div id="image-detect-container" class="none">
       <div id="image-detect-image-container">
-      <img onclick="View.bookmark.imageDetectClose();" src="/images/close.gif">
+      <img onclick="View.bookmark.imageDetectClose();" src="../images/close.gif">
       </div>
       <div id="image-detect-container-list">
       </div>
       <div id="image-detect-notice">
-        <p><img src="/images/caution.png"> エントリーの画像は全ユーザー共通です <a href="http://b.hatena.ne.jp/help/guideline_image">ガイドライン</a></p>
+        <p><img src="../images/caution.png"> エントリーの画像は全ユーザー共通です <a href="http://b.hatena.ne.jp/help/guideline_image">ガイドライン</a></p>
         <p class="none" id="image-detect-notice-user-container"> </p>
       </div>
     </div>
@@ -169,7 +173,7 @@
               <div style="width: 100%; display: table-cell;">
                 <span id="title-toggle-button" class="edit-cell">
                   <img onclick="
-                  View.bookmark.titleEditToggle();" src="/images/edit-lock.png" class="loaded" id="title-editable-toggle">
+                  View.bookmark.titleEditToggle();" src="../images/edit-lock.png" class="loaded" id="title-editable-toggle">
                 </span>
 
                 <span class="edit-cell" id="title-text-container">
@@ -183,7 +187,7 @@
 
                 <div class="none" id="title-notice">
                   <p>
-                  <img src="/images/caution.png"> タイトルは全ユーザー共通です <a href="http://b.hatena.ne.jp/help/guideline_title">タイトル変更のガイドライン</a>
+                  <img src="../images/caution.png"> タイトルは全ユーザー共通です <a href="http://b.hatena.ne.jp/help/guideline_title">タイトル変更のガイドライン</a>
                   </p>
                   <p class="none" id="title-notice-user-container">
                   </p>
@@ -192,7 +196,7 @@
 
               </div>
 
-            <div class="edit-cell loading"><img src="/images/loading.gif" width="16" height="16" class="usericon">データをロードしています…</div>
+            <div class="edit-cell loading"><img src="../images/loading.gif" width="16" height="16" class="usericon">データをロードしています…</div>
           </div>
 
 
@@ -203,7 +207,7 @@
                 <a href="" id="url"></a>
               </div>
               <div>
-                <span id="users-count-container" class="none"><img src="/images/page.gif"><a id='users-count'></a></span><img id="comment-show"><span id="favorites"></span>
+                <span id="users-count-container" class="none"><img src="../images/page.gif"><a id='users-count'></a></span><img id="comment-show"><span id="favorites"></span>
                 <span id="type-counter"><span id="type-count">0</span> / 100</span>
               </div>
             </div>
@@ -253,12 +257,12 @@
 
         <div id="image-table-container" class="table-right none">
           <div id="image-container">
-            <div id="image-current-container" onclick="View.bookmark.imageDetect();" ><img id="current-image" src="/images/noimages.png" /></div>
+            <div id="image-current-container" onclick="View.bookmark.imageDetect();" ><img id="current-image" src="../images/noimages.png" /></div>
           </div>
           <hr id="option-help-separator"/>
           <div id="option-help-container" title="有効にすることで使える、より便利な機能の紹介です。">
-            <a id="post-twitter-help" class="option-help" href="http://b.hatena.ne.jp/guide/twitter?target=append&amp;ref=chrome" title="Twitter 連携機能を設定すると、ブックマーク時に Twitter へも投稿することができます。"><img src="/images/add-twitter.png" alt="[Twitter]"></a>
-            <a id="private-help" class="option-help" href="http://b.hatena.ne.jp/guide/plus?target=append&amp;ref=chrome" title="はてなブックマークプラスにお申し込みいただくと、他のユーザーに公開しない非公開ブックマークがご利用いただけます。"><img src="/images/add-private.png" alt="[非公開]"></a>
+            <a id="post-twitter-help" class="option-help" href="http://b.hatena.ne.jp/guide/twitter?target=append&amp;ref=chrome" title="Twitter 連携機能を設定すると、ブックマーク時に Twitter へも投稿することができます。"><img src="../images/add-twitter.png" alt="[Twitter]"></a>
+            <a id="private-help" class="option-help" href="http://b.hatena.ne.jp/guide/plus?target=append&amp;ref=chrome" title="はてなブックマークプラスにお申し込みいただくと、他のユーザーに公開しない非公開ブックマークがご利用いただけます。"><img src="../images/add-private.png" alt="[非公開]"></a>
           </div>
         </div>
       </div>
@@ -298,20 +302,20 @@
     <div id="comment-title-container">
       <span id="comment-title"></span>
       <span id="comment-title-star-container"></span>
-      <img src="/images/star_my.gif" alt="はてなスターをロードしています…" title="はてなスターをロードしています…" id="star-loading-icon" />
+      <img src="../images/star_my.gif" alt="はてなスターをロードしています…" title="はてなスターをロードしています…" id="star-loading-icon" />
     </div>
 
     <div id="comment-title-right">
       <div id="comment-infos">
         <a id="comment-users"></a>
         <span id="comment-count-detail"></span>
-        <img onclick="View.comment.toggleNoComment();" id="comment-toggle" src="/images/comment-viewer-toggle-on.png" />
+        <img onclick="View.comment.toggleNoComment();" id="comment-toggle" src="../images/comment-viewer-toggle-on.png" />
       </div>
     </div>
 
 
   </h3>
-  <div id="comment-message"><img id="comment-loading-icon" src="/images/loading.gif" />コメントをロードしています…</div>
+  <div id="comment-message"><img id="comment-loading-icon" src="../images/loading.gif" />コメントをロードしています…</div>
   <ul id="comment-list"></ul>
 </div>
 <div id="search-container">
