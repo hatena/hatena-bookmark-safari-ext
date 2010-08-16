@@ -1,5 +1,5 @@
 
-var BG = chrome.extension.getBackgroundPage();
+var BG = this;
 var user = BG.UserManager.user;
 
 Config.View = {
