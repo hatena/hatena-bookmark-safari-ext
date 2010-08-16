@@ -9,7 +9,7 @@ $.extend(Manager, {
     editBookmark: function(url, options) {
         if (!UserManager.user) {
             // XXX:
-            chromeWrap.tabs.create({
+            Abstract.tabs.create({
                 url: 'http://www.hatena.ne.jp/login'
             });
             return;
@@ -20,7 +20,7 @@ $.extend(Manager, {
             url: url
         });
 
-        chromeWrap.tabs.create({
+        Abstract.tabs.create({
             url  : uri.pathQuery,
             name : 'bookmarkedit'
         });
@@ -35,15 +35,15 @@ $.extend(Manager, {
         });
     },
     editBookmarkTabId: function(tabId) {
-        chrome.tabs.get(tabId, Manager.editBookmarkTab);
+        Abstract.tabs.get(tabId, Manager.editBookmarkTab);
     },
     editBookmarkCurrentTab: function() {
-        chrome.tabs.getSelected(null, Manager.editBookmarkTab);
+        Abstract.tabs.getSelected(null, Manager.editBookmarkTab);
     },
     saveBookmarkError: function(data) {
         console.error(data);
         var url = '/background/popup.html?error=1&url=' + encodeURIComponent(data.url) + '&comment=' + data.comment;
-        chrome.tabs.create({
+        Abstract.tabs.create({
             url: url,
         });
     },
@@ -51,7 +51,7 @@ $.extend(Manager, {
         console.error(data);
     },
     confirmBookmark: function(openURL) {
-        chrome.tabs.create({
+        Abstract.tabs.create({
             url: openURL,
             selected: true,
         });
@@ -122,12 +122,12 @@ $.extend(Manager, {
         Manager.updateBookmarkCounter(tab);
     },
     updateTabById: function(tabId) {
-        chrome.tabs.get(tabId, function(tab) {
+        Abstract.tabs.get(tabId, function(tab) {
             Manager.updateTab(tab);
         });
     },
     updateCurrentTab: function() {
-        chrome.tabs.getSelected(null, function(t) {
+        Abstract.tabs.getSelected(null, function(t) {
             chrome.windows.getCurrent(function(w) {
                 if (t && w && w.id == t.windowId) {
                     Manager.updateTab(t);
@@ -221,12 +221,12 @@ $(document).ready(function() {
     }
 });
 
-chrome.tabs.onUpdated.addListener(function(tabId, opt) {
+Abstract.tabs.onUpdated.addListener(function(tabId, opt) {
     if (opt.status === 'loading')
         Manager.updateTabById(tabId);
 });
 
-chrome.tabs.onSelectionChanged.addListener(function(tabId) {
+Abstract.tabs.onSelectionChanged.addListener(function(tabId) {
     Manager.updateCurrentTab();
 });
 
@@ -243,9 +243,9 @@ chrome.browserAction.onClicked.addListener(function(tab) {
                 }
             }
             if (flag) {
-                chrome.tabs.get(info.tabId, function(tab) {
+                Abstract.tabs.get(info.tabId, function(tab) {
                     if (URI.parse(tab.url).param('url') != url) {
-                        var port = chrome.tabs.connect(window.popupWinInfo.tabId);
+                        var port = Abstract.tabs.connect(window.popupWinInfo.tabId);
                         port.postMessage({
                             message: 'popup-reload',
                             data: {
@@ -309,7 +309,7 @@ setTimeout(function() {
     url = 'http://example.com/';
     url = '/background/popup.html?debug=1&url=' + encodeURIComponent(url);
     // var url = 'http://www.hatena.ne.jp/';
-    chrome.tabs.create({
+    Abstract.tabs.create({
         url: url,
     });
 }, 10);
@@ -317,7 +317,7 @@ setTimeout(function() {
 /*
 setTimeout(function() {
     var url = '/tests/test.html';
-    chrome.tabs.create({
+    Abstract.tabs.create({
         url: url,
     });
 }, 10);
