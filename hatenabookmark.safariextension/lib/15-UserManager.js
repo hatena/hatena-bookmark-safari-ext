@@ -152,7 +152,7 @@ User.prototype = {
                 }
             });
         }).error(function(res) {
-            Manager.deleteBookmarkError(data);
+            console.log(data);
         });
     },
 
@@ -176,12 +176,19 @@ User.prototype = {
             p('remote save success - ' + data.url);
             if (data.confirm_bookmark) {
                 setTimeout(function() {
-                    Manager.confirmBookmark(URI.parse(data.url).entryURL);
+                    Abstract.tabs.create({
+                        url: URI.parse(data.url).entryURL,
+                        selected: true,
+                    });
                 }, 10);
             }
             self.updateBookmark(data.url, res);
         }).error(function(res) {
-            Manager.saveBookmarkError(data);
+            console.error(data);
+            var url = '/background/popup.html?error=1&url=' + encodeURIComponent(data.url) + '&comment=' + data.comment;
+            Abstract.tabs.create({
+                url: url,
+            });
         });
     },
     updateBookmark: function(url, data) {

@@ -116,11 +116,6 @@ var Utils = {
     faviconUrl: function(url) {
         return 'http://favicon.hatena.ne.jp/?url=' + encodeURIComponent(url.replace('#', '%23'));
     },
-    editBookmarkCurrent: function(winId) {
-        chrome.tabs.getSelected(winId, function(tabs) {
-            chrome.extension.getBackgroundPage().Manager.editBookmarkTab(tabs.id);
-        });
-    },
     createElementSimply: function(name, attr) {
         var children = Array.prototype.slice.call(arguments, 2);
         var e = document.createElement(name);

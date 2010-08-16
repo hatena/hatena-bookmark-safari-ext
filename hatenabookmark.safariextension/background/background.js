@@ -1,141 +1,8 @@
+console.log('background loading');
 
 var isEuraAgreed = function() {
     return !!localStorage.eula;
 }
-
-var Manager = $({});
-
-$.extend(Manager, {
-    editBookmark: function(url, options) {
-        if (!UserManager.user) {
-            // XXX:
-            Abstract.tabs.create({
-                url: 'http://www.hatena.ne.jp/login'
-            });
-            return;
-        }
-        var uri = URI.pathQuery('/background/bookmarkedit.html');
-        if (options) uri.param(options);
-        uri.param({
-            url: url
-        });
-
-        Abstract.tabs.create({
-            url  : uri.pathQuery,
-            name : 'bookmarkedit'
-        });
-        window.open(uri.pathQuery, 'bookmarkedit');
-    },
-    editBookmarkTab: function(tab) {
-        Manager.editBookmark(tab.url, {
-            faviconUrl: tab.faviconUrl,
-            winId: tab.windowId,
-            tabId: tab.id,
-            title: tab.title
-        });
-    },
-    editBookmarkTabId: function(tabId) {
-        Abstract.tabs.get(tabId, Manager.editBookmarkTab);
-    },
-    editBookmarkCurrentTab: function() {
-        Abstract.tabs.getSelected(null, Manager.editBookmarkTab);
-    },
-    saveBookmarkError: function(data) {
-        console.error(data);
-        var url = '/background/popup.html?error=1&url=' + encodeURIComponent(data.url) + '&comment=' + data.comment;
-        Abstract.tabs.create({
-            url: url,
-        });
-    },
-    deleteBookmarkError: function(data) {
-        console.error(data);
-    },
-    confirmBookmark: function(openURL) {
-        Abstract.tabs.create({
-            url: openURL,
-            selected: true,
-        });
-    },
-    _iconDataCache: {},
-    get ctx() {
-       if (!Manager._ctx) {
-                var canvas = document.getElementById('bookmark-icon-canvas');
-                Manager._ctx = canvas.getContext('2d');
-       }
-       return Manager._ctx;
-    },
-    getIconData: function(iconId) {
-        if (!Manager._iconDataCache[iconId]) {
-            var ctx = Manager.ctx;
-            var icon = document.getElementById(iconId);
-            ctx.clearRect(1, 1, icon.width, icon.height);
-            ctx.drawImage(icon, 1, 1);
-            Manager._iconDataCache[iconId] = ctx.getImageData(1,1,icon.width,icon.height);
-        }
-        return Manager._iconDataCache[iconId];
-    },
-    updateBookmarkIcon: function(tab) {
-        return;
-    },
-    updateBookmarkCounter: function(tab) {
-        if (!localStorage.eula) return;
-
-        chrome.browserAction.setIcon({path: '/images/chrome-b-plus.png'});
-        if (tab && tab.url && tab.url.indexOf('http') == 0 && Config.get('background.bookmarkcounter.enabled')) {
-
-            if (UserManager.user) {
-                 UserManager.user.hasBookmark(tab.url).next(function(bool) {
-                     if (bool) {
-                         chrome.browserAction.setIcon({tabId: tab.id, path: '/images/chrome-b-checked.png'});
-                     }
-                 });
-            }
-
-            HTTPCache.counter.get(tab.url).next(function(count) {
-                if (count == null) {
-                    chrome.browserAction.setBadgeText({tabId: tab.id, 
-                        text: '-',
-                    });
-                    chrome.browserAction.setBadgeBackgroundColor({tabId: tab.id, 
-                        color: [200,200,200, 255],
-                    });
-                } else {
-                    chrome.browserAction.setBadgeText({tabId: tab.id, 
-                        text: "" + count,
-                    });
-                    chrome.browserAction.setBadgeBackgroundColor({tabId: tab.id, 
-                        color: [96,255,0, 200],
-                    });
-                }
-            });
-        } else {
-            chrome.browserAction.setBadgeText({tabId: tab.id, 
-                text: '',
-            });
-            chrome.browserAction.setBadgeBackgroundColor({tabId: tab.id, 
-                color: [99,99,99, 255],
-            });
-        }
-    },
-    updateTab: function(tab) {
-        Manager.updateBookmarkIcon(tab);
-        Manager.updateBookmarkCounter(tab);
-    },
-    updateTabById: function(tabId) {
-        Abstract.tabs.get(tabId, function(tab) {
-            Manager.updateTab(tab);
-        });
-    },
-    updateCurrentTab: function() {
-        Abstract.tabs.getSelected(null, function(t) {
-            chrome.windows.getCurrent(function(w) {
-                if (t && w && w.id == t.windowId) {
-                    Manager.updateTab(t);
-                }
-            });
-        });
-    },
-});
 
 var ConnectMessenger = $({});
 
@@ -208,10 +75,6 @@ UserManager.bind('UserChange', function() {
 Sync.bind('complete', function() {
     // Manager.editBookmark('http://example.com/');
     $(document).trigger('BookmarksUpdated');
-});
-
-$(document).bind('BookmarksUpdated', function() {
-    Manager.updateCurrentTab();
 });
 
 $(document).ready(function() {
@@ -335,5 +198,4 @@ chrome.windows.create({url:'../tests/test.html'});
 }, 10);
 */
 
-
-
+console.log('background loaded');
