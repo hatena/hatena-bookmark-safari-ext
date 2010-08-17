@@ -278,6 +278,7 @@ var View = {
             if (this.inited) return;
             var self = this;
             getInformation().next(function(info) {
+                // TODO: なんかファビコンでない
                 self.setTitle(info.title || info.url);
                 self.titleContainer.css('background-image', info.faviconUrl ? info.faviconUrl : sprintf('url(%s)', Utils.faviconUrl(info.url)));
                 if (info.url.indexOf('http') != 0) {
