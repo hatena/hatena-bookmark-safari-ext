@@ -7,10 +7,17 @@
 
     var iframe;
 
-
+    function extractOrigin(str) {
+        var matched = str.match(/([a-z-]+:\/\/[^/]+)/);
+        return matched[1];
+    }
 
     window.addEventListener("message", function (ev) {
         var res;
+
+        var myOrigin = extractOrigin(safari.extension.baseURI).toLowerCase();
+        if (ev.origin !== myOrigin)
+            return;
 
         switch (ev.data) {
         case "getInfo":
