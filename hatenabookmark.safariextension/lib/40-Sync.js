@@ -83,7 +83,7 @@ jQuery.extend(Sync, {
                         }
                     };
                 }
-                console.log('sync execute: index:' + i + ' ' + title);
+                // console.log('sync execute: index:' + i + ' ' + title);
             }).next(function() {
                 if (i > 0) {
                     executer();
