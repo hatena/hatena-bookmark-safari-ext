@@ -216,7 +216,7 @@ var View = {
             var max = Config.get('popup.search.result.threshold');
             var el = list.get(0);
             var loop = function() {
-                this.current = Connect()
+                self.current = Connect()
                     .send("Model.Bookmark.search." + start,
                           { word   : word,
                             limit  : 100,
