@@ -19,19 +19,15 @@
  *
  * -- Server side --
  *
- * safari.application.addEventListener("message", handleMessage, false);
+ * Response(function (get) {
+ *     get("/login", function (ev) {
+ *         return "Response 1";
+ *     });
  *
- * function handleMessage(ev) {
- *     switch (ev.name) {
- *     case "message1":
- *         ev.target.dispatchMessage(ev.name, "Response 1");
- *         break;
- *     case "message2":
- *         ev.target.dispatchMessage(ev.name, "Response 2");
- *         break;
- *     default:
- *     }
- * }
+ *     get("users/(.+)", function (ev, matched) {
+ *         return "user : " + matched[1];
+ *     });
+ * }); * safari.application.addEventListener("message", handleMessage, false);
  *
  */
 
