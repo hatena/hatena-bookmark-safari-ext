@@ -31,7 +31,7 @@ Response(function (get, deferred) {
         });
     });
 
-    get(/Model\.Bookmark\.search\.(\d+)/, function (ev, matched, dispatch) {
+    get("Model.Bookmark.search", function (ev, matched, dispatch) {
         // searchwordもargsに入れる args.word
         var args = ev.message;
         var word = args.word;

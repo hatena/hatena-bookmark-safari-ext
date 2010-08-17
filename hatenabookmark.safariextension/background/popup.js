@@ -217,7 +217,7 @@ var View = {
             var el = list.get(0);
             var loop = function() {
                 self.current = Connect()
-                    .send("Model.Bookmark.search." + start,
+                    .send("Model.Bookmark.search",
                           { word   : word,
                             limit  : 100,
                             offset : start,
