@@ -7,6 +7,17 @@
 
     var iframe;
 
+    window.addEventListener("message", function (ev) {
+        if (ev.data !== "getInfo")
+            return;
+
+        var res   = {};
+        res.url   = location.href;
+        res.title = document.title;
+
+        ev.source.postMessage(res, ev.origin);
+    }, false);
+
     function performMessage(event) {
         switch (event.name) {
         case "insertIframe":

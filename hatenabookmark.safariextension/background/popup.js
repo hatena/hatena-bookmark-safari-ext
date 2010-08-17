@@ -476,6 +476,7 @@ var View = {
             if (data.canonical) {
                 this.setCanonical(data.canonical);
             }
+
             if (data.title) {
                 this.setTitle(data.title);
             }
@@ -635,12 +636,25 @@ var View = {
 
             var url = info.url;
 
-            this.port.postMessage({
-                message: 'bookmarkedit_bridge_get',
-                data: {
-                    url: url,
-                }
-            });
+            // this.port.postMessage({
+            //     message: 'bookmarkedit_bridge_get',
+            //     data: {
+            //         url: url,
+            //     }
+            // });
+
+            // TODO: 綺麗に抽象化したい
+            window.addEventListener("message", function (ev) {
+                var uri    = URI.parse(request_uri.param("url"));
+                var origin = uri.schema + "://" + uri.host;
+                var data   = event.data;
+
+                if (ev.origin !== origin)
+                    return;
+
+                View.bookmark.updatePageData(data);
+            }, false);
+            window.parent.postMessage("getInfo", request_uri.param("url"));
 
             var lastCommentValueConf = Config.get('popup.bookmark.lastCommentValue');
             if (lastCommentValueConf && lastCommentValueConf.url == url) {
@@ -872,7 +886,7 @@ var View = {
             if (force || !this.titleLoaded) {
                 this.titleText.text(Utils.truncate(title, 60));
                 this.titleText.attr('title', title);
-               $('#title-input').attr('value', title);
+                $('#title-input').attr('value', title);
             }
             this.titleLoaded = true;
         },
