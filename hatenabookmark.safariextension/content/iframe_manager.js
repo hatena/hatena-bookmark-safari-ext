@@ -3,20 +3,36 @@
 
     safari.self.addEventListener("message", performMessage, false);
 
-    document.body.addEventListener("click", performClick, false);
+    document.body.addEventListener("click", closeIframe, false);
 
     var iframe;
 
     window.addEventListener("message", function (ev) {
-        if (ev.data !== "getInfo")
-            return;
+        var res;
 
+        switch (ev.data) {
+        case "getInfo":
+            res = getInfo(ev);
+            break;
+        case "closeIframe":
+            res = closeIframe(ev);
+        }
+
+        ev.source.postMessage(res, ev.origin);
+    }, false);
+
+    function getInfo(ev) {
         var res   = {};
         res.url   = location.href;
         res.title = document.title;
 
-        ev.source.postMessage(res, ev.origin);
-    }, false);
+        return res;
+    }
+
+    function closeIframe(ev) {
+        if (!iframe) return;
+        iframe.style.display = 'none';
+    }
 
     function performMessage(event) {
         switch (event.name) {
@@ -35,12 +51,13 @@
         iframe.src = getSrc(event);
 
         with (iframe.style) {
-            position = 'fixed';
-            right = '0px';
-            top = '0px';
-            height = '100%';
-            width = '600px';
+            position   = 'fixed';
+            right      = '0px';
+            top        = '0px';
+            height     = '100%';
+            width      = '600px';
             background = 'white';
+            zIndex     = 2147483647;
         }
 
         document.body.appendChild(iframe);
@@ -51,11 +68,6 @@
             display = 'block';
         }
         iframe.src = getSrc(event);
-    }
-
-    function performClick(event) {
-        if (!iframe) return;
-        iframe.style.display = 'none';
     }
 
     function getSrc(event) {

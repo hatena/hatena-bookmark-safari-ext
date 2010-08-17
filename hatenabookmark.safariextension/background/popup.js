@@ -61,20 +61,7 @@ if (!urlGiven) {
 
 
 function closeWin() {
-    if (!urlGiven) {
-        window.close();
-        // BG.Abstract.experimental.extension.getPopupView().close();
-    } else {
-        // if (window.currentWin) {
-        //     Abstract.windows.get(currentWin.id, function(win) {
-        //         delete BG.popupWinInfo;
-        //         saveWindowPositions(win);
-        //         Abstract.windows.remove(currentWin.id);
-        //     });
-        // } else {
-            window.close();
-        // }
-    }
+    window.parent.postMessage("closeIframe", request_uri.param("url"));
 }
 
 function saveWindowPositions(win) {
@@ -131,27 +118,23 @@ function getInformation() {
 function deleteBookmark() {
     getInformation().next(function(info) {
         var url = info.url;
-        UserManagerProxy.user.deleteBookmark(url);
+        UserManagerProxy.deleteBookmark(url);
         closeWin();
     });
 }
 
-
 function formSubmitHandler(ev) {
     var form = $('#form');
 
-    var user = UserManagerProxy.user;
     var url = form.serialize();
     url = View.bookmark.setSubmitData(url);
 
     url = url.replace(new RegExp('\\+', 'g'), '%20'); // for title
-    console.log(url);
-    user.saveBookmark(url);
 
-    // iframe でやる.
-    setTimeout(function() {
-        closeWin();
-    }, 0);
+    UserManagerProxy.saveBookmark(url);
+
+    closeWin();
+
     return false;
 }
 
@@ -786,7 +769,7 @@ var View = {
             Connect()
                 .send("Model.Bookmark.findByUrl", url).recv(function(event) {
                     var res = event.message;
-                    self.setByBookmark(res)
+                    self.setByBookmark(res);
                 })
                 .close();
         },

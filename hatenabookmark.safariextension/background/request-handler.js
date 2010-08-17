@@ -36,4 +36,15 @@ Response(function (get, deferred) {
         return UserManager.user;
     });
 
+    get("UserManager.user.saveBookmark", function (ev, matched, dispatch) {
+        var url = ev.message;
+        UserManager.user.saveBookmark(url);
+        return url;
+    });
+
+    get("UserManager.user.deleteBookmark", function (ev, matched, dispatch) {
+        var url = ev.message;
+        UserManager.user.deleteBookmark(url);
+        return url;
+    });
 });
