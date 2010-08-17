@@ -20,12 +20,18 @@
  * -- Server side --
  *
  * Response(function (get) {
- *     get("/login", function (ev) {
+ *     get("/login", function (ev, matched, dispatch) {
  *         return "Response 1";
  *     });
  *
- *     get("users/(.+)", function (ev, matched) {
+ *     get("users/(.+)", function (ev, matched, dispatch) {
  *         return "user : " + matched[1];
+ *     });
+ *
+ *     get("get/(.+)", function (ev, matched, dispatch) {
+ *         $.get(matched[0], function (res) {
+ *              dispatch(res);
+ *         });
  *     });
  * });
  *
@@ -47,8 +53,14 @@ function Response(block) {
 
                 var matched = pattern instanceof RegExp ? ev.name.match(pattern) : ev.name === pattern;
 
+                function dispatch(value) {
+                    ev.target.page.dispatchMessage(ev.name, value);
+                }
+
                 if (matched) {
-                    ev.target.page.dispatchMessage(ev.name, callback(ev, matched));
+                    var v = callback(ev, matched, dispatch);
+                    if (typeof v === "undefined")
+                        dispatch(v);
                     break;
                 }
             }
