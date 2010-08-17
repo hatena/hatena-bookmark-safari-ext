@@ -45,7 +45,7 @@ function Response(block) {
                 var pattern  = handler[0];
                 var callback = handler[1];
 
-                var matched = ev.name.match(pattern);
+                var matched = pattern instanceof RegExp ? ev.name.match(pattern) : ev.name === pattern;
 
                 if (matched) {
                     ev.target.page.dispatchMessage(ev.name, callback(ev, matched));
