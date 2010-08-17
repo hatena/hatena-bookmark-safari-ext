@@ -31,6 +31,24 @@ Response(function (get, deferred) {
         });
     });
 
+    get(/Model\.Bookmark\.search\.(\d+)/, function (ev, matched, dispatch) {
+        // searchwordもargsに入れる args.word
+        var args = ev.message;
+        var word = args.word;
+
+        Model.Bookmark.search(word, args).next(function(res) {
+            dispatch(res.map(function(r) {
+                return {
+                    title: r.title,
+                    url: r.url,
+                    body: r.body,
+                    tags: r.tags,
+                    dateYMD: r.dateYMD
+                };
+            }));
+        });
+    });
+
     get("UserManager.user", function (ev, matched, dispatch) {
         console.log(UserManager.user);
         return UserManager.user;
