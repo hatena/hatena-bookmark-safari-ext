@@ -40,8 +40,10 @@ function Connect(page) {
 }
 
 Connect.prototype = {
+    delimiter: "-",
+
     send: function (name, value) {
-        this.queue.push({ name : name, value : value });
+        this.queue.push({ name : name + this.delimiter + Data.now(), value : value });
         return this;
     },
 
@@ -57,6 +59,7 @@ Connect.prototype = {
 
     close: function () {
         this._consume();
+        return this;
     },
 
     cancel: function() {

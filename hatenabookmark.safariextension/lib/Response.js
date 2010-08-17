@@ -38,7 +38,18 @@
  */
 
 function Response(block) {
+    const delimiter = "-";
+
     var handlers = [];
+
+    function extractTime(str) {
+        var matched = str.match(delimiter + "(\\d+)$");
+        return matched[matched.length - 1];
+    }
+
+    function eraseTime(str) {
+        return str.replace(new RegExp(delimiter + "\\d+$"), "");
+    }
 
     block(function get(name, callback) {
         handlers.push([name, callback]);
@@ -51,13 +62,17 @@ function Response(block) {
                 var pattern  = handler[0];
                 var callback = handler[1];
 
-                var matched = pattern instanceof RegExp ? ev.name.match(pattern) : ev.name === pattern;
+                var name = eraseTime(ev.name);
+
+                var matched = pattern instanceof RegExp ? name.match(pattern) : name === pattern;
 
                 function dispatch(value) {
                     ev.target.page.dispatchMessage(ev.name, value);
                 }
 
                 if (matched) {
+                    console.log("Response.js :: recv " + ev.name + " (" + name + ")");
+
                     var v = callback(ev, matched, dispatch);
                     if (typeof v !== "undefined") {
                         dispatch(v);
