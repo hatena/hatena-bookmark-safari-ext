@@ -50,7 +50,6 @@ Response(function (get, deferred) {
     });
 
     get("UserManager.user", function (ev, matched, dispatch) {
-        console.log(UserManager.user);
         return UserManager.user;
     });
 
