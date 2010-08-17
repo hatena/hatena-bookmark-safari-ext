@@ -8,9 +8,9 @@ var request_uri = URI.parse('http://example.com/' + location.href);
 console.log(request_uri.param('title'));
 console.log(request_uri.param('uri'));
 console.log(request_uri.param('faviconUrl'));
-var popupMode = request_uri.param('url') ? false : true;
+var urlGiven = request_uri.param('url') ? true : false;
 
-if (popupMode) {
+if (!urlGiven) {
     // パラメータ URL が定義されていないとき
     p = function(msg) {
         BG.console.log(JSON.stringify(Array.prototype.slice.call(arguments, 0, arguments.length)));
@@ -67,7 +67,7 @@ if (popupMode) {
 
 
 function closeWin() {
-    if (popupMode) {
+    if (!urlGiven) {
         window.close();
         // BG.Abstract.experimental.extension.getPopupView().close();
     } else {
@@ -110,7 +110,7 @@ function loadWindowPosition(win) {
 // 今見ているページの情報を返す (Deferred).
 function getInformation() {
     var d = new Deferred();
-    if (popupMode) {
+    if (!urlGiven) {
         BG.Abstract.tabs.getSelected(null, function(tab) {
             d.call({
                 url: tab.url,
@@ -1017,7 +1017,7 @@ var ViewManager = {
 }
 
 /*
-if (popupMode) {
+if (!urlGiven) {
     Abstract.windows.getCurrent(function(win) {
         BG.console.log(win);
         var height = Math.max(300, win.height - 150);
@@ -1059,7 +1059,7 @@ var ready = function() {
         return;
     }
 
-    if (window.popupMode) {
+    if (!window.urlGiven) {
         if (request_uri.param('error')) {
             //
         } else {
