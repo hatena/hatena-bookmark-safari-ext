@@ -709,7 +709,7 @@ var View = {
             this.tagCompleter.register(this.commentEL, {
                 updatedHandler: function(inputLine) {
                     // darty...
-                    var m = inputLine.value;
+                    var m = inputLine.value || '';
                     var byte = Utils.countCommentToBytes(m);
                     byte = Math.floor(byte / 3);
                     self.typeCount.text(byte);
