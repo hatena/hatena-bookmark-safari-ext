@@ -23,7 +23,7 @@
     function performInsertIframe(event) {
         console.log('performInsertIframe');
         iframe = document.createElement('iframe');
-        iframe.src = safari.extension.baseURI + event.message + '?uri=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(document.title) +'&faviconUrl=' + encodeURIComponent((document.querySelector('link[rel~="icon"]')|| { href: '' }).href);
+        iframe.src = getSrc(event);
 
         with (iframe.style) {
             position = 'fixed';
@@ -41,11 +41,15 @@
         with(iframe.style) {
             display = 'block';
         }
-        iframe.src = safari.extension.baseURI + event.message + '?uri=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(document.title);
+        iframe.src = getSrc(event);
     }
 
     function performClick(event) {
         if (!iframe) return;
         iframe.style.display = 'none';
+    }
+
+    function getSrc(event) {
+        return safari.extension.baseURI + event.message + '?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(document.title) +'&faviconUrl=' + encodeURIComponent((document.querySelector('link[rel~="icon"]')|| { href: '' }).href);
     }
 })();
