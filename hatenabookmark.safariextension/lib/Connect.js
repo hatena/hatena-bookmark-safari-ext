@@ -82,9 +82,10 @@ Connect.prototype = {
                     try {
                         f(ev);
                     } catch (e) {
-                        if (error) error(e);
-
-                        return; // interrupt
+                        if (error)
+                            return error(e);
+                        else
+                            throw e;
                     }
 
                     that._consume();
