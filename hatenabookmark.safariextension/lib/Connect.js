@@ -43,7 +43,7 @@ Connect.prototype = {
     delimiter: "-",
 
     send: function (name, value) {
-        this.queue.push({ name : name + this.delimiter + Data.now(), value : value });
+        this.queue.push({ name : name + this.delimiter + Date.now(), value : value });
         return this;
     },
 
