@@ -61,8 +61,7 @@ Connect.prototype = {
 
     cancel: function() {
         if (this.listener) {
-            this.page.removeEventListener(this.name, this.listener, false);
-            console.log("Cancelled connection");
+            this.page.removeEventListener("message", this.listener, false);
         }
 
         this.queue.length = 0;
@@ -87,7 +86,7 @@ Connect.prototype = {
                     if (ev.name !== message.name)
                         return;
 
-                    that.page.removeEventListener(message.name, arguments.callee, false);
+                    that.page.removeEventListener("message", arguments.callee, false);
 
                     try {
                         f(ev);
