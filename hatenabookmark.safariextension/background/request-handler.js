@@ -23,7 +23,11 @@ Response(function (get, deferred) {
     get("Model.Bookmark.findByUrl", function (ev, matched, dispatch) {
         var url = ev.message;
         Model.Bookmark.findByUrl(url).next(function(r) {
-            dispatch(r);
+            var newData = {};
+            (['comment', 'dateYMD', 'dateYMDHM']).forEach(function(key) {
+                newData[key] = r[key];
+            });
+            dispatch(newData);
         });
     });
 
