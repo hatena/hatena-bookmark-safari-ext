@@ -768,7 +768,7 @@ dd#all-tags {
 
 #search-container,
 #comment-list {
-  max-height: 470px;
+/*  max-height: 470px;  */
   overflow-y: auto;
   word-break:break-all;
 }

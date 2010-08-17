@@ -28,7 +28,7 @@
             right = '0px';
             top = '0px';
             height = '100%';
-            width = '500px';
+            width = '600px';
             background = 'white';
         }
 
