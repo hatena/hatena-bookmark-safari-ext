@@ -5,11 +5,7 @@ var BG = this;
 var UserManager = { };
 
 var request_uri = URI.parse('http://example.com/' + location.href);
-console.log(request_uri.param('title'));
-console.log(request_uri.param('uri'));
-console.log(request_uri.param('faviconUrl'));
 var urlGiven = request_uri.param('url') ? true : false;
-
 if (!urlGiven) {
     // パラメータ URL が定義されていないとき
     p = function(msg) {
@@ -111,6 +107,7 @@ function loadWindowPosition(win) {
 function getInformation() {
     var d = new Deferred();
     if (!urlGiven) {
+        // TODO: おいとく
         BG.Abstract.tabs.getSelected(null, function(tab) {
             d.call({
                 url: tab.url,
@@ -125,8 +122,6 @@ function getInformation() {
             d.call({
                 url: request_uri.param('url'),
                 faviconUrl: request_uri.param('faviconUrl'),
-                winId: request_uri.param('windowId'),
-                tabId: request_uri.param('tabId'),
                 title: request_uri.param('title'),
             })
         }, 0);
@@ -289,17 +284,20 @@ var View = {
                     self.commentMessage.text('表示できるブックマークコメントはありません');
                     return;
                 }
-                HTTPCache.comment.get(info.url).next(function(r) {
-                    if (r) {
-                        self.commentMessage.hide();
-                        self.setTitle(r.title);
-                        self.list.empty();
-                        self.list.html('');
-                        self.showComment(r);
-                    } else {
-                        self.commentMessage.text('表示できるブックマークコメントはありません');
-                    }
-                });
+                Connect()
+                    .send("HTTPCache.comment.get", info.url).recv(function(event) {
+                        var r = event.message;
+                        if (r) {
+                            self.commentMessage.hide();
+                            self.setTitle(r.title);
+                            self.list.empty();
+                            self.list.html('');
+                            self.showComment(r);
+                        } else {
+                            self.commentMessage.text('表示できるブックマークコメントはありません');
+                        }
+                    })
+                    .close();
             });
         },
         setTitle: function(title) {
