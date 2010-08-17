@@ -763,19 +763,32 @@ var View = {
             this.form.show();
             this.commentEL.focus();
             if (Config.get('popup.tags.allTags.enabled') || Config.get('popup.tags.complete.enabled')) {
-                HTTPCache.usertags.get(user.name).next(function(res) {
-                    if (Config.get('popup.tags.complete.enabled')) {
-                        self.tagCompleter.addSuggestTags(res.tagsKeys);
-                        self.tagCompleter.tagsObject = res.tags;
-                    }
-                    if (Config.get('popup.tags.allTags.enabled')) {
-                        self.setUserTags(res)
-                    }
-                });
+                Connect()
+                    .send("HTTPCache.usertags.get", user.name).recv(function(event) {
+                        var res = event.message;
+                        if (Config.get('popup.tags.complete.enabled')) {
+                            self.tagCompleter.addSuggestTags(res.tagsKeys);
+                            self.tagCompleter.tagsObject = res.tags;
+                        }
+                        if (Config.get('popup.tags.allTags.enabled')) {
+                            self.setUserTags(res)
+                        }
+                    })
+                    .close();
             }
 
-            HTTPCache.entry.get(url).next(function(res) { self.setEntry(res) });
-            Model.Bookmark.findByUrl(url).next(function(res) { self.setByBookmark(res) });
+            Connect()
+                .send("HTTPCache.entry.get", url).recv(function(event) {
+                    var res = event.message;
+                    self.setEntry(res);
+                })
+                .close();
+            Connect()
+                .send("Model.Bookmark.findByUrl", url).recv(function(event) {
+                    var res = event.message;
+                    self.setByBookmark(res)
+                })
+                .close();
         },
 
         setUserTags: function(tags) {
