@@ -9,7 +9,7 @@ var B_API_STATIC_HTTP = 'http://' + B_API_STATIC_HOST + '/';
 
 // utility
 var p = function() {
-    console.log(JSON.stringify(Array.prototype.slice.call(arguments, 0, arguments.length)));
+    // console.log(JSON.stringify(Array.prototype.slice.call(arguments, 0, arguments.length)));
 }
 
 var sprintf = function (str) {
@@ -253,7 +253,7 @@ if (typeof jQuery != 'undefined') {
                     // Recurse if we're merging object values
                     if ( deep && !getterFlag && copy && typeof copy === "object" && !copy.nodeType ) {
                         src = target[ name ];
-                        target[ name ] = jQuery.extend( deep, 
+                        target[ name ] = jQuery.extend( deep,
                             // Never move original objects, clone them
                             src || ( copy.length != null ? [ ] : { } )
                         , copy );
