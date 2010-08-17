@@ -59,6 +59,15 @@ Connect.prototype = {
         this._consume();
     },
 
+    cancel: function() {
+        if (this.listener) {
+            this.page.removeEventListener(this.name, this.listener, false);
+            console.log("Cancelled connection");
+        }
+
+        this.queue.length = 0;
+    },
+
     _consume: function () {
         var that  = this;
         var queue = this.queue;
@@ -73,7 +82,8 @@ Connect.prototype = {
                 if (typeof queue[0] === "function")
                     var error = queue.shift();
 
-                that.page.addEventListener("message", function (ev) {
+                that.name = message.name;
+                that.listener = function (ev) {
                     if (ev.name !== message.name)
                         return;
 
@@ -89,8 +99,9 @@ Connect.prototype = {
                     }
 
                     that._consume();
-                }, false);
+                };
 
+                that.page.addEventListener("message", that.listener, false);
                 that.page.tab.dispatchMessage(message.name, message.value);
 
                 return;
