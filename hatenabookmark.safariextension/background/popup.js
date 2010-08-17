@@ -216,30 +216,25 @@ var View = {
             var max = Config.get('popup.search.result.threshold');
             var el = list.get(0);
             var loop = function() {
-                Connect()
-                    .send("Model.Bookmark.search." + start,// + Math.floor(Math.random() * 1000),
-                          { word: word,
-                            limit: 100,
-                            offset: start,
-                            order: 'date desc',
-                          }
-                         ).recv(function(event) {
-                             var res = event.message;
-                             res.forEach(function(r) {
-                                 // try {
-                                 if (el.children.length < max)
-                                     list.append(createBookmarkList(r));
-                                 // } catch(e) { p(e) }
-                                 // var m = $('<li/>').text(r.title + r.url);
-                                 // m.appendTo(list);
-                             });
-                             var rLen = el.children.length;
-                             self.totalCount.text(rLen >= (max-1) ? sprintf('%d件以上', max) : sprintf('%d件', rLen));
-                             start += 100;
-                             if (start < max && !(rLen >= (max-1))) {
-                                 loop();
-                             }
-                         })
+                this.current = Connect()
+                    .send("Model.Bookmark.search." + start,
+                          { word   : word,
+                            limit  : 100,
+                            offset : start,
+                            order  : 'date desc' })
+                    .recv(function(event) {
+                        var res = event.message;
+                        res.forEach(function(r) {
+                            if (el.children.length < max)
+                                list.append(createBookmarkList(r));
+                        });
+                        var rLen = el.children.length;
+                        self.totalCount.text(rLen >= (max-1) ? sprintf('%d件以上', max) : sprintf('%d件', rLen));
+                        start += 100;
+                        if (start < max && !(rLen >= (max-1))) {
+                            loop();
+                        }
+                    })
                     .close();
             };
             loop();
