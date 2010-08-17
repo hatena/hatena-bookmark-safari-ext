@@ -307,14 +307,14 @@ var View = {
         showNoComment: function() {
             this.list.removeClass('hide-nocomment');
             Config.set('popup.commentviewer.togglehide', true);
-            this.commentToggle.attr('src', '/images/comment-viewer-toggle-on.png');
+            this.commentToggle.attr('src', '../images/comment-viewer-toggle-on.png');
             this.commentToggle.attr('title', 'コメントがないユーザを非表示');
             this.commentToggle.attr('alt', 'コメントがないユーザを非表示');
         },
         hideNoComment: function() {
             this.list.addClass('hide-nocomment');
             Config.set('popup.commentviewer.togglehide', false);
-            this.commentToggle.attr('src', '/images/comment-viewer-toggle-off.png');
+            this.commentToggle.attr('src', '../images/comment-viewer-toggle-off.png');
             this.commentToggle.attr('title', 'すべてのユーザを表示');
             this.commentToggle.attr('alt', 'すべてのユーザを表示');
         },
@@ -492,8 +492,8 @@ var View = {
         setSubmitData: function(data) {
             var selectedImage = $('#current-image').attr('updated');
             if (selectedImage) {
-                var noImage = selectedImage.indexOf('/images/noimages') != -1;
-                if (noImage) selectedImage = '/images/noimages.gif'; // set const noimage
+                var noImage = selectedImage.indexOf('../images/noimages') != -1;
+                if (noImage) selectedImage = '../images/noimages.gif'; // set const noimage
                 if (this.currentEntry && this.currentEntry.image_url) {
                     // 元画像がある
                     if (this.currentEntry.image_url != selectedImage ||
@@ -522,7 +522,7 @@ var View = {
         imageDetect: function() {
             var images = this.images;
             if (images && images.length) {
-                images = $.unique(images.concat(['/images/noimages.png']));
+                images = $.unique(images.concat(['../images/noimages.png']));
                 var list = $('#image-detect-container-list').empty();
                 images.forEach(function(image) {
                     list.append($('<img/>').attr('src', image));
@@ -850,14 +850,14 @@ var View = {
 
         titleEditToggle: function() {
             var img = $('#title-editable-toggle');
-            if (img.attr('src').indexOf('/images/edit-lock.png') == -1) {
-                img.attr('src', '/images/edit-lock.png');
+            if (img.attr('src').indexOf('../images/edit-lock.png') == -1) {
+                img.attr('src', '../images/edit-lock.png');
                 $('#title-text-container').show();
                 $('#title-text-edit-container').addClass('none');
                 $('#title-input').attr('disabled', 'disabled');
                 $('#title-notice').hide();
             } else {
-                img.attr('src', '/images/edit-cancel.png');
+                img.attr('src', '../images/edit-cancel.png');
                 $('#title-text-container').hide();
                 $('#title-text-edit-container').removeClass('none');
                 $('#title-input').attr('disabled', null);
