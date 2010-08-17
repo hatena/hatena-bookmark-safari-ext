@@ -2,8 +2,6 @@ Deferred.debug = true;
 var BG = this;
 //Utils.inject(BG, ['UserManager', 'User', 'HTTPCache', 'URI', 'Manager', 'Model']);
 
-var UserManager = { };
-
 var request_uri = URI.parse('http://example.com/' + location.href);
 var urlGiven = request_uri.param('url') ? true : false;
 if (!urlGiven) {
@@ -133,7 +131,7 @@ function getInformation() {
 function deleteBookmark() {
     getInformation().next(function(info) {
         var url = info.url;
-        UserManager.user.deleteBookmark(url);
+        UserManagerProxy.user.deleteBookmark(url);
         closeWin();
     });
 }
@@ -142,7 +140,7 @@ function deleteBookmark() {
 function formSubmitHandler(ev) {
     var form = $('#form');
 
-    var user = UserManager.user;
+    var user = UserManagerProxy.user;
     var url = form.serialize();
     url = View.bookmark.setSubmitData(url);
 
@@ -210,7 +208,7 @@ var View = {
         init: function() {
         },
         search: function(word) {
-            if (!UserManager.user) {
+            if (!UserManagerProxy.user) {
                 this.container.hide();
                 $('#login-container').show();
                 return;
@@ -331,8 +329,8 @@ var View = {
             var self = this;
             var bookmarks = data.bookmarks;
 
-            if (UserManager.user && UserManager.user.ignores) {
-                var ignoreRegex = UserManager.user.ignores;
+            if (UserManagerProxy.user && UserManagerProxy.user.ignores) {
+                var ignoreRegex = UserManagerProxy.user.ignores;
                 bookmarks = bookmarks.filter(function(b) { return ! ignoreRegex.test(b.user) });
             }
             var publicLen = bookmarks.length;
@@ -556,8 +554,8 @@ var View = {
             });
         },
         init: function() {
-            var user = UserManager.user;
-            if (!UserManager.user) {
+            var user = UserManagerProxy.user;
+            if (!UserManagerProxy.user) {
                $('#bookmark-edit-container').hide();
                $('#login-container').show();
                 return;
@@ -599,7 +597,7 @@ var View = {
                 this.titleLoaded = false;
             }
 
-            var user = UserManager.user;
+            var user = UserManagerProxy.user;
             this.usericon.attr('src', user.view.icon);
             this.usernameEL.text(user.name);
             if (user.plususer) {
@@ -1028,7 +1026,7 @@ if (!urlGiven) {
 
 var eulaAccept = function() {
     localStorage.eula = true;
-    UserManager.loginWithRetry(15 * 1000);
+    UserManagerProxy.loginWithRetry(15 * 1000);
     $('#eula').hide();
     setTimeout(function() {
         ready();
@@ -1047,6 +1045,17 @@ var setWindowSize = function(w, h) {
     document.getElementById('comment-list').style.maxWidth = '' + w + 'px';
 }
 */
+
+var prepareUser = function() {
+    Connect()
+        .send("UserManager.user").recv(function(event) {
+            var user = event.message;
+            UserManagerProxy.blessUser(user);
+            console.log(UserManagerProxy.user);
+            ready();
+        })
+        .close();
+}
 
 var ready = function() {
     if (!localStorage.eula) {
@@ -1089,7 +1098,7 @@ var ready = function() {
             */
         }
     }
-    var user = UserManager.user;
+    var user = UserManagerProxy.user;
     if (user) {
         var hicon = $('#header-usericon');
         hicon.append(E('img', {
@@ -1127,5 +1136,5 @@ var ready = function() {
     }
 };
 
-$(document).bind('ready', ready);
+$(document).bind('ready', prepareUser);
 
