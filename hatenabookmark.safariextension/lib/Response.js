@@ -59,8 +59,9 @@ function Response(block) {
 
                 if (matched) {
                     var v = callback(ev, matched, dispatch);
-                    if (typeof v === "undefined")
+                    if (typeof v !== "undefined") {
                         dispatch(v);
+                    }
                     break;
                 }
             }
