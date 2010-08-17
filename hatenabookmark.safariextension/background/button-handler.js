@@ -18,8 +18,6 @@
             var page = tab.page;
             page.dispatchMessage("insertIframe", "background/popup.html");
             break;
-        default:
-            alert("sorry!!!!");
         }
     }
 })();

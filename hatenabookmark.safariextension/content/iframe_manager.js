@@ -15,8 +15,6 @@
             else
                 showIframe(event);
             break;
-        default:
-            alert("sorry!!!!");
         }
     }
 
