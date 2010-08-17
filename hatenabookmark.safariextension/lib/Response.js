@@ -48,7 +48,7 @@ function Response(block) {
                 var matched = ev.name.match(pattern);
 
                 if (matched) {
-                    ev.target.dispatchMessage(ev.name, callback(ev, matched));
+                    ev.target.page.dispatchMessage(ev.name, callback(ev, matched));
                     break;
                 }
             }
