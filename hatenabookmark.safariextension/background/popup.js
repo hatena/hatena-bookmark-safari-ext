@@ -422,7 +422,7 @@ var View = {
                                 cEL.appendChild(document.createTextNode(match));
                             }
                         });
-                        console.log(matches);
+                        //console.log(matches);
                     }
                     frag.appendChild(li);
                     elements.push(li);
@@ -1051,7 +1051,6 @@ var prepareUser = function() {
         .send("UserManager.user").recv(function(event) {
             var user = event.message;
             UserManagerProxy.blessUser(user);
-            console.log(UserManagerProxy.user);
             ready();
         })
         .close();
