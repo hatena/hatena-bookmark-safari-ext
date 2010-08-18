@@ -26,6 +26,10 @@
     }
 
     TabManager.bind("change", function (ev, activeTab) {
+        bookmarkButton.disabled = true;
         bookmarkButton.badge = activeTab.title.length;
+        setTimeout(function() {
+            bookmarkButton.disabled = false;
+        }, 0);
     });
 })();
