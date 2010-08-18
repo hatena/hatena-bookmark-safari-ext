@@ -8,9 +8,9 @@ const B_STATIC_HTTP = 'http://b.st-hatena.com/';
 var SiteinfoRequestor = {
     init: function SR_init() {
         var self = SiteinfoRequestor;
+
         Connect()
-            .send("SiteinfoManager.getSiteinfoForURL",
-                  {url: location.href})
+            .send("SiteinfoManager.getSiteinfoForURL", location.href)
             .recv(function(event) {
                 var siteinfo = event.message;
                 self.onGotSiteinfo(siteinfo);
@@ -55,23 +55,16 @@ var SiteinfoRequestor = {
 
     onGotXPathSiteinfos: function SR_onGotXPathSiteinfos(siteinfos) {
         var self = SiteinfoRequestor;
+
         for (var i = 0, n = siteinfos.length; i < n; i++) {
             var siteinfo = siteinfos[i];
-                console.log('siteinfo');
-                console.log(siteinfo);
-                console.log('result');
-                console.log(queryXPathOfType(siteinfo.domain, document,
-                                             XPathResult.BOOLEAN_TYPE));
-                if (queryXPathOfType(siteinfo.domain, document,
-                                     XPathResult.BOOLEAN_TYPE)) {
-                    console.log('if in');
-                    if (!siteinfo.disable) {
-                        console.log('disableではない');
-                        console.log(new WidgetEmbedder(siteinfo));
-                    }
-                    console.log('breakしました');
-                    break;
+
+            if (queryXPathOfType(siteinfo.domain, document, XPathResult.BOOLEAN_TYPE)) {
+                if (!siteinfo.disable) {
+                    new WidgetEmbedder(siteinfo);
                 }
+                break;
+            }
         }
         self.destroy();
     },
