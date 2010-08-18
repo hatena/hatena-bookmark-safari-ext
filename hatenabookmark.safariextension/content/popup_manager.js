@@ -10,25 +10,34 @@
     var PopupManager = {
         popup: null,
         show: function(args) {
-            if (!this.popup) {
-                this.popup = document.createElement('iframe');
-                document.body.appendChild(this.popup);
+            var self = this;
+
+            function showPopup() {
+                if (!self.popup) {
+                    self.popup = document.createElement('iframe');
+                    document.body.appendChild(self.popup);
+                }
+
+                var popup = self.popup;
+
+                popup.src = self.getSrc(args);
+
+                with (popup.style) {
+                    display    = 'block';
+                    position   = 'fixed';
+                    right      = '0px';
+                    top        = '0px';
+                    height     = '100%';
+                    width      = '600px';
+                    background = 'white';
+                    zIndex     = 2147483647;
+                }
             }
 
-            var popup = this.popup;
-
-            popup.src = this.getSrc(args);
-
-            with (popup.style) {
-                display    = 'block';
-                position   = 'fixed';
-                right      = '0px';
-                top        = '0px';
-                height     = '100%';
-                width      = '600px';
-                background = 'white';
-                zIndex     = 2147483647;
-            }
+            if (args.view)
+                Connect().send("Config.set", { key: "popup.lastView", value : args.view }).recv(showPopup).close();
+            else
+                showPopup();
         },
         hide: function() {
             if (!this.popup) return;

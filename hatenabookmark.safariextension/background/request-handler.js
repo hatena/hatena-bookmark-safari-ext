@@ -78,4 +78,15 @@ Response(function (get, deferred) {
         safari.application.activeBrowserWindow.activeTab.page.dispatchMessage("showPopup", ev.message);
         return "dummy";
     });
+
+    get("Config.set", function (ev, matched, dispatch) {
+        var args = ev.message;
+        Config.set(args.key, args.value);
+        return "dummy";
+    });
+
+    get("Config.get", function (ev, matched, dispatch) {
+        var args = ev.message;
+        return Config.get(args.key);
+    });
 });
