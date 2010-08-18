@@ -50,7 +50,10 @@ Response(function (get, deferred) {
     });
 
     get("UserManager.user", function (ev, matched, dispatch) {
-        return UserManager.user;
+        // TODO: ”ñ“¯Šú“I‚É dispatch ‚µ‚Ä‚â‚ç‚È‚¢‚Æ‚¨‚©‚µ‚­‚È‚éH
+        setTimeout(function () {
+            dispatch(UserManager.user);
+        }, 0);
     });
 
     get("UserManager.user.saveBookmark", function (ev, matched, dispatch) {

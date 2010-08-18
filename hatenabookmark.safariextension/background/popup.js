@@ -1083,7 +1083,8 @@ var prepareUser = function() {
     Connect()
         .send("UserManager.user").recv(function(event) {
             var user = event.message;
-            UserManagerProxy.blessUser(user);
+            if (user)
+                UserManagerProxy.blessUser(user);
             ready();
         })
         .close();
@@ -1169,4 +1170,3 @@ var ready = function() {
 };
 
 $(document).bind('ready', prepareUser);
-
