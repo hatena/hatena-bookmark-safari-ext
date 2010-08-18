@@ -5,7 +5,7 @@ Abstract.tabs = {
     create: function (createProperties, callback) {
         var bw  = safari.application.activeBrowserWindow;
 
-        var savedCurrentTab = bw.currentTab;
+        var savedCurrentTab = bw.activeTab;
 
         // open new tab and visit url
         var tab = bw.openTab();
