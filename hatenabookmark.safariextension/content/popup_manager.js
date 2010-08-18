@@ -115,7 +115,7 @@
 
     function extensionMessageHandler(event) {
         switch (event.name) {
-        case "insertIframe":
+        case "showPopup":
             PopupManager.show(event);
             break;
         }

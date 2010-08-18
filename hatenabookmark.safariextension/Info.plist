@@ -24,17 +24,45 @@
 		<array>
 			<dict>
 				<key>Command</key>
-				<string>bookmarkButtonClicked</string>
+				<string>bookmarkButton</string>
 				<key>Identifier</key>
 				<string>bookmark-button</string>
 				<key>Image</key>
-				<string>images/logo16.png</string>
+				<string>images/logo-text.png</string>
 				<key>Label</key>
 				<string>はてなブックマーク</string>
 				<key>Palette Label</key>
 				<string>はてなブックマークを操作</string>
 				<key>Tool Tip</key>
 				<string>操作します</string>
+			</dict>
+			<dict>
+				<key>Command</key>
+				<string>bookmarkButtonComment</string>
+				<key>Identifier</key>
+				<string>bookmark-button-comment</string>
+				<key>Image</key>
+				<string>images/serif_list.png</string>
+				<key>Label</key>
+				<string>はてブコメント</string>
+				<key>Palette Label</key>
+				<string>はてブコメントを表示</string>
+				<key>Tool Tip</key>
+				<string>はてブコメントを表示します</string>
+			</dict>
+			<dict>
+				<key>Command</key>
+				<string>bookmarkButtonBookmark</string>
+				<key>Identifier</key>
+				<string>bookmark-button-bookmark</string>
+				<key>Image</key>
+				<string>images/chrome-b-append.png</string>
+				<key>Label</key>
+				<string>はてブ追加</string>
+				<key>Palette Label</key>
+				<string>はてブ追加</string>
+				<key>Tool Tip</key>
+				<string>はてブに追加します</string>
 			</dict>
 		</array>
 	</dict>

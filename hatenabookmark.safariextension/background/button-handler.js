@@ -16,11 +16,22 @@
     });
 
     function performCommand(event) {
-        switch (event.command) {
-        case "bookmarkButtonClicked":
+        function showPopup() {
             var tab  = safari.application.activeBrowserWindow.activeTab;
             var page = tab.page;
-            page.dispatchMessage("insertIframe", "background/popup.html");
+            page.dispatchMessage("showPopup", "background/popup.html");
+        }
+        switch (event.command) {
+        case "bookmarkButtonComment":
+            Config.set('popup.lastView', 'comment');
+            showPopup();
+            break;
+        case "bookmarkButtonBookmark":
+            Config.set('popup.lastView', 'bookmark');
+            showPopup();
+            break;
+        case "bookmarkButton":
+            showPopup();
             break;
         }
     }
