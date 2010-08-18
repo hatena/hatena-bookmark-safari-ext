@@ -42,7 +42,7 @@
 
     TabManager.bind("change", function (ev, activeTab) {
         var bookmarkButton = getBookmarkButton();
-        if (activeTab.url) {
+        if (activeTab.url && activeTab.url.indexOf('https') !== 0) {
             HTTPCache.counter.get(activeTab.url).next(function(count) {
                 bookmarkButton.badge = count;
             });
