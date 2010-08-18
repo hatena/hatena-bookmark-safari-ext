@@ -15,6 +15,10 @@
         "https://www.hatena.ne.jp/logout"
     ];
 
+    var ADD_BOOKMARK_PATTERNS = [
+        "http://b.hatena.ne.jp/entry/"
+    ];
+
     if (locationMatched(LOGIN_CHECK_PATTERNS)) {
         Connect()
             .send("LoginCheck", { url : location.href })
@@ -22,11 +26,26 @@
             .close();
     }
 
-
     if (locationMatched(LOGOUT_CHECK_PATTERNS)) {
         Connect()
             .send("Logout", { url : location.href })
             .recv(function () {})
             .close();
+    }
+
+    if (locationMatched(ADD_BOOKMARK_PATTERNS)) {
+        document.addEventListener("DOMContentLoaded", function () {
+            var addBookmarkButton = document.querySelector(".add-bookmark");
+
+            if (addBookmarkButton) {
+                addBookmarkButton.addEventListener("click", function (ev) {
+                    if (ev.button)
+                        return;
+
+                    ev.preventDefault();
+                    ev.stopPropagation();
+                });
+            }
+        });
     }
 })();
