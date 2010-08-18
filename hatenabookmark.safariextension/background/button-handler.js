@@ -1,19 +1,22 @@
 (function() {
     safari.application.addEventListener("command", performCommand, false);
 
-    var bookmarkButton;
-
     var identifiers = {
         bookmarkButton : Extension.getIdentifier("bookmark-button")
     };
 
-    safari.extension.toolbarItems.forEach(function (toolbarItem) {
-        switch (toolbarItem.identifier) {
-        case identifiers.bookmarkButton:
-            bookmarkButton = toolbarItem;
-            break;
-        }
-    });
+    function getBookmarkButton() {
+        var bookmarkButton;
+        safari.extension.toolbarItems.forEach(function (toolbarItem) {
+            switch (toolbarItem.identifier) {
+            case identifiers.bookmarkButton:
+                bookmarkButton = toolbarItem;
+                return;
+            }
+        });
+        return bookmarkButton;
+    }
+
 
     function performCommand(event) {
         function showPopup() {
@@ -38,19 +41,13 @@
     }
 
     TabManager.bind("change", function (ev, activeTab) {
-//        bookmarkButton.disabled = true;
+        var bookmarkButton = getBookmarkButton();
         if (activeTab.url) {
             HTTPCache.counter.get(activeTab.url).next(function(count) {
                 bookmarkButton.badge = count;
-                return count;
-            }).wait(1).next(function(count) {
-                bookmarkButton.disabled = false;
             });
         } else {
             bookmarkButton.badge = 0;
-            setTimeout(function() {
-//                bookmarkButton.disabled = false;
-            }, 100);
         }
     });
 })();
