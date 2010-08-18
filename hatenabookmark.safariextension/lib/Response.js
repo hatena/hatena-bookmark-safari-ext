@@ -71,8 +71,6 @@ function Response(block) {
                 }
 
                 if (matched) {
-                    console.log("Response.js :: recv " + ev.name + " (" + name + ")");
-
                     var v = callback(ev, matched, dispatch);
                     if (typeof v !== "undefined") {
                         dispatch(v);
