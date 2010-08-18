@@ -731,8 +731,6 @@ var View = {
                             $(el).removeClass('selected');
                         } else {
                             $(el).addClass('selected');
-                            console.log(el.parentNode);
-                            console.log(el.className);
                         }
                     });
                     rememberLastComment(m);
