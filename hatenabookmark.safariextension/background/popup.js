@@ -1059,14 +1059,22 @@ if (!urlGiven) {
 
 var eulaAccept = function() {
     localStorage.eula = true;
-    UserManagerProxy.loginWithRetry(15 * 1000);
-    $('#eula').hide();
-    setTimeout(function() {
-        ready();
-        setTimeout(function() {
-            $('#main').show();
-        }, 20);
-    }, 1000);
+
+    // XXX: ログインしようみたいなやつを出したい
+    Config.set('popup.lastView', 'bookmark');
+
+    Connect()
+        .send("LoginCheck", { url : location.href })
+        .recv(function () {
+            $('#eula').hide();
+            setTimeout(function() {
+                prepareUser();
+                setTimeout(function() {
+                    $('#main').show();
+                }, 20);
+            }, 1000);
+        })
+        .close();
 }
 
 /*
@@ -1080,6 +1088,12 @@ var setWindowSize = function(w, h) {
 */
 
 var prepareUser = function() {
+    if (!localStorage.eula) {
+        $('#main').hide();
+        $('#eula').show();
+        return;
+    }
+
     Connect()
         .send("UserManager.user").recv(function(event) {
             var user = event.message;
@@ -1091,14 +1105,6 @@ var prepareUser = function() {
 }
 
 var ready = function() {
-    if (!localStorage.eula) {
-        $('#main').hide();
-        // 何故かレンダリングされないタイミングがあるのでずらす
-        setTimeout(function() {
-            $('#eula').show();
-        }, 20);
-        return;
-    }
 
     if (!window.urlGiven) {
         if (request_uri.param('error')) {
