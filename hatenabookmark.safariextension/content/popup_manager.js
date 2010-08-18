@@ -23,14 +23,17 @@
                 popup.src = self.getSrc(args);
 
                 with (popup.style) {
-                    display    = 'block';
-                    position   = 'fixed';
-                    right      = '0px';
-                    top        = '0px';
-                    height     = '100%';
-                    width      = '600px';
-                    background = 'white';
-                    zIndex     = 2147483647;
+                    display            = 'block';
+                    position           = 'fixed';
+                    right              = '10px';
+                    top                = '10px';
+                    height             = '559px';
+                    width              = '550px';
+                    background         = 'white';
+                    border             = '0px';
+                    WebkitBoxShadow    = "0px 3px 14px #555555";
+                    WebkitBorderRadius = "6px";
+                    zIndex             = 2147483647;
                 }
             }
 
