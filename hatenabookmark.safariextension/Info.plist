@@ -78,8 +78,13 @@
 			<key>Start</key>
 			<array>
 				<string>lib/Connect.js</string>
+				<string>content/location_checker.js</string>
 			</array>
 		</dict>
+		<key>Stylesheets</key>
+		<array>
+			<string>content/widget_embedder.css</string>
+		</array>
 	</dict>
 	<key>Description</key>
 	<string>はてなブックマークを Safari でより便利に使える、はてな公式の拡張です。</string>

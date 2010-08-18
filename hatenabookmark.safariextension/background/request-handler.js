@@ -92,4 +92,18 @@ Response(function (get, deferred) {
         var args = ev.message;
         return Config.get(args.key);
     });
+
+    get("LoginCheck", function (ev, matched, dispatch) {
+        console.log('login by url: ' + ev.message.url);
+        UserManager.loginWithRetry(15 * 1000);
+        return "dummy";
+    });
+
+    get("Logout", function (ev, matched, dispatch) {
+        console.log('logout by url: ' + ev.message.url);
+        setTimeout(function() {
+            UserManager.logout();
+        }, 200);
+        return "dummy";
+    });
 });
