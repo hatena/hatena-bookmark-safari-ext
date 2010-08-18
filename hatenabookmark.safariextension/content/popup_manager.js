@@ -31,7 +31,7 @@
                     position           = 'fixed';
                     right              = '10px';
                     top                = '10px';
-                    height             = '559px';
+                    height             = '590px';
                     width              = '550px';
                     background         = 'white';
                     border             = '0px';
