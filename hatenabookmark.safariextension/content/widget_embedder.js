@@ -236,26 +236,78 @@ extend(WidgetEmbedder.prototype, {
     createWidgets: function WE_createWidgets(link) {
         var widgets = document.createDocumentFragment();
         widgets.appendChild(document.createTextNode(' '));
+
         var url = link.href;
         var sharpEscapedURL = url.replace(/#/g, '%23');
-        var img = E('img', {
-            src: B_STATIC_HTTP + 'entry/image/' + sharpEscapedURL,
-            alt: WidgetEmbedder.messages.SHOW_ENTRY_TEXT,
-            style: 'display: none;',
+
+        var entryURL = getEntryURL(url);
+
+        // ============================================================ //
+
+        var counterImg = E('img', {
+            src   : B_STATIC_HTTP + 'entry/image/' + sharpEscapedURL,
+            alt   : WidgetEmbedder.messages.SHOW_ENTRY_TEXT,
+            style : 'display: none;'
         });
-        img.addEventListener('load', this._onImageLoad, false);
         widgets.appendChild(E('a', {
-            href: getEntryURL(url),
-            title: WidgetEmbedder.messages.SHOW_ENTRY_TITLE,
-            'class': 'hBookmark-widget-counter'
-        }, img));
+            href    : entryURL,
+            title   : WidgetEmbedder.messages.SHOW_ENTRY_TITLE,
+            'class' : 'hBookmark-widget-counter'
+        }, counterImg));
+
+        // ============================================================ //
+
+        var commentsImg = E('img', {
+            src     : "http://b.st-hatena.com/images/b-comment-balloon.png",
+            alt     : WidgetEmbedder.messages.SHOW_COMMENTS_TEXT || "hogehogehoge!",
+            style   : 'display: none;',
+            'class' : "hBookmark-widget-comments-balloon"
+        });
+
+        var commentsAnchor = E('a', {
+            href    : entryURL,
+            title   : WidgetEmbedder.messages.SHOW_ENTRY_TITLE,
+            'class' : 'hBookmark-widget-comments'
+        }, commentsImg);
+
+        widgets.appendChild(commentsAnchor);
+
+        commentsAnchor.addEventListener("click", function (ev) {
+            if (ev.button)
+                return;
+
+            ev.stopPropagation();
+            ev.preventDefault();
+
+            safari.self.tab.dispatchMessage("showPopup", {
+                url  : url,
+                view : "comment"
+            });
+
+            Connect().send("PopupManager.show", { url : url, view : "comment" }).recv(function (ev) {}).close();
+
+        }, false);
+
+        // ============================================================ //
+
+        counterImg.addEventListener('load', function (ev) {
+            var img = event.target;
+            if (img.naturalWidth > 1) {
+                img.style.display = '';
+
+                commentsImg.style.display = '';
+            }
+            img.removeEventListener('load', arguments.callee, false);
+        }, false);
+
         return widgets;
     },
 
-    _onImageLoad: function WE__onImageLoad(event) {
+    _onImageLoad: function WE_onImageLoad(event) {
         var img = event.target;
-        if (img.naturalWidth > 1)
+        if (img.naturalWidth > 1) {
             img.style.display = '';
+        }
         img.removeEventListener('load', arguments.callee, false);
     },
 

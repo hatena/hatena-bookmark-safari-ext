@@ -19,7 +19,8 @@
         function showPopup() {
             var tab  = safari.application.activeBrowserWindow.activeTab;
             var page = tab.page;
-            page.dispatchMessage("showPopup", "background/popup.html");
+
+            page.dispatchMessage("showPopup", {});
         }
         switch (event.command) {
         case "bookmarkButtonComment":

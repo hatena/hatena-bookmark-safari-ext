@@ -9,13 +9,15 @@
 
     var PopupManager = {
         popup: null,
-        show: function(event) {
+        show: function(args) {
             if (!this.popup) {
                 this.popup = document.createElement('iframe');
                 document.body.appendChild(this.popup);
             }
+
             var popup = this.popup;
-            popup.src = this.getSrc(event);
+
+            popup.src = this.getSrc(args);
 
             with (popup.style) {
                 display    = 'block';
@@ -27,18 +29,24 @@
                 background = 'white';
                 zIndex     = 2147483647;
             }
-
         },
         hide: function() {
             if (!this.popup) return;
             this.popup.style.display = 'none';
         },
-        getSrc: function(event) {
-            return safari.extension.baseURI + event.message
-                + '?url=' + encodeURIComponent(location.href)
-                + '&title=' + encodeURIComponent(document.title)
-                +'&faviconUrl='
-                + encodeURIComponent((document.querySelector('link[rel~="icon"]') || { href: '' }).href);
+        getSrc: function(args) {
+            args = args || {};
+
+            var base = safari.extension.baseURI + "background/popup.html"
+                + '?url=' + encodeURIComponent(args.url || location.href);
+
+            if (!args.url) {
+                base += '&title=' + encodeURIComponent(document.title)
+                    + '&faviconUrl='
+                    + encodeURIComponent((document.querySelector('link[rel~="icon"]') || { href: '' }).href);
+            }
+
+            return base;
         }
     };
 
@@ -116,7 +124,7 @@
     function extensionMessageHandler(event) {
         switch (event.name) {
         case "showPopup":
-            PopupManager.show(event);
+            PopupManager.show(event.message);
             break;
         }
     }

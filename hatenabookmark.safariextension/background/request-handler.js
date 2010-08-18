@@ -73,4 +73,9 @@ Response(function (get, deferred) {
     get("SiteinfoManager.getSiteinfosWithXPath", function (ev, matched, dispatch) {
         return SiteinfoManager.getSiteinfosWithXPath();
     });
+
+    get("PopupManager.show", function (ev, matched, dispatch) {
+        safari.application.activeBrowserWindow.activeTab.page.dispatchMessage("showPopup", ev.message);
+        return "dummy";
+    });
 });
