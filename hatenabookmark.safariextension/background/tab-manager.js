@@ -7,7 +7,6 @@ var TabManager = (function () {
         var currentTab = safari.application.activeBrowserWindow.activeTab;
         var currentURL = currentTab.url;
 
-        console.log([currentURL, savedURL]);
         if (savedURL !== currentURL || savedTab !== currentTab ) {
             savedTab = currentTab;
             savedURL = currentURL;
