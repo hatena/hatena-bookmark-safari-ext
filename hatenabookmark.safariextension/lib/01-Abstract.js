@@ -4,8 +4,17 @@ Abstract.tabs = {
     // タブを新規作成
     create: function (createProperties, callback) {
         var bw  = safari.application.activeBrowserWindow;
-        var tab = isNewTab ? bw.openTab() : bw.activeTab;
+
+        var savedCurrentTab = bw.currentTab;
+
+        // open new tab and visit url
+        var tab = bw.openTab();
         tab.url = createProperties.url;
+
+        if (createProperties.selected)
+            tab.activate();
+        else
+            savedCurrentTab.activate();
 
         if (typeof callback === "function")
             callback(tab);
