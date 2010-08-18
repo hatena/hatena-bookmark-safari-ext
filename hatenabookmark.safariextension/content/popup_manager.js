@@ -42,6 +42,7 @@
         hide: function() {
             if (!this.popup) return;
             this.popup.style.display = 'none';
+            this.popup.src = safari.extension.baseURI + "background/blank.html";
         },
         getSrc: function(args) {
             args = args || {};
