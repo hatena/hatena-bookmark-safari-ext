@@ -16,7 +16,8 @@
     ];
 
     var ADD_BOOKMARK_PATTERNS = [
-        "http://b.hatena.ne.jp/entry/"
+        "http://b.hatena.ne.jp/entry/",
+        "http://b.hatena.ne.jp/entry?"
     ];
 
     if (locationMatched(LOGIN_CHECK_PATTERNS)) {
@@ -42,8 +43,14 @@
                     if (ev.button)
                         return;
 
+                    var matched = ev.target.href.match(/\?url=(.*)$/);
+                    if (!matched) return;
+
                     ev.preventDefault();
                     ev.stopPropagation();
+                    var entryURL = decodeURIComponent(matched[1]);
+
+                    Connect().send("PopupManager.show", { url : entryURL, view : "bookmark" }).recv(function (ev) {}).close();
                 });
             }
         });
