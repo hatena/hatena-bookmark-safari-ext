@@ -27,9 +27,10 @@
 
     TabManager.bind("change", function (ev, activeTab) {
         bookmarkButton.disabled = true;
-        bookmarkButton.badge = activeTab.title.length;
-        setTimeout(function() {
+        HTTPCache.counter.get(activeTab.url).next(function(count) {
+            bookmarkButton.badge = count;
+        }).next(function() {
             bookmarkButton.disabled = false;
-        }, 0);
+        });
     });
 })();
