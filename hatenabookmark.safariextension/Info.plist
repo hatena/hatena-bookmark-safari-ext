@@ -45,6 +45,11 @@
 			<key>End</key>
 			<array>
 				<string>content/iframe_manager.js</string>
+				<string>content/widget_embedder.js</string>
+			</array>
+			<key>Start</key>
+			<array>
+				<string>lib/Connect.js</string>
 			</array>
 		</dict>
 	</dict>

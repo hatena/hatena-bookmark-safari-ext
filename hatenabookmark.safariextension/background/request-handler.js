@@ -64,4 +64,13 @@ Response(function (get, deferred) {
         UserManager.user.deleteBookmark(url);
         return url;
     });
+
+    get("SiteinfoManager.getSiteinfoForURL", function (ev, matched, dispatch) {
+        var url = ev.message;
+        return SiteinfoManager.getSiteinfoForURL(url);
+    });
+
+    get("SiteinfoManager.getSiteinfosWithXPath", function (ev, matched, dispatch) {
+        return SiteinfoManager.getSiteinfosWithXPath();
+    });
 });

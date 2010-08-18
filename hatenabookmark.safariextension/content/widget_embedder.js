@@ -8,18 +8,20 @@ const B_STATIC_HTTP = 'http://b.st-hatena.com/';
 var SiteinfoRequestor = {
     init: function SR_init() {
         var self = SiteinfoRequestor;
-        self.port = chrome.extension.connect();
-        self.port.onMessage.addListener(self.onMessage);
-        self.port.postMessage({
-            message: 'get_siteinfo_for_url',
-            data: { url: location.href },
-        });
+        Connect()
+            .send("SiteinfoManager.getSiteinfoForURL",
+                  {url: location.href})
+            .recv(function(event) {
+                var siteinfo = event.message;
+                self.onGotSiteinfo(siteinfo);
+            })
+            .close();
     },
 
     destroy: function SR_destroy() {
+        // TODO: ここは何もしてない
         var self = SiteinfoRequestor;
         // XXX Can we remove the listener 'onMessage'?
-        self.port = null;
     },
 
     onMessage: function SR_onMessage(info) {
@@ -42,19 +44,34 @@ var SiteinfoRequestor = {
             self.destroy();
             return;
         }
-        self.port.postMessage({ message: 'get_siteinfos_with_xpath' });
+        Connect()
+            .send("SiteinfoManager.getSiteinfosWithXPath", { })
+            .recv(function(event) {
+                var siteinfos = event.message;
+                self.onGotXPathSiteinfos(siteinfos);
+            })
+            .close();
     },
 
     onGotXPathSiteinfos: function SR_onGotXPathSiteinfos(siteinfos) {
         var self = SiteinfoRequestor;
         for (var i = 0, n = siteinfos.length; i < n; i++) {
             var siteinfo = siteinfos[i];
-            if (queryXPathOfType(siteinfo.domain, document,
-                                 XPathResult.BOOLEAN_TYPE)) {
-                if (!siteinfo.disable)
-                    new WidgetEmbedder(siteinfo);
-                break;
-            }
+                console.log('siteinfo');
+                console.log(siteinfo);
+                console.log('result');
+                console.log(queryXPathOfType(siteinfo.domain, document,
+                                             XPathResult.BOOLEAN_TYPE));
+                if (queryXPathOfType(siteinfo.domain, document,
+                                     XPathResult.BOOLEAN_TYPE)) {
+                    console.log('if in');
+                    if (!siteinfo.disable) {
+                        console.log('disableではない');
+                        console.log(new WidgetEmbedder(siteinfo));
+                    }
+                    console.log('breakしました');
+                    break;
+                }
         }
         self.destroy();
     },
