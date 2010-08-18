@@ -28,7 +28,7 @@
 				<key>Identifier</key>
 				<string>bookmark-button</string>
 				<key>Image</key>
-				<string>images/logo-text.png</string>
+				<string>images/caution.png</string>
 				<key>Label</key>
 				<string>はてなブックマーク</string>
 				<key>Palette Label</key>
