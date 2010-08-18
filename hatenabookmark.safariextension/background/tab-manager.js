@@ -1,15 +1,16 @@
 var TabManager = (function () {
     var TabManager = $({});
-    var activeTab;
+    var savedURL;
 
     window.setInterval(function () {
         var currentTab = safari.application.activeBrowserWindow.activeTab;
+        var currentURL = currentTab.url;
 
-        if (!activeTab || activeTab !== currentTab) {
-            activeTab = currentTab;
+        if (currentURL && savedURL !== currentURL) {
+            savedURL = currentURL;
             TabManager.trigger("change", currentTab);
         }
-    }, 50);
+    }, 100);
 
     return TabManager;
 })();
