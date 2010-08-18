@@ -38,11 +38,19 @@
     }
 
     TabManager.bind("change", function (ev, activeTab) {
-        bookmarkButton.disabled = true;
-        HTTPCache.counter.get(activeTab.url).next(function(count) {
-            bookmarkButton.badge = count;
-        }).next(function() {
-            bookmarkButton.disabled = false;
-        });
+//        bookmarkButton.disabled = true;
+        if (activeTab.url) {
+            HTTPCache.counter.get(activeTab.url).next(function(count) {
+                bookmarkButton.badge = count;
+                return count;
+            }).wait(1).next(function(count) {
+                bookmarkButton.disabled = false;
+            });
+        } else {
+            bookmarkButton.badge = 0;
+            setTimeout(function() {
+//                bookmarkButton.disabled = false;
+            }, 100);
+        }
     });
 })();
