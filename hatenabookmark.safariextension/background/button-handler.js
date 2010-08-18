@@ -1,15 +1,19 @@
 (function() {
     safari.application.addEventListener("command", performCommand, false);
 
+    var bookmarkButton;
+
+    var identifiers = {
+        bookmarkButton : Extension.getIdentifier("bookmark-button")
+    };
+
     safari.extension.toolbarItems.forEach(function (toolbarItem) {
-        var id = Extension.getIdentifier("bookmark-button");
-        if (toolbarItem.identifier == id) {
-            initBookmarkButton(toolbarItem);
+        switch (toolbarItem.identifier) {
+        case identifiers.bookmarkButton:
+            bookmarkButton = toolbarItem;
+            break;
         }
     });
-
-    function initBookmarkButton(button) {
-    }
 
     function performCommand(event) {
         switch (event.command) {
@@ -20,4 +24,8 @@
             break;
         }
     }
+
+    TabManager.bind("change", function (ev, activeTab) {
+        bookmarkButton.badge = activeTab.title.length;
+    });
 })();

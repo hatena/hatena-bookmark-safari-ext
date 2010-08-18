@@ -1,5 +1,5 @@
 var Extension = {
-    get id () { return 'com.yourcompany.button-iframe-MP9UVWJUQH'; },
+    get id () { return 'jp.ne.hatena.b-YCM7KLTD3K'; },
 
     getIdentifier: function (name) {
         return this.id + " " + name;
