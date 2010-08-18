@@ -16,6 +16,10 @@
                 if (!self.popup) {
                     self.popup = document.createElement('iframe');
                     document.body.appendChild(self.popup);
+                    self.popup.addEventListener('mousewheel', function(event) {
+                        event.stopPropagation();
+                        event.preventDefault();
+                    }, false);
                 }
 
                 var popup = self.popup;
