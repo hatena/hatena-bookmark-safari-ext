@@ -41,21 +41,18 @@
                 }
             }
 
-            if (args.view)
-                Connect()
+            Connect()
                 .send("Config.get", { key: "popup.window.width" })
                 .recv(function(event) {
                     _width = event.message;
-                })
-                .send("Config.set", { key: "popup.lastView", value : args.view })
-                .recv(showPopup)
-                .close();
-            else
-                Connect()
-                .send("Config.get", { key: "popup.window.width" })
-                .recv(function(event) {
-                    _width = event.message;
-                    showPopup();
+
+                    if (args.view)
+                        Connect()
+                        .send("Config.set", { key: "popup.lastView", value : args.view })
+                        .recv(showPopup)
+                        .close();
+                    else
+                        showPopup();
                 })
                 .close();
         },
