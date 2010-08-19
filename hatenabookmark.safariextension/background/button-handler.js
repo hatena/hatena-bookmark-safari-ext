@@ -17,14 +17,27 @@
         return bookmarkButton;
     }
 
+    function showPopup() {
+        var tab  = safari.application.activeBrowserWindow.activeTab;
+        var page = tab.page;
+
+        page.dispatchMessage("showPopup", {});
+    }
+
+    function showPopularPages() {
+        var tab  = safari.application.activeBrowserWindow.activeTab;
+        var url = tab.url;
+
+        var head = (url.match("([a-z]+://[^/]+)/?") || { 0 : null })[0];
+        if (head) {
+            Abstract.tabs.create({
+                url      : "http://b.hatena.ne.jp/entrylist?sort=count&url=" + encodeURIComponent(head),
+                selected : true
+            });
+        }
+    }
 
     function performCommand(event) {
-        function showPopup() {
-            var tab  = safari.application.activeBrowserWindow.activeTab;
-            var page = tab.page;
-
-            page.dispatchMessage("showPopup", {});
-        }
         switch (event.command) {
         case "bookmarkButtonComment":
             Config.set('popup.lastView', 'comment');
@@ -37,12 +50,14 @@
         case "bookmarkButton":
             showPopup();
             break;
+        case "popularPagesButton":
+            showPopularPages();
+            break;
         }
     }
 
     function shouldShowCounter (tab) {
         return tab.url
-            && tab.url.indexOf('https') !== 0
             && Config.get('background.bookmarkcounter.enabled');
     }
 
