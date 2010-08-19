@@ -1,5 +1,6 @@
 (function() {
     if (window.top !== window) return;
+    if (!document.body) return;
 
     safari.self.addEventListener("message", extensionMessageHandler, false);
 
