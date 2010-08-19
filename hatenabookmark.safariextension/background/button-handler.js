@@ -4,13 +4,18 @@
 
     function validateCommand(event) {
         switch (event.command) {
-        case "bookmarkButtonComment":
+        case "bookmarkButtonComment": // toolbar items
         case "HatenaBookmarkShowBookmarkComment":
         case "bookmarkButtonBookmark":
         case "HatenaBookmarkAddBookmark":
         case "bookmarkButton":
         case "popularPagesButton":
         case "HatenaBookmarkShowPopularPages":
+
+        case "HatenaBookmarkAddBookmark": // context menues
+        case "HatenaBookmarkShowBookmarkComment":
+        case "HatenaBookmarkShowPopularPages":
+
             var tab  = safari.application.activeBrowserWindow.activeTab;
             event.target.disabled = !(tab.url && tab.url !== 'about:blank');
         }
