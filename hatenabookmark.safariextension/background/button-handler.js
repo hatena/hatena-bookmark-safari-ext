@@ -40,9 +40,15 @@
         }
     }
 
+    function shouldShowCounter (tab) {
+        return tab.url
+            && tab.url.indexOf('https') !== 0
+            && Config.get('background.bookmarkcounter.enabled');
+    }
+
     TabManager.bind("change", function (ev, activeTab) {
         var bookmarkButton = getBookmarkButton();
-        if (activeTab.url && activeTab.url.indexOf('https') !== 0) {
+        if (shouldShowCounter(activeTab)) {
             HTTPCache.counter.get(activeTab.url).next(function(count) {
                 bookmarkButton.badge = count;
             });
