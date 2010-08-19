@@ -16,6 +16,33 @@
 	<string>1</string>
 	<key>Chrome</key>
 	<dict>
+		<key>Context Menu Items</key>
+		<array>
+			<dict>
+				<key>Command</key>
+				<string>HatenaBookmarkAddBookmark</string>
+				<key>Identifier</key>
+				<string>add-hatena-bookmark</string>
+				<key>Title</key>
+				<string>はてなブックマークに追加</string>
+			</dict>
+			<dict>
+				<key>Command</key>
+				<string>HatenaBookmarkShowBookmarkComment</string>
+				<key>Identifier</key>
+				<string>show-hatena-bookmark-comment</string>
+				<key>Title</key>
+				<string>はてブコメント表示</string>
+			</dict>
+			<dict>
+				<key>Command</key>
+				<string>HatenaBookmarkShowPopularPages</string>
+				<key>Identifier</key>
+				<string>show-hatena-bookmark-popular-pages</string>
+				<key>Title</key>
+				<string>サイトの人気ページを表示</string>
+			</dict>
+		</array>
 		<key>Database Quota</key>
 		<real>104857600</real>
 		<key>Global Page</key>

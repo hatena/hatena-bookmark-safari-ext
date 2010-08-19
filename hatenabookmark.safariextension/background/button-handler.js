@@ -73,10 +73,12 @@
     function performCommand(event) {
         switch (event.command) {
         case "bookmarkButtonComment":
+        case "HatenaBookmarkShowBookmarkComment":
             Config.set('popup.lastView', 'comment');
             showPopup();
             break;
         case "bookmarkButtonBookmark":
+        case "HatenaBookmarkAddBookmark":
             Config.set('popup.lastView', 'bookmark');
             showPopup();
             break;
@@ -84,6 +86,7 @@
             showPopup();
             break;
         case "popularPagesButton":
+        case "HatenaBookmarkShowPopularPages":
             showPopularPages();
             break;
         }
