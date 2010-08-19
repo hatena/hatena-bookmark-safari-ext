@@ -86,10 +86,14 @@ extend(WidgetEmbedder, {
         en: {
             SHOW_ENTRY_TEXT:  '[Show on Hatena Bookmark]',
             SHOW_ENTRY_TITLE: 'Show This Entry on Hatena Bookmark',
+            SHOW_COMMENTS_TEXT: '[Show comments in Popup]',
+            SHOW_COMMENTS_TITLE: 'Show This Entry\'s comments in Popup'
         },
         ja: {
             SHOW_ENTRY_TEXT:  '[はてなブックマークで表示]',
             SHOW_ENTRY_TITLE: 'このエントリーをはてなブックマークで表示',
+            SHOW_COMMENTS_TEXT: '[このエントリーのコメント一覧をポップアップ表示]',
+            SHOW_COMMENTS_TITLE: 'このエントリーのコメント一覧をポップアップ表示'
         },
     },
 });
@@ -255,18 +259,20 @@ extend(WidgetEmbedder.prototype, {
             'class' : 'hBookmark-widget-counter'
         }, counterImg));
 
+        console.log(WidgetEmbedder.messages);
+
         // ============================================================ //
 
         var commentsImg = E('img', {
             src     : "http://b.st-hatena.com/images/b-comment-balloon.png",
-            alt     : WidgetEmbedder.messages.SHOW_COMMENTS_TEXT || "hogehogehoge!",
+            alt     : WidgetEmbedder.messages.SHOW_COMMENTS_TEXT,
             style   : 'display: none;',
             'class' : "hBookmark-widget-comments-balloon"
         });
 
         var commentsAnchor = E('a', {
             href    : entryURL,
-            title   : WidgetEmbedder.messages.SHOW_ENTRY_TITLE,
+            title   : WidgetEmbedder.messages.SHOW_COMMENTS_TITLE,
             'class' : 'hBookmark-widget-comments'
         }, commentsImg);
 
