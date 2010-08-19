@@ -28,7 +28,7 @@
 				<key>Identifier</key>
 				<string>bookmark-button</string>
 				<key>Image</key>
-				<string>images/caution.png</string>
+				<string>images/bookmark.png</string>
 				<key>Label</key>
 				<string>はてなブックマーク</string>
 				<key>Palette Label</key>
@@ -42,7 +42,7 @@
 				<key>Identifier</key>
 				<string>bookmark-button-comment</string>
 				<key>Image</key>
-				<string>images/serif_list.png</string>
+				<string>images/comment.png</string>
 				<key>Label</key>
 				<string>はてブコメント</string>
 				<key>Palette Label</key>
@@ -56,7 +56,7 @@
 				<key>Identifier</key>
 				<string>bookmark-button-bookmark</string>
 				<key>Image</key>
-				<string>images/chrome-b-append.png</string>
+				<string>images/append.png</string>
 				<key>Label</key>
 				<string>はてブ追加</string>
 				<key>Palette Label</key>
