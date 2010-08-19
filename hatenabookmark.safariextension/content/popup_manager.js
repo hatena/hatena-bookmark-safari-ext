@@ -32,6 +32,8 @@
                     position           = 'fixed';
                     right              = '10px';
                     top                = '10px';
+                    left               = 'auto';
+                    bottom             = 'auto';
                     height             = '590px';
                     width              = _width + 'px';
                     background         = 'white';
