@@ -6,7 +6,7 @@
         // ================================================== //
 
         'popup.window.width': {
-            'default': 500,
+            'default': 550,
             type: 'unsignedInt'
         },
         'popup.window.height': {
