@@ -122,6 +122,7 @@
 				<string>lib/Connect.js</string>
 				<string>content/popup_manager.js</string>
 				<string>content/widget_embedder.js</string>
+				<string>content/floating_counter.js</string>
 			</array>
 			<key>Start</key>
 			<array>
