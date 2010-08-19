@@ -21,7 +21,6 @@
 	    <string>横幅</string>
 	    <key>Titles</key>
 	    <array>
-		<string>自動調整</string>
 		<string>550px</string>
 		<string>640px</string>
 		<string>960px</string>
@@ -31,7 +30,6 @@
 	    <string>PopUpButton</string>
 	    <key>Values</key>
 	    <array>
-		<real>-1</real>
 		<real>550</real>
 		<real>640</real>
 		<real>960</real>

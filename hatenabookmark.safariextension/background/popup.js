@@ -343,7 +343,7 @@ var View = {
             }
             var publicLen = bookmarks.length;
 
-            if (Config.get('popup.commentviewer.autodetect.enabled')) {
+            if (Config.get('popup.commentviewer.autodetect.threshold') >= 0) {
                 if (Config.get('popup.commentviewer.autodetect.threshold') < publicLen) {
                     self.hideNoComment();
                 }
@@ -1105,16 +1105,16 @@ var prepareUser = function() {
 }
 
 var ready = function() {
-
     if (!window.urlGiven) {
         if (request_uri.param('error')) {
             //
         } else {
-            if (Config.get('popup.window.autosize')) {
-                document.body.style.width = '' + 500 + 'px';
-            } else {
-                document.body.style.width = '' + Math.max(100, Config.get('popup.window.width')) + 'px';
-            }
+            // if (Config.get('popup.window.autosize')) {
+            //     document.body.style.width = '' + 500 + 'px';
+            // } else {
+            //     document.body.style.width = '' + Math.max(100, Config.get('popup.window.width')) + 'px';
+            // }
+
             // 同期実行だとうまく幅を調整できないので遅らせる
             setTimeout(function () {
                 var overflow = $('#header').width() - $('body').width();
@@ -1136,6 +1136,7 @@ var ready = function() {
             }
             */
         }
+
     }
     var user = UserManagerProxy.user;
     if (user) {
@@ -1150,9 +1151,9 @@ var ready = function() {
         hicon.show();
     }
     $('#search-form').bind('submit', searchFormSubmitHandler);
-    if (Config.get('popup.search.incsearch')) {
-        $('#search-word').bind('keyup', searchIncSearchHandler);
-    }
+    // if (Config.get('popup.search.incsearch')) {
+    //     $('#search-word').bind('keyup', searchIncSearchHandler);
+    // }
     $('#image-detect-container-list img').live('click', function() {
         View.bookmark.imageSelect(this);
     });
