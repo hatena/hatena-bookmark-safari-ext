@@ -103,8 +103,17 @@ a#users-count:visited {
     color-stop(0.5, #427DC4), 
     color-stop(0.5, #2C6EBD)
     );
-    border-bottom: 1px solid #bbb;
-    -webkit-box-shadow: 0px 1px 2px rgba(0,0,0,0.2);
+
+    background: -webkit-gradient(
+    linear, 
+    left top, 
+    left bottom, 
+    from(#e4e2e0), 
+    to(#d1cfcc)
+    );
+
+    border-bottom: 1px solid #aca699;
+    /*-webkit-box-shadow: 0px 1px 2px rgba(0,0,0,0.2);*/
     -webkit-border-top-left-radius: 4px;
     -webkit-border-top-right-radius: 4px;
 }
@@ -241,20 +250,34 @@ a#users-count:visited {
 }
 
 ul.tab-ui li {
-  font-weight: bold;
   display: inline-block;
   padding: 4px 6px;
   margin: 0px;
   -webkit-border-radius: 4px;
   cursor: pointer;
-  color: rgba(255,255,255,0.8);
-  border: 1px solid #427DC4;
-  -webkit-box-shadow: 0px 0px 3px rgba(0,0,0,0.5);
+  color: #333;
+  border: 1px solid #9f9b95;
+  -webkit-box-shadow: 0px 0px 1px rgba(0,0,0,0.05);
+  background: -webkit-gradient(
+  linear, 
+  left top, 
+  left bottom, 
+  from(#fff), 
+  to(#d2cfca)
+  );
+  text-shadow: 0px 1px 0px #fff;
 }
 
 ul.tab-ui li:hover {
-  background: rgba(255,225,255,0.1);
-  border: 1px solid #427DC4;
+  -webkit-box-shadow: 0px 0px 1px rgba(0,0,0,0.05);
+  background: -webkit-gradient(
+  linear, 
+  left top, 
+  left bottom, 
+  from(#fff), 
+  to(#eae9e7)
+  );
+  border: 1px solid #aea184;
 }
 
 
@@ -289,34 +312,42 @@ ul.tab-ui li.tab-link img {
   border: none;
 }
 
-#bookmark-tab,
+
+#bookmark-tab {
+  -webkit-border-top-right-radius: 0px;
+  -webkit-border-bottom-right-radius: 0px;
+  margin: 0;
+}
 #comment-tab {
-  background-image: url(../images/chrome-b-append_off.png);
-  background-position: 3px 5px;
-  background-repeat: no-repeat;
-  padding-left: 25px;
+  -webkit-border-top-left-radius: 0px;
+  -webkit-border-bottom-left-radius: 0px;
+  margin: 0;
 }
 
-#comment-tab {
+#bookmark-tab span,
+#comment-tab span {
+  padding-left: 20px;
+  background-repeat: no-repeat;
+  background-position: -2px -1px;;
+}
+
+#comment-tab span {
   background-image: url(../images/serif_list_off.png);
 }
 
-#bookmark-tab.current {
-  background-image: url(../images/chrome-b-append.png);
+#bookmark-tab.current span {
+  background-image: url(../images/chrome-b-append_off.png);
 }
 
-#comment-tab.current {
-  background-image: url(../images/serif_list.png);
+#comment-tab.current span {
+  background-image: url(../images/serif_list_off.png);
 }
 
 ul.tab-ui li.current {
-  color: #2C6EBD;
-  text-shadow: 0px 1px 0px #fff;
-  background: #fff;
-  border-top-color: rgba(0,0,0,0.3);
-  border-left-color:  rgba(0,0,0,0.3);
-  border-right-color: rgba(255,255,255,0.3);
-  border-bottom-color:  rgba(255,255,255,0.3);
+  color: #000;
+  background: #c8c7c6;
+  -webkit-box-shadow:inset 0 0 10px rgba(0,0,0,0.2);
+  border-color: #777065;
 }
 
 ul.tab-ui li img {
@@ -351,19 +382,6 @@ ul.tab-ui li img {
 #comment-container {
   padding: 0;
   background: #fff;
-}
-
-#comment-header {
-  /*
-  background: #fff;
-  -webkit-box-shadow: 0px 1px 2px rgba(0,0,0,0.2);
-  */
-  display: table;
-  width: 100%;
-  background: #eee;
-  border-bottom: 1px solid #ddd;
-  border-top: 1px solid #ddd;
-  padding: 3px 10px 3px 10px;
 }
 
 #comment-title {
@@ -437,13 +455,24 @@ a.username {
   margin-top: 5px;
 }
 
+#comment-header,
 #bookmark-edit-header {
   display: table;
   width: 100%;
-  background: #eee;
-  border-bottom: 1px solid #ddd;
-  border-top: 1px solid #ddd;
-  padding-bottom: 3px;
+  background: -webkit-gradient(
+  linear, 
+  left top, 
+  left bottom, 
+  from(#e4e2e0), 
+  to(#d1cfcc)
+  );
+  border-bottom: 1px solid #aca699;
+  border-top: 1px solid #f7f6f6;
+  padding: 3px 10px;
+}
+
+#bookmark-edit-header {
+  padding-left: 3px;
 }
 
 #bookmark-edit-header a {
@@ -457,7 +486,7 @@ a.username {
 
 #bookmark-edit-header .edit-cell:first-child img {
   vertical-align: middle;
-  margin-top: -4px;
+  margin-top: -5px;
 }
 
 #bookmark-edit-header .edit-cell:last-child {
