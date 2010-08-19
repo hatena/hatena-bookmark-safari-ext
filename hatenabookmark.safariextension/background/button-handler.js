@@ -62,8 +62,6 @@
 
         var normalized = URINormalizer.normalize(url);
 
-        alert(url + "\n" + normalized);
-
         if (normalized) {
             Abstract.tabs.create({
                 url      : "http://b.hatena.ne.jp/entrylist?sort=count&url=" + encodeURIComponent(normalized),
