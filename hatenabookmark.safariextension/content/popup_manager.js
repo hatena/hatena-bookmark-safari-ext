@@ -11,7 +11,7 @@
         popup: null,
         show: function(args) {
             var self = this;
-
+            var _width;
             function showPopup() {
                 if (!self.popup) {
                     self.popup = document.createElement('iframe');
@@ -32,7 +32,7 @@
                     right              = '10px';
                     top                = '10px';
                     height             = '590px';
-                    width              = '550px';
+                    width              = _width + 'px';
                     background         = 'white';
                     border             = '0px';
                     WebkitBoxShadow    = "0px 3px 14px #555555";
@@ -42,9 +42,22 @@
             }
 
             if (args.view)
-                Connect().send("Config.set", { key: "popup.lastView", value : args.view }).recv(showPopup).close();
+                Connect()
+                .send("Config.get", { key: "popup.window.width" })
+                .recv(function(event) {
+                    _width = event.message;
+                })
+                .send("Config.set", { key: "popup.lastView", value : args.view })
+                .recv(showPopup)
+                .close();
             else
-                showPopup();
+                Connect()
+                .send("Config.get", { key: "popup.window.width" })
+                .recv(function(event) {
+                    _width = event.message;
+                    showPopup();
+                })
+                .close();
         },
         hide: function() {
             if (!this.popup) return;
