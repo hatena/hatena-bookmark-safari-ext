@@ -249,7 +249,8 @@ a#users-count:visited {
   padding: 4px 4px 4px 0;
 }
 
-ul.tab-ui li {
+ul.tab-ui li,
+ul.tab-ui li.tab-link a {
   display: inline-block;
   padding: 4px 6px;
   margin: 0px;
@@ -268,6 +269,7 @@ ul.tab-ui li {
   text-shadow: 0px 1px 0px #fff;
 }
 
+ul.tab-ui li.tab-link a:hover,
 ul.tab-ui li:hover {
   -webkit-box-shadow: 0px 0px 1px rgba(0,0,0,0.05);
   background: -webkit-gradient(
@@ -293,10 +295,6 @@ ul.tab-ui li.tab-link a {
 }
 
 ul.tab-ui li.tab-link img {
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.2);
-  -webkit-border-radius: 4px;
-  padding: 2px;
   display: inline-block;
 }
 
@@ -331,18 +329,20 @@ ul.tab-ui li.tab-link img {
   background-position: -2px -1px;;
 }
 
-#comment-tab span {
-  background-image: url(../images/serif_list_off.png);
-}
 
+#bookmark-tab span,
 #bookmark-tab.current span {
   background-image: url(../images/chrome-b-append_off.png);
 }
 
+#comment-tab span {
+  background-image: url(../images/serif_list_off.png);
+}
 #comment-tab.current span {
   background-image: url(../images/serif_list_off.png);
 }
 
+ul.tab-ui li.tab-link a:active,
 ul.tab-ui li.current {
   color: #000;
   background: #c8c7c6;
