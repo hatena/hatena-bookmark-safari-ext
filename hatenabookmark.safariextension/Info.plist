@@ -70,6 +70,8 @@
 				<string>bookmark-button-comment</string>
 				<key>Image</key>
 				<string>images/comment.png</string>
+				<key>Include By Default</key>
+				<false/>
 				<key>Label</key>
 				<string>はてブコメント</string>
 				<key>Palette Label</key>
@@ -84,6 +86,8 @@
 				<string>bookmark-button-bookmark</string>
 				<key>Image</key>
 				<string>images/append.png</string>
+				<key>Include By Default</key>
+				<false/>
 				<key>Label</key>
 				<string>はてブ追加</string>
 				<key>Palette Label</key>
