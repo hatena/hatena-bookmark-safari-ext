@@ -396,5 +396,11 @@ function getEntryURL(url) {
 }
 
 
-if (window.top == window.self)
-    SiteinfoRequestor.init();
+if (window.top == window.self) {
+    Connect()
+        .send("Config.get", { key : 'content.webinfo.enabled'}).recv(function (ev) {
+            if (ev.message)
+                SiteinfoRequestor.init();
+        })
+        .close();
+}
