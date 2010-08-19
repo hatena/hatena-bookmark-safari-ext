@@ -42,7 +42,6 @@
 
     function shouldShowCounter (tab) {
         return tab.url
-            && tab.url.indexOf('https') !== 0
             && Config.get('background.bookmarkcounter.enabled');
     }
 
