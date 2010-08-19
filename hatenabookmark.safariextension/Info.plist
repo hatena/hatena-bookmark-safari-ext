@@ -32,9 +32,9 @@
 				<key>Label</key>
 				<string>はてなブックマーク</string>
 				<key>Palette Label</key>
-				<string>はてなブックマークを操作</string>
+				<string>はてなブックマーク</string>
 				<key>Tool Tip</key>
-				<string>操作します</string>
+				<string>ポップアップを表示します</string>
 			</dict>
 			<dict>
 				<key>Command</key>
