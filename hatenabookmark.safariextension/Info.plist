@@ -130,7 +130,7 @@
 		</dict>
 		<key>Stylesheets</key>
 		<array>
-			<string>content/widget_embedder.css</string>
+			<string>content/popup_window.css</string>
 		</array>
 	</dict>
 	<key>Description</key>

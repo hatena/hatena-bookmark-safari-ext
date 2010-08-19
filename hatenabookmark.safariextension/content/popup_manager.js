@@ -16,6 +16,7 @@
             function showPopup() {
                 if (!self.popup) {
                     self.popup = document.createElement('iframe');
+                    self.popup.id = 'hatena-bookmark-safari-popup-window';
                     document.body.appendChild(self.popup);
                     self.popup.addEventListener('mousewheel', function(event) {
                         event.stopPropagation();
@@ -24,24 +25,9 @@
                 }
 
                 var popup = self.popup;
-
                 popup.src = self.getSrc(args);
-
-                with (popup.style) {
-                    setProperty('display'            , 'block'               , 'important');
-                    setProperty('position'           , 'fixed'               , 'important');
-                    setProperty('right'              , '10px'                , 'important');
-                    setProperty('top'                , '10px'                , 'important');
-                    setProperty('left'               , 'auto'                , 'important');
-                    setProperty('bottom'             , 'auto'                , 'important');
-                    setProperty('height'             , '590px'               , 'important');
-                    setProperty('width'              , _width + 'px'         , 'important');
-                    setProperty('background'         , 'white'               , 'important');
-                    setProperty('border'             , '0px'                 , 'important');
-                    setProperty('-webkit-box-shadow'    , "0px 3px 14px #555555", 'important');
-                    setProperty('-webkit-border-radius' , "6px"                 , 'important');
-                    setProperty('z-index'             , '2147483647'          , 'important');
-                }
+                popup.style.setProperty('display', 'block', 'important');
+                popup.style.setProperty('width', _width + 'px', 'important');
             }
 
             Connect()
