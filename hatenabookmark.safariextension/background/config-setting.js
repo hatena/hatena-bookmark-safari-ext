@@ -24,6 +24,7 @@
         'popup.tags.allTags.enabled': true,
         'background.bookmarkcounter.enabled': true,
         'popup.commentviewer.autodetect.threshold': 15,
+        'contextmenu.enabled': true,
 
         // ================================================== //
         // localStorage

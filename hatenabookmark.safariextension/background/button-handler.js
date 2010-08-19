@@ -3,21 +3,33 @@
     safari.application.addEventListener("validate", validateCommand, false);
 
     function validateCommand(event) {
-        switch (event.command) {
-        case "bookmarkButtonComment": // toolbar items
-        case "HatenaBookmarkShowBookmarkComment":
-        case "bookmarkButtonBookmark":
-        case "HatenaBookmarkAddBookmark":
-        case "bookmarkButton":
-        case "popularPagesButton":
-        case "HatenaBookmarkShowPopularPages":
-
-        case "HatenaBookmarkAddBookmark": // context menues
-        case "HatenaBookmarkShowBookmarkComment":
-        case "HatenaBookmarkShowPopularPages":
-
-            var tab  = safari.application.activeBrowserWindow.activeTab;
-            event.target.disabled = !(tab.url && tab.url !== 'about:blank');
+        switch(event.target.toString()) {
+        case "[object SafariExtensionToolbarItem]":
+            switch (event.command) {
+            case "bookmarkButtonComment": // toolbar items
+            case "HatenaBookmarkShowBookmarkComment":
+            case "bookmarkButtonBookmark":
+            case "HatenaBookmarkAddBookmark":
+            case "bookmarkButton":
+            case "popularPagesButton":
+            case "HatenaBookmarkShowPopularPages":
+                var tab  = safari.application.activeBrowserWindow.activeTab;
+                event.target.disabled = !(tab.url && tab.url !== 'about:blank');
+            }
+            break;
+        case "[object SafariExtensionContextMenuItem]":
+            switch(event.command) {
+            case "HatenaBookmarkAddBookmark": // context menues
+            case "HatenaBookmarkShowBookmarkComment":
+            case "HatenaBookmarkShowPopularPages":
+                var tab  = safari.application.activeBrowserWindow.activeTab;
+                event.target.disabled = !(Config.get('contextmenu.enabled') && tab.url && tab.url !== 'about:blank');
+                break;
+            default:
+                break;
+            }
+        default:
+            break;
         }
     }
 
