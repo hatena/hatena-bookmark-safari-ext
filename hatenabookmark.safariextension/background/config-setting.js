@@ -1,50 +1,42 @@
 
 (function() {
     var defaults = {
-        'popup.window.autosize': {
-            'default': true,
-            type: 'boolean',
-        },
+        // ================================================== //
+        // safari.extension.settings
+        // ================================================== //
+
         'popup.window.width': {
             'default': 500,
-            type: 'unsignedInt',
-            normalizer: {
-                name: 'between',
-                options: [100, 9999]
-            },
+            type: 'unsignedInt'
         },
         'popup.window.height': {
             'default': 450,
-            type: 'unsignedInt',
-            normalizer: {
-                name: 'between',
-                options: [100, 9999]
-            },
+            type: 'unsignedInt'
         },
         'popup.search.result.threshold': {
             'default': 200,
-            type: 'unsignedInt',
-            normalizer: {
-                name: 'between',
-                options: [10, 9999]
-            },
+            type: 'unsignedInt'
         },
-        'popup.search.incsearch': false,
-        'popup.search.lastWord': '',
-        'popup.commentviewer.autodetect.enabled': true,
+
+        'content.webinfo.enabled': true,
+        'popup.tags.recommendTags.enabled': true,
+        'popup.tags.complete.enabled': true,
+        'popup.tags.allTags.enabled': true,
+        'background.bookmarkcounter.enabled': true,
         'popup.commentviewer.autodetect.threshold': 15,
+
+        // ================================================== //
+        // localStorage
+        // ================================================== //
+
+        'popup.search.lastWord': '',
         'popup.commentviewer.togglehide': false,
+        'popup.tags.showAllTags': false,
         'popup.bookmark.confirmBookmark': false,
         'popup.bookmark.postTwitter': false,
         'popup.bookmark.addAsin': false,
         'popup.bookmark.lastCommentValue': {},
-        'popup.tags.recommendTags.enabled': true,
-        'popup.tags.allTags.enabled': true,
-        'popup.tags.showAllTags': false,
-        'popup.tags.complete.enabled': true,
-        'popup.lastView': 'comment',
-        'content.webinfo.enabled': true,
-        'background.bookmarkcounter.enabled': true,
+        'popup.lastView': 'comment'
     };
     Object.keys(defaults).forEach(function(key) {
         Config.append(key, defaults[key]);
