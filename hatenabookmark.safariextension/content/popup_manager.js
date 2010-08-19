@@ -28,19 +28,19 @@
                 popup.src = self.getSrc(args);
 
                 with (popup.style) {
-                    display            = 'block';
-                    position           = 'fixed';
-                    right              = '10px';
-                    top                = '10px';
-                    left               = 'auto';
-                    bottom             = 'auto';
-                    height             = '590px';
-                    width              = _width + 'px';
-                    background         = 'white';
-                    border             = '0px';
-                    WebkitBoxShadow    = "0px 3px 14px #555555";
-                    WebkitBorderRadius = "6px";
-                    zIndex             = 2147483647;
+                    setProperty('display'            , 'block'               , 'important');
+                    setProperty('position'           , 'fixed'               , 'important');
+                    setProperty('right'              , '10px'                , 'important');
+                    setProperty('top'                , '10px'                , 'important');
+                    setProperty('left'               , 'auto'                , 'important');
+                    setProperty('bottom'             , 'auto'                , 'important');
+                    setProperty('height'             , '590px'               , 'important');
+                    setProperty('width'              , _width + 'px'         , 'important');
+                    setProperty('background'         , 'white'               , 'important');
+                    setProperty('border'             , '0px'                 , 'important');
+                    setProperty('-webkit-box-shadow'    , "0px 3px 14px #555555", 'important');
+                    setProperty('-webkit-border-radius' , "6px"                 , 'important');
+                    setProperty('z-index'             , '2147483647'          , 'important');
                 }
             }
 
@@ -61,7 +61,7 @@
         },
         hide: function() {
             if (!this.popup) return;
-            this.popup.style.display = 'none';
+            this.popup.style.setProperty('display', 'none', 'important');
             this.popup.src = safari.extension.baseURI + "background/blank.html";
         },
         getSrc: function(args) {
