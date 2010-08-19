@@ -1,5 +1,20 @@
 (function() {
     safari.application.addEventListener("command", performCommand, false);
+    safari.application.addEventListener("validate", validateCommand, false);
+
+    function validateCommand(event) {
+        switch (event.command) {
+        case "bookmarkButtonComment":
+        case "HatenaBookmarkShowBookmarkComment":
+        case "bookmarkButtonBookmark":
+        case "HatenaBookmarkAddBookmark":
+        case "bookmarkButton":
+        case "popularPagesButton":
+        case "HatenaBookmarkShowPopularPages":
+            var tab  = safari.application.activeBrowserWindow.activeTab;
+            event.target.disabled = !(tab.url && tab.url !== 'about:blank');
+        }
+    }
 
     var identifiers = {
         bookmarkButton : Extension.getIdentifier("bookmark-button")
