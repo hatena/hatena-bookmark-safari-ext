@@ -33,6 +33,8 @@ var Config = {
         }
     },
     get: function(oKey) {
+        this.keyCheck(oKey);
+
         var key = this.PREFIX + oKey;
         if (typeof this.localStorage[key] == 'undefined') {
             return this.getDefault(oKey);
@@ -48,6 +50,7 @@ var Config = {
         }
     },
     set: function(oKey, value) {
+        this.keyCheck(oKey);
         var key = this.PREFIX + oKey;
 
         value = this.typeConversion(oKey, value);
@@ -57,6 +60,9 @@ var Config = {
         } else {
             // ToDo
         }
+    },
+    keyCheck: function(key) {
+        if (!this.configs[key]) throw 'key undefined!: ' + key;
     },
     typeConversion: function(key, value) {
         var config = this.configs[key];
@@ -115,6 +121,7 @@ var Config = {
         }
     },
     clear: function(key) {
+        this.keyCheck(key);
         key = this.PREFIX + key;
         this.localStorage.removeItem(key);
     },
