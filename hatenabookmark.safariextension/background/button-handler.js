@@ -24,14 +24,49 @@
         page.dispatchMessage("showPopup", {});
     }
 
+    var URINormalizer = {
+        db: [
+            ["http://(\\w+)\\.hatena\\.(ne\\.jp|com)/([A-Za-z][\\w-]{1,30}[A-Za-z0-9])/", function (matched) {
+                return "http://" + matched[1] + ".hatena." + matched[2] + "/" + matched[3] + "/";
+            }],
+            ["http://twitter.com/([^/]+)", function (matched) {
+                return "http://twitter.com/" + matched[1];
+            }]
+        ],
+
+        takeHead: function (uri) {
+            return (uri.match("([a-z]+://[^/]+)/?") || { 0 : null })[0];
+        },
+
+        normalize: function (uri) {
+            var normalized;
+
+            this.db.some(function (pair) {
+                var matched = uri.match(pair[0]);
+
+                if (matched) {
+                    normalized = pair[1](matched);
+                    return true;
+                }
+
+                return false;
+            }, this);
+
+            return normalized ? normalized : this.takeHead(uri);
+        }
+    };
+
     function showPopularPages() {
-        var tab  = safari.application.activeBrowserWindow.activeTab;
+        var tab = safari.application.activeBrowserWindow.activeTab;
         var url = tab.url;
 
-        var head = (url.match("([a-z]+://[^/]+)/?") || { 0 : null })[0];
-        if (head) {
+        var normalized = URINormalizer.normalize(url);
+
+        alert(url + "\n" + normalized);
+
+        if (normalized) {
             Abstract.tabs.create({
-                url      : "http://b.hatena.ne.jp/entrylist?sort=count&url=" + encodeURIComponent(head),
+                url      : "http://b.hatena.ne.jp/entrylist?sort=count&url=" + encodeURIComponent(normalized),
                 selected : true
             });
         }
