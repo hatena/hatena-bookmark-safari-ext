@@ -109,6 +109,7 @@
 
     function shouldShowCounter (tab) {
         return tab.url
+            && tab.url !== 'about:blank'
             && Config.get('background.bookmarkcounter.enabled');
     }
 
