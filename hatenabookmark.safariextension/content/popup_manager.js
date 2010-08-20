@@ -9,10 +9,18 @@
 
     var PopupManager = {
         popup: null,
+        lastView: null,
         show: function(args) {
             var self = this;
             var _width;
             function showPopup() {
+                if (self.popup && self.popup.style.display != 'none' && args && args.view == self.lastView) {
+                    self.lastView = args && args.view;
+                    self.hide();
+                    return;
+                }
+                self.lastView = args && args.view;
+
                 if (!self.popup) {
                     self.popup = document.createElement('iframe');
                     self.popup.id = 'hatena-bookmark-safari-popup-window';
