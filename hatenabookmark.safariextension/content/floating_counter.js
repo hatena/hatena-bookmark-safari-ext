@@ -1,81 +1,46 @@
-if (true) {
-    function createCounter(entry) {
-        var container = document.createElement("div");
-        var permalink = entry.entry_url;
-
-        with (container.style) {
-            right              = '5px';
-            bottom             = '5px';
-            position           = 'fixed';
-            padding            = '4px';
-            backgroundColor    = 'white';
-            opacity            = '0.9';
-            WebkitBorderRadius = "2px";
-            margin             = "auto";
-            zIndex             = 2147483647;
-        }
-
-        var counter = document.createElement("span");
-        counter.textContent = entry.count;
-
-        with (counter.style) {
-            fontSize        = '12px';
-            fontWeight      = 'bold';
-            backgroundColor = 'pink';
-            color           = 'red';
-            padding         = '3px';
-            fontFamily      = 'sans-serif';
-            textDecoration  = 'none';
-        }
-
-        var counterContainer    = document.createElement("a");
-        counterContainer.href   = permalink;
-        counterContainer.title  = entry.title;
-        counterContainer.target = "_blank";
-
-        with (counterContainer.style) {
-            display = 'table-cell';
-        }
-
-        counterContainer.appendChild(counter);
-        container.appendChild(counterContainer);
-
-        entry.favorites.reverse().forEach(function (fav) {
-            var link  = "http://b.hatena.ne.jp/" + fav.name + "/" + fav.timestamp.replace(/\//g, '') + "#bookmark-" + entry.eid;
-            var title = fav.name;
-
-            if (fav.body)
-                title += ": " + fav.body;
-
-            var iconContainer    = document.createElement("a");
-            iconContainer.href   = link;
-            iconContainer.title  = title;
-            iconContainer.target = "_blank";
-
-            with (iconContainer.style) {
-                display = 'table-cell';
-            }
-
-            var icon = document.createElement("img");
-            icon.src = "http://www.st-hatena.com/users/" + fav.name.substring(0, 2) + "/" + fav.name + "/profile_s.gif";
-
-            iconContainer.appendChild(icon);
-
-            container.appendChild(iconContainer);
-        });
-
-        // '<a href="#{permalink}"><img title="#{title}" alt="#{title}" src="#{icon}" /></a>'
-
-        return container;
+(function() {
+    if (window.top !== window) return;
+    var counter;
+    function createCounter() {
+        counter = document.createElement('iframe');
+        counter.id = 'hatena-bookmark-safari-counter-window';
+        counter.src = safari.extension.baseURI + "background/floating_counter.html"
+            + '?url=' + encodeURIComponent(location.href);
+        document.body.appendChild(counter);
     }
 
+    // キャッシュ作ろうとする
     Connect()
         .send("HTTPCache.entry.get", location.href).recv(function (ev) {
-            var res = ev.message;
-
-            if (res.count > 0) {
-                document.body.appendChild(createCounter(res));
-            }
         })
         .close();
-}
+
+    document.addEventListener('DOMContentLoaded', function(event) {
+        createCounter();
+    }, false);
+
+
+    // XXX: popup_managerに同じようなのがある
+    function extractOrigin(str) {
+        var matched = str.match(/([a-z-]+:\/\/[^\/]+)/);
+        return matched[1];
+    }
+
+    window.addEventListener("message", function (ev) {
+        var res;
+
+        var myOrigin = extractOrigin(safari.extension.baseURI).toLowerCase();
+        if (ev.origin !== myOrigin)
+            return;
+
+        if (ev.data.match(/^resizeCounter/)) {
+            ev.data.split('?')[1].split('&').forEach(function(param) {
+                var pair = param.split('=');
+                var key = pair[0];
+                var value = pair[1];
+                counter.style.setProperty(key, value, 'important');
+            });
+            counter.style.setProperty('visibility', 'visible', 'important');
+        }
+    }, false);
+})();

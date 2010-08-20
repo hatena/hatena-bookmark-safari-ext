@@ -1,0 +1,33 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    /* visibility: hidden; */
+    overflow: hidden !important;
+}
+
+#container {
+    display: inline-block;
+    max-width: 200px;
+    background: blue;
+}
+
+#count {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: bold;
+    background: pink;
+    font-family: sans-serif;
+    vertical-align: middle;
+}
+
+#count a {
+    text-decoration: none;
+    color: red;
+}
+
+img {
+    vertical-align: middle;
+}
