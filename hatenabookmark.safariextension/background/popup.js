@@ -40,6 +40,23 @@ function loadWindowPosition(win) {
     Abstract.windows.update(win.id, pos);
 };
 
+
+function resetDB() {
+    var user = UserManagerProxy.user;
+    if (!user) return;
+    if (window.confirm(sprintf('ユーザー『%s』のローカルデータベースを再同期します。よろしいですか？', user.name))) {
+        Connect().send("UserManager.user.resetDatabase").recv(function() {}).close();
+    }
+}
+
+function resetAll() {
+    if (window.confirm('初期設定に戻します。よろしいですか？')) {
+        Connect().send("Config.clearAll").recv(function() {
+            location.reload();
+        }).close();
+    }
+}
+
 // 今見ているページの情報を返す (Deferred).
 function getInformation() {
     var d = new Deferred();
@@ -1065,7 +1082,9 @@ var ready = function() {
             height: 16,
         }));
         hicon.show();
+        $('#db-username').text(user.name);
     }
+
     $('#search-form').bind('submit', searchFormSubmitHandler);
     // if (Config.get('popup.search.incsearch')) {
     //     $('#search-word').bind('keyup', searchIncSearchHandler);

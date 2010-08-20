@@ -116,4 +116,16 @@ Response(function (get, deferred) {
         Abstract.tabs.create(ev.message);
         return true;
     });
+
+    get("UserManager.user.resetDatabase", function (ev, matched, dispatch) {
+        UserManager.user.resetDatabase();
+        return true;
+    });
+
+    get("Config.clearAll", function (ev, matched, dispatch) {
+        Config.clearALL();
+        return true;
+    });
+
+
 });
