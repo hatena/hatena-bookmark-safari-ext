@@ -156,7 +156,7 @@
     }
 
     function popupEmbeddable() {
-        return !!document.body;
+        return !!document.body && document.body.localName.toLowerCase() !== "frameset";
     }
 
     function getEntryPageURL(url) {
@@ -164,8 +164,6 @@
     }
 
     function openEntryPage() {
-        alert(getEntryPageURL(location.href));
-
         Connect()
             .send("Abstract.tabs.create", { url: getEntryPageURL(location.href), selected: true })
             .recv(function () {})
