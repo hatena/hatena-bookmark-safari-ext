@@ -1083,6 +1083,9 @@ var ready = function() {
         }));
         hicon.show();
         $('#db-username').text(user.name);
+        $("#user-reset-db").show();
+    } else {
+        $("#user-reset-db").hide();
     }
 
     $('#search-form').bind('submit', searchFormSubmitHandler);
