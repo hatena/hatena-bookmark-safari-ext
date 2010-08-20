@@ -143,13 +143,15 @@
             bookmarkButton.badge = 0;
         }
 
-        UserManager.user.hasBookmark(activeTab.url).next(function(bool) {
-            // TODO: ボタン複数ある場合は?
-            if (bool) {
-                getBookmarkButton().image = safari.extension.baseURI + 'images/add-twitter.png';
-            } else {
-                getBookmarkButton().image = safari.extension.baseURI + 'images/bookmark.png';
-            }
-        });
+        if (UserManager.user) {
+            UserManager.user.hasBookmark(activeTab.url).next(function(bool) {
+                // TODO: ボタン複数ある場合は?
+                if (bool) {
+                    getBookmarkButton().image = safari.extension.baseURI + 'images/add-twitter.png';
+                } else {
+                    getBookmarkButton().image = safari.extension.baseURI + 'images/bookmark.png';
+                }
+            });
+        }
     });
 })();
