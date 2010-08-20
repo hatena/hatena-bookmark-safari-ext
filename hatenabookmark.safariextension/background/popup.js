@@ -109,6 +109,23 @@ function formSubmitHandler(ev) {
 
 function searchFormSubmitHandler(ev) {
     View.search.search($('#search-word').attr('value'));
+
+    try {
+        // ここで死ぬとform submit されてやばい
+        $("#init-setting").hide();
+        if (View.search.initSettingTimer) {
+            clearTimeout(View.search.initSettingTimer);
+            View.search.initSettingTimer = null;
+        }
+        View.search.initSettingTimer = setTimeout(function() {
+            if ($("#search-result li").length == 0) {
+                $("#init-setting").show();
+            }
+            View.search.initSettingTimer = null;
+        }, 2000);
+    } catch(e) {
+    }
+
     return false;
 }
 
@@ -151,6 +168,7 @@ var createBookmarkList = function(bookmark) {
 
 var View = {
     search: {
+        initSettingTimer: null,
         get container() { return $('#search-container'); },
         get list() { return $('#search-result'); },
         get tab() { return $('#search-tab'); },
