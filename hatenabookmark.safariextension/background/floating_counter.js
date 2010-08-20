@@ -23,11 +23,8 @@
                 iconContainer.attr({
                     href: link,
                     title: lines.join("\n"),
-                })
-                    .click(function() {
-                        Connect().send("PopupManager.show", { url : entryURL, view : "comment" }).recv(function (ev) {}).close();
-                        return false;
-                    });
+                    target: '_blank'
+                });
 
                 var icon = $("<img>");
                 icon.attr({
