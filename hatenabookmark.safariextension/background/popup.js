@@ -404,6 +404,9 @@ var View = {
             return this._port;
         },
         updatePageData: function(data) {
+            if (!data)
+                return;
+
             if (data.images) {
                 this.setImages(data.images);
             }
@@ -572,7 +575,7 @@ var View = {
 
             // TODO: 綺麗に抽象化したい
             window.addEventListener("message", function (ev) {
-                var uri    = URI.parse(request_uri.param("url"));
+                var uri    = URI.parse(url);
                 var origin = uri.schema + "://" + uri.host;
                 var data   = event.data;
 
@@ -581,7 +584,7 @@ var View = {
 
                 View.bookmark.updatePageData(data);
             }, false);
-            window.parent.postMessage("getInfo", request_uri.param("url"));
+            window.parent.postMessage("getInfo", url);
 
             var lastCommentValueConf = Config.get('popup.bookmark.lastCommentValue');
             if (lastCommentValueConf && lastCommentValueConf.url == url) {

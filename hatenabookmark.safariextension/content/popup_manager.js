@@ -1,10 +1,9 @@
 (function() {
     if (window.top !== window) return;
-    if (!document.body) return;
 
     safari.self.addEventListener("message", extensionMessageHandler, false);
 
-    document.body.addEventListener("click", function() {
+    window.addEventListener("click", function() {
         PopupManager.hide();
     }, false);
 
@@ -119,28 +118,26 @@
 
     // おいとく
     window.addEventListener("message", function (ev) {
-        var res;
-
         var myOrigin = extractOrigin(safari.extension.baseURI).toLowerCase();
         if (ev.origin !== myOrigin)
             return;
 
         switch (ev.data) {
         case "getInfo":
-            res = PageInformationManager.getInfo(ev);
+            ev.source.postMessage(PageInformationManager.getInfo(ev), ev.origin);
             break;
         case "closeIframe":
-            res = PopupManager.hide(ev);
+            PopupManager.hide(ev);
         }
-
-        ev.source.postMessage(res, ev.origin);
     }, false);
-
 
     function extensionMessageHandler(event) {
         switch (event.name) {
         case "showPopup":
-            PopupManager.show(event.message);
+            if (popupEmbeddable())
+                PopupManager.show(event.message);
+            else
+                openEntryPage();
             break;
         }
     }
@@ -150,4 +147,20 @@
         return matched[1];
     }
 
+    function popupEmbeddable() {
+        return !!document.body;
+    }
+
+    function getEntryPageURL(url) {
+        return "http://b.hatena.ne.jp/entry/" + url.replace(/^.*:\/\//, "");
+    }
+
+    function openEntryPage() {
+        alert(getEntryPageURL(location.href));
+
+        Connect()
+            .send("Abstract.tabs.create", { url: getEntryPageURL(location.href), selected: true })
+            .recv(function () {})
+            .close();
+    }
 })();

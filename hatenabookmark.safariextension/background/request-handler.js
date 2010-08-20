@@ -111,4 +111,9 @@ Response(function (get, deferred) {
         }, 200);
         return "dummy";
     });
+
+    get("Abstract.tabs.create", function (ev, matched, dispatch) {
+        Abstract.tabs.create(ev.message);
+        return true;
+    });
 });
