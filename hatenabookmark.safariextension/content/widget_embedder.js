@@ -127,7 +127,7 @@ extend(WidgetEmbedder.prototype, {
         var existing = this.getExistingWidgets(paragraph, link);
         var counter = existing.counter;
         var image = existing.counterImage;
-        var counterAdded = !counter;
+        var counterAdded = false;
         if (!counter) {
             var point = this.getAnnotationPoint(paragraph, link, existing);
             if (!point) return;
@@ -138,6 +138,7 @@ extend(WidgetEmbedder.prototype, {
             fragment.appendChild(counter);
             point.insertNode(fragment);
             point.detach();
+            counterAdded = true;
         }
         if (existing.comments) return;
 
