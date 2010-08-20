@@ -18,10 +18,10 @@ iframe#hatena-bookmark-safari-counter-window {
     display: block;
     visibility: hidden;
     position: fixed !important;
-    right: 10px !important;
+    right: 4px !important;
     top: auto !important;
     left: auto !important;
-    bottom: 10px !important;
+    bottom: 4px !important;
     height: 500px;
     width: 500px;
     background: transparent !important;

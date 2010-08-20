@@ -1,8 +1,18 @@
 (function() {
     var entryURL = decodeURIComponent(URI.parse('http://example.com/' + location.href).param('url'));
 
-    $(function() {
-        function show(entry) {
+    Connect()
+        .send("HTTPCache.entry.get", entryURL).recv(function (event) {
+            var res = event.message;
+
+            if (res.count > 0) {
+                show(res);
+            }
+        })
+        .close();
+
+    function show(entry) {
+        $(function() {
             if (Config.get("content.bookmarkcounter.enabled")) $("#count a")
                 .text(entry.count)
                 .attr('href', 'http://b.hatena.ne.jp/entry/' + entryURL)
@@ -36,17 +46,11 @@
                 iconContainer.append(icon);
                 $("#favs").append(iconContainer);
             });
-            window.parent.postMessage('resizeCounter?width=' + ($("#container").width()) + 'px&height=' + ($("#container").height()) + "px", entryURL);
-        }
 
-        Connect()
-            .send("HTTPCache.entry.get", entryURL).recv(function (event) {
-                var res = event.message;
-
-                if (res.count > 0) {
-                    show(res);
-                }
-            })
-            .close();
-    });
+            var padding = 8;
+            window.parent.postMessage('resizeCounter?width=' +
+                                      (padding + $("#container").width()) + 'px&height=' +
+                                      (padding + $("#container").height()) + "px", entryURL);
+        });
+    }
 })();
