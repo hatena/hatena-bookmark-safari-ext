@@ -24,7 +24,7 @@
                         return false;
                     });
             } else {
-                $("#count a").remove();
+                $("#count").remove();
             }
 
             if (Config.get("content.fans.enabled")) {
