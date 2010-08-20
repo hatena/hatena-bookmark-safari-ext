@@ -53,11 +53,11 @@
         return bookmarkButton;
     }
 
-    function showPopup() {
+    function showPopup(view) {
         var tab  = safari.application.activeBrowserWindow.activeTab;
         var page = tab.page;
 
-        page.dispatchMessage("showPopup", {});
+        page.dispatchMessage("showPopup", {view: view});
     }
 
     var URINormalizer = {
@@ -110,13 +110,11 @@
         switch (event.command) {
         case "bookmarkButtonComment":
         case "HatenaBookmarkShowBookmarkComment":
-            Config.set('popup.lastView', 'comment');
-            showPopup();
+            showPopup('comment');
             break;
         case "bookmarkButtonBookmark":
         case "HatenaBookmarkAddBookmark":
-            Config.set('popup.lastView', 'bookmark');
-            showPopup();
+            showPopup('bookmark');
             break;
         case "bookmarkButton":
             showPopup();
