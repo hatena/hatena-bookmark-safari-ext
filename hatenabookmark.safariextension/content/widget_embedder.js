@@ -122,7 +122,7 @@ extend(WidgetEmbedder.prototype, {
         paragraph._hb_isWidgetEmbedded = true;
 
         var link = this.getLink(paragraph);
-        if (!link || !/^https?:/.test(link.href)) return;
+        if (!link || !/^http:/.test(link.href)) return;
         var url = link.href;
         var existing = this.getExistingWidgets(paragraph, link);
         var counter = existing.counter;
