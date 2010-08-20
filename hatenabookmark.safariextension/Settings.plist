@@ -182,5 +182,25 @@
 		<key>Type</key>
 		<string>CheckBox</string>
 	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<true/>
+		<key>Key</key>
+		<string>content.bookmarkcounter.enabled</string>
+		<key>Title</key>
+		<string>ページ内にブクマカウンタを表示する</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<true/>
+		<key>Key</key>
+		<string>content.fans.enabled</string>
+		<key>Title</key>
+		<string>ページ内にお気に入りユーザーを表示する</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
 </array>
 </plist>

@@ -3,7 +3,7 @@
 
     $(function() {
         function show(entry) {
-            $("#count a")
+            if (Config.get("content.bookmarkcounter.enabled")) $("#count a")
                 .text(entry.count)
                 .attr('href', 'http://b.hatena.ne.jp/entry/' + entryURL)
                 .click(function() {
@@ -11,7 +11,7 @@
                     return false;
                 });
 
-            entry.favorites.reverse().forEach(function (fav) {
+            if (Config.get("content.fans.enabled")) entry.favorites.reverse().forEach(function (fav) {
                 var link  = "http://b.hatena.ne.jp/" + fav.name + "/" + fav.timestamp.replace(/\//g, '') + "#bookmark-" + entry.eid;
                 var lines = [fav.name];
 

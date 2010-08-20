@@ -25,6 +25,8 @@
         'background.bookmarkcounter.enabled': true,
         'popup.commentviewer.autodetect.threshold': 15,
         'contextmenu.enabled': true,
+        'content.fans.enabled': true,
+        'content.bookmarkcounter.enabled': true,
 
         // ================================================== //
         // localStorage
