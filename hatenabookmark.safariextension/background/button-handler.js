@@ -41,11 +41,12 @@
         bookmarkButton : Extension.getIdentifier("bookmark-button")
     };
 
-    function getBookmarkButton() {
+    function getBookmarkButton(key) {
+        if (!key) key = 'bookmarkButton';
         var bookmarkButton;
         safari.extension.toolbarItems.forEach(function (toolbarItem) {
             switch (toolbarItem.identifier) {
-            case identifiers.bookmarkButton:
+            case identifiers[key]:
                 bookmarkButton = toolbarItem;
                 return;
             }
@@ -141,5 +142,14 @@
         } else {
             bookmarkButton.badge = 0;
         }
+
+        UserManager.user.hasBookmark(activeTab.url).next(function(bool) {
+            // TODO: ボタン複数ある場合は?
+            if (bool) {
+                getBookmarkButton().image = safari.extension.baseURI + 'images/add-twitter.png';
+            } else {
+                getBookmarkButton().image = safari.extension.baseURI + 'images/bookmark.png';
+            }
+        });
     });
 })();
