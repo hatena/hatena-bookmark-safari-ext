@@ -162,7 +162,7 @@
 		<key>Key</key>
 		<string>background.bookmarkcounter.enabled</string>
 		<key>Title</key>
-		<string>ブックマークカウンターを表示する</string>
+		<string>ツールバーにブクマカウンタを表示する</string>
 		<key>Type</key>
 		<string>CheckBox</string>
 	</dict>
@@ -182,13 +182,19 @@
 		<key>Type</key>
 		<string>CheckBox</string>
 	</dict>
-	<dict>
+                <dict>
+		<key>Title</key>
+		<string>右下</string>
+		<key>Type</key>
+		<string>Group</string>
+	</dict>
+        <dict>
 		<key>DefaultValue</key>
 		<true/>
 		<key>Key</key>
 		<string>content.bookmarkcounter.enabled</string>
 		<key>Title</key>
-		<string>ページ内にブクマカウンタを表示する</string>
+		<string>ページの右下にブクマカウンタを表示する</string>
 		<key>Type</key>
 		<string>CheckBox</string>
 	</dict>
@@ -198,9 +204,10 @@
 		<key>Key</key>
 		<string>content.fans.enabled</string>
 		<key>Title</key>
-		<string>ページ内にお気に入りユーザーを表示する</string>
+		<string>ページの右下にお気に入りユーザーを表示する</string>
 		<key>Type</key>
 		<string>CheckBox</string>
 	</dict>
+
 </array>
 </plist>
