@@ -1044,6 +1044,10 @@ var prepareUser = function() {
 }
 
 var ready = function() {
+    $("#search-container").css('max-height', window.innerHeight - 100);
+    $("#comment-list").css('max-height', window.innerHeight - 100 - 20);
+    $("#bookmark-edit-container").css({ 'max-height': window.innerHeight - 100, 'overflow-y': 'scroll'});
+
     if (!window.urlGiven) {
         if (request_uri.param('error')) {
             //

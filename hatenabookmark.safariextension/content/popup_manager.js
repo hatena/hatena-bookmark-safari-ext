@@ -35,6 +35,8 @@
                 popup.src = self.getSrc(args);
                 popup.style.setProperty('display', 'block', 'important');
                 popup.style.setProperty('width', _width + 'px', 'important');
+                var height = window.innerHeight * 0.9;
+                popup.style.setProperty('height', height + 'px', 'important');
             }
 
             Connect()
