@@ -77,7 +77,7 @@
         getInfo: function() {
             var res = {};
 
-            res.url   = location.href;
+            res.url   = encodeURI(location.href);
             res.title = document.title;
 
             var cannonical = this.getCannonical();

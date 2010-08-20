@@ -3,7 +3,6 @@ Deferred.debug = true;
 var BG = this;
 
 var request_uri = URI.parse(location.href);
-console.log(request_uri);
 
 var urlGiven = request_uri.param('url') ? true : false;
 if (!urlGiven) {
@@ -48,19 +47,19 @@ function getInformation() {
         // TODO: おいとく
         BG.Abstract.tabs.getSelected(null, function(tab) {
             d.call({
-                url: tab.url,
-                faviconUrl: tab.faviconUrl,
-                winId: tab.windowId,
-                tabId: tab.id,
-                title: tab.title
+                url        : encodeURI(tab.url),
+                faviconUrl : tab.faviconUrl,
+                winId      : tab.windowId,
+                tabId      : tab.id,
+                title      : tab.title
             });
         });
     } else {
         setTimeout(function() {
             d.call({
-                url: request_uri.param('url'),
-                faviconUrl: request_uri.param('faviconUrl'),
-                title: request_uri.param('title')
+                url        : encodeURI(request_uri.param('url')),
+                faviconUrl : request_uri.param('faviconUrl'),
+                title      : request_uri.param('title')
             });
         }, 0);
     }
@@ -413,7 +412,6 @@ var View = {
             if (data.canonical) {
                 this.setCanonical(data.canonical);
             }
-
             if (data.title) {
                 this.setTitle(data.title);
             }
