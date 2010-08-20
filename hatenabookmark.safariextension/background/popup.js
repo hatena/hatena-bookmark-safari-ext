@@ -703,15 +703,11 @@ var View = {
             }
 
             Connect()
-                .send("HTTPCache.entry.get", url).recv(function(event) {
-                    var res = event.message;
-                    self.setEntry(res);
+                .send("Model.Bookmark.findByUrl", url).recv(function (event) {
+                    self.setByBookmark(event.message);
                 })
-                .close();
-            Connect()
-                .send("Model.Bookmark.findByUrl", url).recv(function(event) {
-                    var res = event.message;
-                    self.setByBookmark(res);
+                .send("HTTPCache.entry.get", url).recv(function (event) {
+                    self.setEntry(event.message);
                 })
                 .close();
         },
