@@ -1,64 +1,17 @@
 Deferred.debug = true;
-var BG = this;
-//Utils.inject(BG, ['UserManager', 'User', 'HTTPCache', 'URI', 'Manager', 'Model']);
 
-var request_uri = URI.parse('http://example.com/' + location.href);
+var BG = this;
+
+var request_uri = URI.parse(location.href);
+console.log(request_uri);
+
 var urlGiven = request_uri.param('url') ? true : false;
 if (!urlGiven) {
     // パラメータ URL が定義されていないとき
     p = function(msg) {
         BG.console.log(JSON.stringify(Array.prototype.slice.call(arguments, 0, arguments.length)));
-    }
-} else if (request_uri.param('debug')) {
-} else {
-    // パラメータ URL が定義されているとき
-
-    // TODO: ここじゃないところで，tabのfocusでglobalPageにfocusされたというイベントを投げるようにする．それによって数字を変えるとかやってる．
-    // Abstract.tabs.getSelected(null, function(tab) {
-    //     // アクティブなウィンドウを取得
-    //     Abstract.windows.get(tab.windowId, function(win) {
-    //         // win => アクティブなウィンドウ (Safari の ContentWindow)
-    //         window.currentWin = win;
-    //         BG.popupWinInfo = {
-    //             windowId: win.id,
-    //             tabId: tab.id,
-    //         }
-
-    //         // 位置を指定してウィンドウをロード
-    //         loadWindowPosition(win);
-    //     });
-    // });
-
-    // TODO: このへん書き換える iframeからやるべきことではない
-    // // ウィンドウが削除されたときに呼ばれる
-    // Abstract.windows.onRemoved.addListener(function(windowId) {
-    //     if (BG.popupWinInfo)
-    //         delete BG.popupWinInfo;
-    //     delete window.currentWin;
-    // });
-
-    // TODO: これは？？？？
-    // ポートの接続要求が来たとき
-    // Abstract.self.onConnect.addListener(function(port, name) {
-    //     port.onMessage.addListener(function(info, con) {
-    //         if (info.message == 'popup-reload') {
-    //             if (info.data.url) {
-    //                 // XXX
-    //                 location.href = '/background/popup.html?url=' + encodeURIComponent(info.data.url);
-    //             }
-    //         }
-    //     });
-    // });
-
-    // if (window.currentWin) {
-    //     setInterval(function() {
-    //         Abstract.windows.get(currentWin.id, function(win) {
-    //             saveWindowPositions(win);
-    //         });
-    //     }, 50);
-    // }
+    };
 }
-
 
 function closeWin() {
     window.parent.postMessage("closeIframe", request_uri.param("url"));
@@ -70,19 +23,19 @@ function saveWindowPositions(win) {
         left: win.left,
         top: win.top,
         width: Math.max(100, win.width),
-        height: Math.max(100, win.height),
+        height: Math.max(100, win.height)
     });
 }
 
 function loadWindowPosition(win) {
     if (request_uri.param('debug') || request_uri.param('error')) return;
     var pos;
-    try { pos = JSON.parse(localStorage.bookmarkEditWindowPositions) } catch (e) {};
+    try { pos = JSON.parse(localStorage.bookmarkEditWindowPositions); } catch (e) {};
     if (!pos) {
         pos = {
             width: Config.get('popup.window.height'),
-            height: 400,
-        }
+            height: 400
+        };
     }
 
     Abstract.windows.update(win.id, pos);
@@ -99,7 +52,7 @@ function getInformation() {
                 faviconUrl: tab.faviconUrl,
                 winId: tab.windowId,
                 tabId: tab.id,
-                title: tab.title,
+                title: tab.title
             });
         });
     } else {
@@ -107,8 +60,8 @@ function getInformation() {
             d.call({
                 url: request_uri.param('url'),
                 faviconUrl: request_uri.param('faviconUrl'),
-                title: request_uri.param('title'),
-            })
+                title: request_uri.param('title')
+            });
         }, 0);
     }
     return d;
@@ -239,33 +192,6 @@ var View = {
             };
             loop();
         }
-
-        //                 });
-        //         self.current = Model.Bookmark.search(word, {
-        //             limit: 100,
-        //             offset: start,
-        //             order: 'date desc',
-        //         }).next(function(res) {
-        //             res.forEach(function(r) {
-        //                 // try {
-        //                     if (el.children.length < max)
-        //                         list.append(createBookmarkList(r));
-        //                 // } catch(e) { p(e) }
-        //                 // var m = $('<li/>').text(r.title + r.url);
-        //                 // m.appendTo(list);
-        //             });
-        //             var rLen = el.children.length;
-        //             self.totalCount.text(rLen >= (max-1) ? sprintf('%d件以上', max) : sprintf('%d件', rLen));
-        //             start += 100;
-        //             if (start < max && !(rLen >= (max-1))) {
-        //                 loop();
-        //             }
-        //         });
-        //     }
-        //     loop();
-
-        //     // this.container.text('search:' + word);
-        // }
     },
     comment: {
         get container()       { return $('#comment-container') },
@@ -643,13 +569,6 @@ var View = {
             this.faviconEL.attr('src', info.faviconUrl);
 
             var url = info.url;
-
-            // this.port.postMessage({
-            //     message: 'bookmarkedit_bridge_get',
-            //     data: {
-            //         url: url,
-            //     }
-            // });
 
             // TODO: 綺麗に抽象化したい
             window.addEventListener("message", function (ev) {
