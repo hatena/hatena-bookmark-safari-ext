@@ -2,6 +2,10 @@
     safari.application.addEventListener("command", performCommand, false);
     safari.application.addEventListener("validate", validateCommand, false);
 
+    function validateURL(url) {
+        return url && /^https?:\/\//.test(url);
+    }
+
     function validateCommand(event) {
         switch(event.target.toString()) {
         case "[object SafariExtensionToolbarItem]":
@@ -14,7 +18,7 @@
             case "popularPagesButton":
             case "HatenaBookmarkShowPopularPages":
                 var tab  = safari.application.activeBrowserWindow.activeTab;
-                event.target.disabled = !(tab.url && tab.url !== 'about:blank');
+                event.target.disabled = !validateURL(tab.url);
             }
             break;
         case "[object SafariExtensionContextMenuItem]":
@@ -23,7 +27,7 @@
             case "HatenaBookmarkShowBookmarkComment":
             case "HatenaBookmarkShowPopularPages":
                 var tab  = safari.application.activeBrowserWindow.activeTab;
-                event.target.disabled = !(Config.get('contextmenu.enabled') && tab.url && tab.url !== 'about:blank');
+                event.target.disabled = !(Config.get('contextmenu.enabled') && validateURL(tab.url));
                 break;
             default:
                 break;
