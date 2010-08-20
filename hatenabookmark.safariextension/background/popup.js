@@ -45,7 +45,10 @@ function resetDB() {
     var user = UserManagerProxy.user;
     if (!user) return;
     if (window.confirm(sprintf('ユーザー『%s』のローカルデータベースを再同期します。よろしいですか？', user.name))) {
-        Connect().send("UserManager.user.resetDatabase").recv(function() {}).close();
+        Connect().send("UserManager.user.resetDatabase").recv(function() {
+            $("#feels-wrong-button").show();
+            $("#reset-user-db").hide();
+        }).close();
     }
 }
 
@@ -109,22 +112,8 @@ function formSubmitHandler(ev) {
 
 function searchFormSubmitHandler(ev) {
     View.search.search($('#search-word').attr('value'));
-
-    try {
-        // ここで死ぬとform submit されてやばい
-        $("#init-setting").hide();
-        if (View.search.initSettingTimer) {
-            clearTimeout(View.search.initSettingTimer);
-            View.search.initSettingTimer = null;
-        }
-        View.search.initSettingTimer = setTimeout(function() {
-            if ($("#search-result li").length == 0) {
-                $("#init-setting").show();
-            }
-            View.search.initSettingTimer = null;
-        }, 2000);
-    } catch(e) {
-    }
+    $("#feels-wrong-button").show();
+    $("#reset-user-db").hide();
 
     return false;
 }
@@ -168,7 +157,6 @@ var createBookmarkList = function(bookmark) {
 
 var View = {
     search: {
-        initSettingTimer: null,
         get container() { return $('#search-container'); },
         get list() { return $('#search-result'); },
         get tab() { return $('#search-tab'); },
@@ -1100,10 +1088,14 @@ var ready = function() {
             height: 16,
         }));
         hicon.show();
+
+        // ユーザーDB初期化とかの
         $('#db-username').text(user.name);
-        $("#user-reset-db").show();
-    } else {
-        $("#user-reset-db").hide();
+        $("#feels-wrong-button").click(function() {
+            $("#feels-wrong-button").hide();
+            $("#reset-user-db").show();
+            return false;
+        });
     }
 
     $('#search-form').bind('submit', searchFormSubmitHandler);
