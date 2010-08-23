@@ -51,10 +51,12 @@
     inform(tmpSettings);
 
     // safari.extension.settings ‚ÅŠÇ—‚³‚ê‚é€–Ú‚É‚Â‚¢‚Ä‚Í, localStorage ‚Ö‘‚«ž‚Þ (“¯Šú‚ð‚Æ‚é)
-    Object.keys(extensionSettings).forEach(function (key) {
-        var value = safari.extension.settings.getItem(key);
-        console.log("Sync " + key);
-        console.log(Config.get(key) + " => " + value);
-        Config.set(key, value);
-    });
+    if (safari.extension && safari.extension.settings) {
+        Object.keys(extensionSettings).forEach(function (key) {
+            var value = safari.extension.settings.getItem(key);
+            console.log("Sync " + key);
+            console.log(Config.get(key) + " => " + value);
+            Config.set(key, value);
+        });
+    }
 })();
