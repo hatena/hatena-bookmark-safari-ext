@@ -38,9 +38,13 @@
     }
 
     var identifiers = {
-        bookmarkButton : Extension.getIdentifier("bookmark-button")
+        bookmarkButton         : Extension.getIdentifier("bookmark-button"),
+        bookmarkButtonComment  : Extension.getIdentifier("bookmark-button-comment"),
+        bookmarkButtonBookmark : Extension.getIdentifier("bookmark-button-bookmark")
     };
+    var identifiersInOrder = ['bookmarkButtonComment', 'bookmarkButton', 'bookmarkButtonBookmark'];
 
+    // 指定したkeyのだけ
     function getBookmarkButton(key) {
         if (!key) key = 'bookmarkButton';
         var bookmarkButton;
@@ -52,6 +56,18 @@
             }
         });
         return bookmarkButton;
+    }
+
+    // ブクマ拡張が出してるボタン全部
+    // 最初のボタンにブクマカウンタがでる
+    function getBookmarkButtons() {
+        var buttons = [];
+        identifiersInOrder.forEach(function(key) {
+            safari.extension.toolbarItems.forEach(function (toolbarItem) {
+                if (toolbarItem.identifier === identifiers[key]) buttons.push(toolbarItem);
+            });
+        });
+        return buttons;
     }
 
     function showPopup(view) {
@@ -134,16 +150,28 @@
     }
 
     TabManager.bind("change", function (ev, activeTab) {
-        var bookmarkButton = getBookmarkButton();
+        // バッジ表示
+        // たくさんあるとき先頭の
+        // 1つもないときやめる
         if (shouldShowCounter(activeTab)) {
             HTTPCache.counter.get(activeTab.url).next(function(count) {
-                bookmarkButton.badge = count;
+                var buttons = getBookmarkButtons();
+                var firstButton = buttons.shift();
+                if (firstButton) {
+                    firstButton.badge = count;
+                    buttons.forEach(function(b) {
+                        b.badge = 0;
+                    });
+                }
             });
         } else {
-            bookmarkButton.badge = 0;
+            getBookmarkButtons().forEach(function(b) {
+                b.badge = 0;
+            });
         }
 
         if (UserManager.user) {
+            // ブクマ済のとき画像変える
             UserManager.user.hasBookmark(activeTab.url).next(function(bool) {
                 // TODO: ボタン複数ある場合は?
                 if (bool) {
