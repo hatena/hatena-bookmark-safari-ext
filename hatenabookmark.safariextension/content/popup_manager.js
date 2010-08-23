@@ -161,8 +161,26 @@
     }
 
     function popupEmbeddable() {
-        return !!document.body && document.body.localName.toLowerCase() !== "frameset";
+        return !!(document.body && document.body.localName.toLowerCase() !== "frameset" && !includeFlash());
     }
+
+    function includeFlash() {
+        return Array.prototype.some.call(document.querySelectorAll('object, embed'), function(flash) {
+            console.log(flash);
+            console.log(is_in_view(flash));
+            return is_in_view(flash);
+        });
+    }
+
+    function is_in_view(elem) {
+        var rect = elem.getBoundingClientRect();
+        var ws = [1, rect.width-1];
+        var hs = [1, rect.height-1];
+        for(var w in ws ) for(var h in hs)
+            if (document.elementFromPoint(rect.left + ws[w], rect.top + hs[h]) === elem) return true;
+        return false;
+    }
+
 
     function getEntryPageURL(url) {
         return "http://b.hatena.ne.jp/entry/" + url.replace(/^.*:\/\//, "");
