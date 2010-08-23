@@ -44,6 +44,21 @@
     };
     var identifiersInOrder = ['bookmarkButtonComment', 'bookmarkButton', 'bookmarkButtonBookmark'];
 
+    var buttonImages = {};
+    buttonImages[Extension.getIdentifier("bookmark-button")] = {
+        done: safari.extension.baseURI + 'images/edit-cancel.png',
+        yet:  safari.extension.baseURI + 'images/bookmark.png'
+    };
+    buttonImages[Extension.getIdentifier("bookmark-button-comment")] = {
+        done: safari.extension.baseURI + 'images/close.gif',
+        yet:  safari.extension.baseURI + 'images/comment.png'
+    };
+    buttonImages[Extension.getIdentifier("bookmark-button-bookmark")] = {
+        done: safari.extension.baseURI + 'images/chrome-b-checked.png',
+        yet:  safari.extension.baseURI + 'images/append.png'
+    };
+
+
     // 指定したkeyのだけ
     function getBookmarkButton(key) {
         if (!key) key = 'bookmarkButton';
@@ -178,14 +193,11 @@
 
         if (UserManager.user) {
             // ブクマ済のとき画像変える
-            if (!getBookmarkButton()) return;
+            if (!getBookmarkButtons()) return;
             UserManager.user.hasBookmark(activeTab.url).next(function(bool) {
-                // TODO: ボタン複数ある場合は?
-                if (bool) {
-                    getBookmarkButton().image = safari.extension.baseURI + 'images/add-twitter.png';
-                } else {
-                    getBookmarkButton().image = safari.extension.baseURI + 'images/bookmark.png';
-                }
+                getBookmarkButtons().forEach(function(button) {
+                    button.image = buttonImages[button.identifier][bool ? 'done' : 'yet'];
+                });
             });
         }
     });
