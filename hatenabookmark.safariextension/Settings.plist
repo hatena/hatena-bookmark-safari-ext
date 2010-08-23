@@ -218,7 +218,7 @@
 		<key>DefaultValue</key>
 		<string>b</string>
 		<key>Key</key>
-		<string>keyboard.addBookmark.key</string>
+		<string>shortcut.addBookmark.key</string>
 		<key>Title</key>
 		<string>ブックマーク追加</string>
 		<key>Titles</key>
@@ -324,7 +324,7 @@
 		<key>DefaultValue</key>
 		<string>c</string>
 		<key>Key</key>
-		<string>keyboard.showComment.key</string>
+		<string>shortcut.showComment.key</string>
 		<key>Title</key>
 		<string>コメント表示</string>
 		<key>Titles</key>
