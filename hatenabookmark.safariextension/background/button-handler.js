@@ -153,6 +153,7 @@
         // バッジ表示
         // たくさんあるとき先頭の
         // 1つもないときやめる
+        if (!activeTab) activeTab = safari.application.activeBrowserWindow.activeTab;
         if (shouldShowCounter(activeTab)) {
             HTTPCache.counter.get(activeTab.url).next(function(count) {
                 var buttons = getBookmarkButtons();
@@ -172,6 +173,7 @@
 
         if (UserManager.user) {
             // ブクマ済のとき画像変える
+            if (!getBookmarkButton()) return;
             UserManager.user.hasBookmark(activeTab.url).next(function(bool) {
                 // TODO: ボタン複数ある場合は?
                 if (bool) {
