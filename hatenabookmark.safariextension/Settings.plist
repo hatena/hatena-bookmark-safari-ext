@@ -223,6 +223,7 @@
 		<string>ブックマーク追加</string>
 		<key>Titles</key>
 		<array>
+			<string>無効</string>
 			<string>a</string>
 			<string>b</string>
 			<string>c</string>
@@ -254,6 +255,7 @@
 		<string>PopUpButton</string>
 		<key>Values</key>
 		<array>
+			<string>disabled</string>
 			<string>a</string>
 			<string>b</string>
 			<string>c</string>
@@ -329,6 +331,7 @@
 		<string>コメント表示</string>
 		<key>Titles</key>
 		<array>
+			<string>無効</string>
 			<string>a</string>
 			<string>b</string>
 			<string>c</string>
@@ -360,6 +363,7 @@
 		<string>PopUpButton</string>
 		<key>Values</key>
 		<array>
+			<string>disabled</string>
 			<string>a</string>
 			<string>b</string>
 			<string>c</string>
