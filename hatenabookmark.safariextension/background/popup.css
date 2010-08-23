@@ -458,6 +458,7 @@ a.username {
   margin-top: 5px;
 }
 
+#search-header,
 #comment-header,
 #bookmark-edit-header {
   display: table;
@@ -1073,13 +1074,6 @@ em a:visited {
   margin-right: 2px;
 }
 
-#search-header {
-  display: table;
-  width: 100%;
-  background: #eee;
-  border-bottom: 1px solid #ddd;
-  border-top: 1px solid #ddd;
-}
 
 #search-header .edit-cell {
   padding: 3px;
@@ -1112,4 +1106,21 @@ em a:visited {
     padding-left    : 0.6em;
     color           : blue;
     cursor          : pointer;
+}
+
+#feels-wrong-button {
+  font-size: 85%;
+  color: #999;
+  text-decoration: underline;
+  padding: 0 1em;
+}
+
+#reset-user-db {
+  padding: 1em 2em;
+  text-align: center;
+}
+
+#reset-user-db p.notice {
+  text-align: left;
+  margin-bottom: 1em;
 }
