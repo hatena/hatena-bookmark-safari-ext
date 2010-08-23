@@ -112,8 +112,17 @@ a#users-count:visited {
     to(#d1cfcc)
     );
 
-    border-bottom: 1px solid #aca699;
-    /*-webkit-box-shadow: 0px 1px 2px rgba(0,0,0,0.2);*/
+
+    background: -webkit-gradient(
+    linear, 
+    left top, 
+    left bottom, 
+    from(#d0d0d0), 
+    to(#a7a7a7)
+    );
+
+    border-bottom: 1px solid #b2b2b2;
+    border-top: 1px solid #c1c1c1;
     -webkit-border-top-left-radius: 4px;
     -webkit-border-top-right-radius: 4px;
 }
@@ -257,29 +266,21 @@ ul.tab-ui li.tab-link a {
   -webkit-border-radius: 4px;
   cursor: pointer;
   color: #333;
-  border: 1px solid #9f9b95;
-  -webkit-box-shadow: 0px 0px 1px rgba(0,0,0,0.05);
+  border: 1px solid rgba(0,0,0,0.5);
+  -webkit-box-shadow: 0px 1px 0px rgba(255,255,255,0.5);
   background: -webkit-gradient(
   linear, 
   left top, 
   left bottom, 
-  from(#fff), 
-  to(#d2cfca)
+  from(#fefefe), 
+  to(#b8b8b8)
   );
-  text-shadow: 0px 1px 0px #fff;
+  text-shadow: 0px 1px 0px rgba(255,255,255,0.8);
 }
 
 ul.tab-ui li.tab-link a:hover,
 ul.tab-ui li:hover {
-  -webkit-box-shadow: 0px 0px 1px rgba(0,0,0,0.05);
-  background: -webkit-gradient(
-  linear, 
-  left top, 
-  left bottom, 
-  from(#fff), 
-  to(#eae9e7)
-  );
-  border: 1px solid #aea184;
+  -webkit-box-shadow: 0px 0px 2px rgba(0,0,0,0.3);
 }
 
 
@@ -312,13 +313,9 @@ ul.tab-ui li.tab-link img {
 
 
 #bookmark-tab {
-  -webkit-border-top-right-radius: 0px;
-  -webkit-border-bottom-right-radius: 0px;
   margin: 0;
 }
 #comment-tab {
-  -webkit-border-top-left-radius: 0px;
-  -webkit-border-bottom-left-radius: 0px;
   margin: 0;
 }
 
@@ -344,10 +341,16 @@ ul.tab-ui li.tab-link img {
 
 ul.tab-ui li.tab-link a:active,
 ul.tab-ui li.current {
-  color: #000;
+
+  background: -webkit-gradient(
+  linear, 
+  left top, 
+  left bottom, 
+    from(#828282), 
+    to(#b1b1b1)
+  );
   background: #c8c7c6;
-  -webkit-box-shadow:inset 0 0 10px rgba(0,0,0,0.2);
-  border-color: #777065;
+  -webkit-box-shadow:inset 0 0 5px rgba(0,0,0,0.3);
 }
 
 ul.tab-ui li img {
@@ -463,12 +466,13 @@ a.username {
   linear, 
   left top, 
   left bottom, 
-  from(#e4e2e0), 
-  to(#d1cfcc)
+    from(#d0d0d0), 
+    to(#a7a7a7)
   );
-  border-bottom: 1px solid #aca699;
-  border-top: 1px solid #f7f6f6;
+  border-bottom: 1px solid #b2b2b2;
+  border-top: 1px solid #696969;
   padding: 3px 10px;
+  text-shadow: 0px 1px 0px rgba(255,255,255,0.8);
 }
 
 #bookmark-edit-header {
@@ -865,7 +869,6 @@ body.data-loading * .loading {
     display: inline;
 }
 
-
 /* search-container {{{ */
 
 #search-container h3.entry-search {
@@ -966,7 +969,6 @@ body.data-loading * .loading {
 }
 
 /* }}} */
-
 
 #comment-count-detail {
   color: #555;
