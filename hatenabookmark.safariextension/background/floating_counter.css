@@ -1,0 +1,38 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    overflow: hidden !important;
+}
+
+#container {
+    display               : inline-block;
+    max-width             : 200px;
+    background            : blue;
+    -webkit-border-radius : 2px;
+    background-color      : white;
+    opacity               : 0.95;
+    padding               : 2px;
+}
+
+#count {
+    display        : inline-block;
+    font-size      : 11px;
+    font-weight    : bold;
+    padding        : 1px 2px;
+    font-weight    : bold;
+    background     : pink;
+    font-family    : sans-serif;
+    vertical-align : middle;
+}
+
+#count a {
+    text-decoration: none;
+    color: red;
+}
+
+img {
+    vertical-align: middle;
+}

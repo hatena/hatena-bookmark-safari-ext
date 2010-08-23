@@ -185,10 +185,11 @@ User.prototype = {
             self.updateBookmark(data.url, res);
         }).error(function(res) {
             console.error(data);
-            var url = '/background/popup.html?error=1&url=' + encodeURIComponent(data.url) + '&comment=' + data.comment;
-            Abstract.tabs.create({
-                url: url,
-            });
+
+            var url = safari.extension.baseURI + 'background/popup.html?error=1&url='
+                + encodeURIComponent(data.url) + '&comment=' + data.comment;
+
+            Abstract.tabs.create({ url: url });
         });
     },
     updateBookmark: function(url, data) {

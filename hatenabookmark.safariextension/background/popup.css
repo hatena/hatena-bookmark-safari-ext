@@ -532,8 +532,12 @@ a.username {
     padding: 1px 0 1px 0;
 }
 
-#buttons div.edit-cell:first-child {
-  width: 100%;
+/* #buttons div.edit-cell:first-child { */
+/*   width: 100%; */
+/* } */
+
+#buttons div.table-row {
+    text-align : right;
 }
 
 .edit-left {
@@ -801,7 +805,7 @@ dd#all-tags {
 
 #search-container,
 #comment-list {
- max-height: 470px;
+ /* max-height: 470px; */
   overflow-y: auto;
   word-break:break-all;
 }
@@ -1085,6 +1089,11 @@ em a:visited {
   text-align: right;
 }
 
+#reset-user-db {
+    display: none;
+    font-size: 80%;
+}
+
 /* }}} */
 
 
@@ -1094,4 +1103,13 @@ em a:visited {
 
 #search-tab {
   padding-left: 0;
+}
+
+/*  */
+
+#bookmark-delete-link {
+    text-decoration : underline;
+    padding-left    : 0.6em;
+    color           : blue;
+    cursor          : pointer;
 }

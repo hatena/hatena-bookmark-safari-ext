@@ -3,18 +3,27 @@
 
     safari.self.addEventListener("message", extensionMessageHandler, false);
 
-    document.body.addEventListener("click", function() {
+    window.addEventListener("click", function() {
         PopupManager.hide();
     }, false);
 
     var PopupManager = {
         popup: null,
+        lastView: null,
         show: function(args) {
             var self = this;
             var _width;
             function showPopup() {
+                if (self.popup && self.popup.style.display != 'none' && args && args.view == self.lastView) {
+                    self.lastView = args && args.view;
+                    self.hide();
+                    return;
+                }
+                self.lastView = args && args.view;
+
                 if (!self.popup) {
                     self.popup = document.createElement('iframe');
+                    self.popup.id = 'hatena-bookmark-safari-popup-window';
                     document.body.appendChild(self.popup);
                     self.popup.addEventListener('mousewheel', function(event) {
                         event.stopPropagation();
@@ -23,22 +32,10 @@
                 }
 
                 var popup = self.popup;
-
                 popup.src = self.getSrc(args);
-
-                with (popup.style) {
-                    display            = 'block';
-                    position           = 'fixed';
-                    right              = '10px';
-                    top                = '10px';
-                    height             = '590px';
-                    width              = _width + 'px';
-                    background         = 'white';
-                    border             = '0px';
-                    WebkitBoxShadow    = "0px 3px 14px #555555";
-                    WebkitBorderRadius = "6px";
-                    zIndex             = 2147483647;
-                }
+                popup.style.setProperty('display', 'block', 'important');
+                popup.style.setProperty('width', _width + 'px', 'important');
+                self.setHeight(popup);
             }
 
             Connect()
@@ -56,9 +53,29 @@
                 })
                 .close();
         },
+        refreshResizeQueue: function () {
+            if (this.resizeTimer) {
+                window.clearTimeout(this.resizeTimer);
+                this.resizeTimer = null;
+            }
+
+            this.resizeTimer = window.setTimeout(PopupManager.resize, 500);
+        },
+        resize: function () {
+            var self = PopupManager;
+
+            var height = window.innerHeight * 0.9;
+            self.popup.style.setProperty('height', height + 'px', 'important');
+            self.popup.contentWindow.postMessage({ method: 'resize', data: {height : height}},
+                                                 safari.extension.baseURI + "background/popup.html");
+        },
+        setHeight: function() {
+            if (!this.popup) return;
+            this.refreshResizeQueue();
+        },
         hide: function() {
             if (!this.popup) return;
-            this.popup.style.display = 'none';
+            this.popup.style.setProperty('display', 'none', 'important');
             this.popup.src = safari.extension.baseURI + "background/blank.html";
         },
         getSrc: function(args) {
@@ -73,6 +90,9 @@
                     + encodeURIComponent((document.querySelector('link[rel~="icon"]') || { href: '' }).href);
             }
 
+            if (args.error)
+                base += "&error=1";
+
             return base;
         }
     };
@@ -81,7 +101,7 @@
         getInfo: function() {
             var res = {};
 
-            res.url   = location.href;
+            res.url   = encodeURI(location.href);
             res.title = document.title;
 
             var cannonical = this.getCannonical();
@@ -130,28 +150,31 @@
 
     // おいとく
     window.addEventListener("message", function (ev) {
-        var res;
-
         var myOrigin = extractOrigin(safari.extension.baseURI).toLowerCase();
         if (ev.origin !== myOrigin)
             return;
 
         switch (ev.data) {
         case "getInfo":
-            res = PageInformationManager.getInfo(ev);
+            ev.source.postMessage({ method: 'getInfo', data: PageInformationManager.getInfo(ev)}, ev.origin);
             break;
         case "closeIframe":
-            res = PopupManager.hide(ev);
+            PopupManager.hide(ev);
         }
-
-        ev.source.postMessage(res, ev.origin);
     }, false);
+
+    window.addEventListener("resize", function (ev) {
+        PopupManager.setHeight();
+    });
 
 
     function extensionMessageHandler(event) {
         switch (event.name) {
         case "showPopup":
-            PopupManager.show(event.message);
+            if (popupEmbeddable())
+                PopupManager.show(event.message);
+            else
+                openEntryPage();
             break;
         }
     }
@@ -159,6 +182,52 @@
     function extractOrigin(str) {
         var matched = str.match(/([a-z-]+:\/\/[^\/]+)/);
         return matched[1];
+    }
+
+    function popupEmbeddable() {
+        return !!(document.body && document.body.localName.toLowerCase() !== "frameset" && !includeFlash() && !bodyIsInline());
+    }
+
+    function bodyIsInline() {
+        return window.getComputedStyle(document.body).display.toLowerCase() == 'inline';
+    }
+
+    function includeFlash() {
+        return Array.prototype.some.call(document.querySelectorAll('object, embed'), function(flash) {
+            return is_in_view(flash);
+        });
+    }
+
+    function is_in_view(elem) {
+        var rect = elem.getBoundingClientRect();
+        var ws = [1, rect.width-1];
+        var hs = [1, rect.height-1];
+        for(var w in ws ) for(var h in hs)
+            if (document.elementFromPoint(rect.left + ws[w], rect.top + hs[h]) === elem) return true;
+        return false;
+    }
+
+
+    function getEntryPageURL(url) {
+        return "http://b.hatena.ne.jp/entry/" + url.replace(/^.*:\/\//, "");
+    }
+
+    function openEntryPage() {
+        Connect()
+            .send("Abstract.tabs.create", { url: getEntryPageURL(location.href), selected: true })
+            .recv(function () {})
+            .close();
+    }
+
+
+    // TODO: これがここにあるのはやばい
+    document.addEventListener("contextmenu", handleContextMenu, false);
+
+    function handleContextMenu(event) {
+        safari.self.tab.setContextMenuEventUserInfo(event, {
+            nodeName: event.target.nodeName,
+            url: event.target.href
+        });
     }
 
 })();

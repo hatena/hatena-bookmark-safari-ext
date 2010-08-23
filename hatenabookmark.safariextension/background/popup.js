@@ -1,62 +1,46 @@
 Deferred.debug = true;
-var BG = this;
-//Utils.inject(BG, ['UserManager', 'User', 'HTTPCache', 'URI', 'Manager', 'Model']);
 
-var request_uri = URI.parse('http://example.com/' + location.href);
+var BG = this;
+
+var request_uri = URI.parse(location.href);
+
 var urlGiven = request_uri.param('url') ? true : false;
 if (!urlGiven) {
     // パラメータ URL が定義されていないとき
     p = function(msg) {
         BG.console.log(JSON.stringify(Array.prototype.slice.call(arguments, 0, arguments.length)));
+    };
+}
+
+window.addEventListener("message", function (ev) {
+    var uri    = URI.parse(request_uri.param('url'));
+    var origin = uri.schema + "://" + uri.host;
+    var method = event.data.method;
+    var data = event.data.data;
+
+    if (ev.origin !== origin)
+        return;
+
+    switch(method) {
+    case 'getInfo':
+        View.bookmark.updatePageData(data);
+        break;
+    case 'resize':
+        resizeWindow(data);
+        break;
     }
-} else if (request_uri.param('debug')) {
-} else {
-    // パラメータ URL が定義されているとき
+    // resize
+}, false);
 
-    // TODO: ここじゃないところで，tabのfocusでglobalPageにfocusされたというイベントを投げるようにする．それによって数字を変えるとかやってる．
-    // Abstract.tabs.getSelected(null, function(tab) {
-    //     // アクティブなウィンドウを取得
-    //     Abstract.windows.get(tab.windowId, function(win) {
-    //         // win => アクティブなウィンドウ (Safari の ContentWindow)
-    //         window.currentWin = win;
-    //         BG.popupWinInfo = {
-    //             windowId: win.id,
-    //             tabId: tab.id,
-    //         }
+function resizeWindow(data) {
+    var height = window.innerHeight;
 
-    //         // 位置を指定してウィンドウをロード
-    //         loadWindowPosition(win);
-    //     });
-    // });
+    if (data && data.height)
+        height = data.height;
 
-    // TODO: このへん書き換える iframeからやるべきことではない
-    // // ウィンドウが削除されたときに呼ばれる
-    // Abstract.windows.onRemoved.addListener(function(windowId) {
-    //     if (BG.popupWinInfo)
-    //         delete BG.popupWinInfo;
-    //     delete window.currentWin;
-    // });
-
-    // TODO: これは？？？？
-    // ポートの接続要求が来たとき
-    // Abstract.self.onConnect.addListener(function(port, name) {
-    //     port.onMessage.addListener(function(info, con) {
-    //         if (info.message == 'popup-reload') {
-    //             if (info.data.url) {
-    //                 // XXX
-    //                 location.href = '/background/popup.html?url=' + encodeURIComponent(info.data.url);
-    //             }
-    //         }
-    //     });
-    // });
-
-    // if (window.currentWin) {
-    //     setInterval(function() {
-    //         Abstract.windows.get(currentWin.id, function(win) {
-    //             saveWindowPositions(win);
-    //         });
-    //     }, 50);
-    // }
+    $("#search-container").css('max-height', height - 100);
+    $("#comment-list").css('max-height', height - 100 - 20);
+    $("#bookmark-edit-container").css({ 'max-height': height - 100, 'overflow-y': 'scroll'});
 }
 
 
@@ -70,23 +54,43 @@ function saveWindowPositions(win) {
         left: win.left,
         top: win.top,
         width: Math.max(100, win.width),
-        height: Math.max(100, win.height),
+        height: Math.max(100, win.height)
     });
 }
 
 function loadWindowPosition(win) {
     if (request_uri.param('debug') || request_uri.param('error')) return;
     var pos;
-    try { pos = JSON.parse(localStorage.bookmarkEditWindowPositions) } catch (e) {};
+    try { pos = JSON.parse(localStorage.bookmarkEditWindowPositions); } catch (e) {};
     if (!pos) {
         pos = {
             width: Config.get('popup.window.height'),
-            height: 400,
-        }
+            height: 400
+        };
     }
 
     Abstract.windows.update(win.id, pos);
 };
+
+
+function resetDB() {
+    var user = UserManagerProxy.user;
+    if (!user) return;
+    if (window.confirm(sprintf('ユーザー『%s』のローカルデータベースを再同期します。よろしいですか？', user.name))) {
+        Connect().send("UserManager.user.resetDatabase").recv(function() {
+            $("#feels-wrong-button").show();
+            $("#reset-user-db").hide();
+        }).close();
+    }
+}
+
+function resetAll() {
+    if (window.confirm('初期設定に戻します。よろしいですか？')) {
+        Connect().send("Config.clearAll").recv(function() {
+            location.reload();
+        }).close();
+    }
+}
 
 // 今見ているページの情報を返す (Deferred).
 function getInformation() {
@@ -95,20 +99,20 @@ function getInformation() {
         // TODO: おいとく
         BG.Abstract.tabs.getSelected(null, function(tab) {
             d.call({
-                url: tab.url,
-                faviconUrl: tab.faviconUrl,
-                winId: tab.windowId,
-                tabId: tab.id,
-                title: tab.title,
+                url        : encodeURI(tab.url),
+                faviconUrl : tab.faviconUrl,
+                winId      : tab.windowId,
+                tabId      : tab.id,
+                title      : tab.title
             });
         });
     } else {
         setTimeout(function() {
             d.call({
-                url: request_uri.param('url'),
-                faviconUrl: request_uri.param('faviconUrl'),
-                title: request_uri.param('title'),
-            })
+                url        : encodeURI(request_uri.param('url')),
+                faviconUrl : request_uri.param('faviconUrl'),
+                title      : request_uri.param('title')
+            });
         }, 0);
     }
     return d;
@@ -140,6 +144,9 @@ function formSubmitHandler(ev) {
 
 function searchFormSubmitHandler(ev) {
     View.search.search($('#search-word').attr('value'));
+    $("#feels-wrong-button").show();
+    $("#reset-user-db").hide();
+
     return false;
 }
 
@@ -239,33 +246,6 @@ var View = {
             };
             loop();
         }
-
-        //                 });
-        //         self.current = Model.Bookmark.search(word, {
-        //             limit: 100,
-        //             offset: start,
-        //             order: 'date desc',
-        //         }).next(function(res) {
-        //             res.forEach(function(r) {
-        //                 // try {
-        //                     if (el.children.length < max)
-        //                         list.append(createBookmarkList(r));
-        //                 // } catch(e) { p(e) }
-        //                 // var m = $('<li/>').text(r.title + r.url);
-        //                 // m.appendTo(list);
-        //             });
-        //             var rLen = el.children.length;
-        //             self.totalCount.text(rLen >= (max-1) ? sprintf('%d件以上', max) : sprintf('%d件', rLen));
-        //             start += 100;
-        //             if (start < max && !(rLen >= (max-1))) {
-        //                 loop();
-        //             }
-        //         });
-        //     }
-        //     loop();
-
-        //     // this.container.text('search:' + word);
-        // }
     },
     comment: {
         get container()       { return $('#comment-container') },
@@ -478,13 +458,15 @@ var View = {
             return this._port;
         },
         updatePageData: function(data) {
+            if (!data)
+                return;
+
             if (data.images) {
                 this.setImages(data.images);
             }
             if (data.canonical) {
                 this.setCanonical(data.canonical);
             }
-
             if (data.title) {
                 this.setTitle(data.title);
             }
@@ -644,25 +626,8 @@ var View = {
 
             var url = info.url;
 
-            // this.port.postMessage({
-            //     message: 'bookmarkedit_bridge_get',
-            //     data: {
-            //         url: url,
-            //     }
-            // });
-
             // TODO: 綺麗に抽象化したい
-            window.addEventListener("message", function (ev) {
-                var uri    = URI.parse(request_uri.param("url"));
-                var origin = uri.schema + "://" + uri.host;
-                var data   = event.data;
-
-                if (ev.origin !== origin)
-                    return;
-
-                View.bookmark.updatePageData(data);
-            }, false);
-            window.parent.postMessage("getInfo", request_uri.param("url"));
+            window.parent.postMessage("getInfo", url);
 
             var lastCommentValueConf = Config.get('popup.bookmark.lastCommentValue');
             if (lastCommentValueConf && lastCommentValueConf.url == url) {
@@ -784,15 +749,11 @@ var View = {
             }
 
             Connect()
-                .send("HTTPCache.entry.get", url).recv(function(event) {
-                    var res = event.message;
-                    self.setEntry(res);
+                .send("Model.Bookmark.findByUrl", url).recv(function (event) {
+                    self.setByBookmark(event.message);
                 })
-                .close();
-            Connect()
-                .send("Model.Bookmark.findByUrl", url).recv(function(event) {
-                    var res = event.message;
-                    self.setByBookmark(res);
+                .send("HTTPCache.entry.get", url).recv(function (event) {
+                    self.setEntry(event.message);
                 })
                 .close();
         },
@@ -857,9 +818,9 @@ var View = {
 
         setByBookmark: function(b) {
             if (b) {
-                $('#bookmarked-notice').text('このエントリーは ' + b.dateYMDHM + ' にブックマークしました')
-                .removeClass('none');
-                $('#delete-button').removeClass('none');
+                $('#bookmarked-notice > #bookmarked-notice-message').text('このエントリーは ' + b.dateYMDHM + ' にブックマークしました');
+                $('#bookmarked-notice > #bookmark-delete-link').removeClass('none');
+                $('#bookmarked-notice').removeClass('none');
                 $('#edit-submit').attr('value', '編集');
                 this.updateComment(b.comment);
             }
@@ -1105,6 +1066,8 @@ var prepareUser = function() {
 }
 
 var ready = function() {
+    resizeWindow();
+
     if (!window.urlGiven) {
         if (request_uri.param('error')) {
             //
@@ -1149,7 +1112,16 @@ var ready = function() {
             height: 16,
         }));
         hicon.show();
+
+        // ユーザーDB初期化とかの
+        $('#db-username').text(user.name);
+        $("#feels-wrong-button").click(function() {
+            $("#feels-wrong-button").hide();
+            $("#reset-user-db").show();
+            return false;
+        });
     }
+
     $('#search-form').bind('submit', searchFormSubmitHandler);
     // if (Config.get('popup.search.incsearch')) {
     //     $('#search-word').bind('keyup', searchIncSearchHandler);

@@ -105,7 +105,7 @@
         <li id="search-tab">
         <form id="search-form">
           <input type="image" src="../images/searchbutton.png" width=19 height=19 />
-          <input placeholder="検索ワードを入力" id="search-word" type="text" />
+          <input placeholder="検索ワードを入力" id="search-word" type="search" />
         </form>
         </li>
       </ul>
@@ -149,7 +149,10 @@
         <div class="table-left"><a id="link-canonical"></a></div><div class="table-right"><img src="../images/page.gif"> <a id="canonical-users"></a></div>
       </div>
     </div>
-    <div id="bookmarked-notice" class="none"></div>
+    <div id="bookmarked-notice" class="none">
+        <span id="bookmarked-notice-message"></span>
+        <a id="bookmark-delete-link" class="none" onclick="deleteBookmark(); return false;">削除する</a>
+    </div>
     <div id="bookmark-error" class="none"></div>
 
     <div id="image-detect-container" class="none">
@@ -282,15 +285,15 @@
     </dl>
     <div id="buttons">
         <div class="table-row">
-            <div class="edit-cell">
-                <input class="none" onclick="deleteBookmark();" id="delete-button" type="button" value="削除" />
-            </div>
+            <!-- <div class="edit-cell"> -->
+            <!--     <input class="none" onclick="deleteBookmark();" id="delete-button" type="button" value="削除" /> -->
+            <!-- </div> -->
             <div class="edit-cell">
                 <input id="edit-submit" type="submit" value="追加" />
             </div>
-            <div class="edit-cell">
-                <input onclick="closeWin();" id="cancel" type="button" value="キャンセル" />
-            </div>
+            <!-- <div class="edit-cell"> -->
+            <!--     <input onclick="closeWin();" id="cancel" type="button" value="キャンセル" /> -->
+            <!-- </div> -->
         </div>
     </div>
     </form>
@@ -328,8 +331,13 @@
     </div>
   </div>
   <ul id="search-result"></ul>
+
+  <a id="feels-wrong-button" href="http://b.hatena.ne.jp/help">おかしいなと感じたら</a>
+  <div id="reset-user-db">
+    <p class="notice">※ユーザー 『<span id="db-username"></span>』 のはてなブックマークのデータを再同期します。Web 上のはてなブックマークとのデータに差違が出た場合にご利用ください。</p>
+    <input type="button" onclick="resetDB();" value="再同期する" />
+  </div>
 </div>
 </div>
-<a href="popup.html" target="_blank">こんにちは!!!!!</a>
 </body>
 </html>

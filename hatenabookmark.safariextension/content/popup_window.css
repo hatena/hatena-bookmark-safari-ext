@@ -1,0 +1,32 @@
+iframe#hatena-bookmark-safari-popup-window {
+    display: block;
+    position: fixed !important;
+    right: 10px !important;
+    top: 10px !important;
+    left: auto !important;
+    bottom: auto !important;
+    height: 590px;
+    width: 550px;
+    background: white !important;
+    border: 0px !important;
+    -webkit-box-shadow: 0px 3px 14px #555555 !important;
+    -webkit-border-radius: 6px !important;
+    z-index: 2147483647 !important;
+    overflow: hidden !important;
+}
+
+iframe#hatena-bookmark-safari-counter-window {
+    display: block;
+    visibility: hidden;
+    position: fixed !important;
+    right: 4px !important;
+    top: auto !important;
+    left: auto !important;
+    bottom: 4px !important;
+    height: 500px;
+    width: 500px;
+    background: transparent !important;
+    border: 0px !important;
+    z-index: 2147483647 !important;
+    overflow: hidden !important;
+}

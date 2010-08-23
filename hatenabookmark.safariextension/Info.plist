@@ -16,6 +16,17 @@
 	<string>1</string>
 	<key>Chrome</key>
 	<dict>
+		<key>Context Menu Items</key>
+		<array>
+			<dict>
+				<key>Command</key>
+				<string>HatenaBookmarkShowPopularPages</string>
+				<key>Identifier</key>
+				<string>show-hatena-bookmark-popular-pages</string>
+				<key>Title</key>
+				<string>サイトの人気ページを表示</string>
+			</dict>
+		</array>
 		<key>Database Quota</key>
 		<real>104857600</real>
 		<key>Global Page</key>
@@ -43,6 +54,8 @@
 				<string>bookmark-button-comment</string>
 				<key>Image</key>
 				<string>images/comment.png</string>
+				<key>Include By Default</key>
+				<false/>
 				<key>Label</key>
 				<string>はてブコメント</string>
 				<key>Palette Label</key>
@@ -57,6 +70,8 @@
 				<string>bookmark-button-bookmark</string>
 				<key>Image</key>
 				<string>images/append.png</string>
+				<key>Include By Default</key>
+				<false/>
 				<key>Label</key>
 				<string>はてブ追加</string>
 				<key>Palette Label</key>
@@ -88,18 +103,21 @@
 		<dict>
 			<key>End</key>
 			<array>
+				<string>lib/Connect.js</string>
 				<string>content/popup_manager.js</string>
 				<string>content/widget_embedder.js</string>
+				<string>content/key_handler.js</string>
 			</array>
 			<key>Start</key>
 			<array>
 				<string>lib/Connect.js</string>
 				<string>content/location_checker.js</string>
+				<string>content/floating_counter.js</string>
 			</array>
 		</dict>
 		<key>Stylesheets</key>
 		<array>
-			<string>content/widget_embedder.css</string>
+			<string>content/popup_window.css</string>
 		</array>
 	</dict>
 	<key>Description</key>
