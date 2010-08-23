@@ -15,12 +15,8 @@ if (!urlGiven) {
 window.addEventListener("message", function (ev) {
     var uri    = URI.parse(request_uri.param('url'));
     var origin = uri.schema + "://" + uri.host;
-    try {
-        var method = event.data.method;
-        var data = event.data.data;
-    } catch(error) {
-        return;
-    }
+    var method = event.data.method;
+    var data = event.data.data;
 
     if (ev.origin !== origin)
         return;
@@ -30,14 +26,17 @@ window.addEventListener("message", function (ev) {
         View.bookmark.updatePageData(data);
         break;
     case 'resize':
-        resizeWindow();
+        resizeWindow(data);
         break;
     }
     // resize
 }, false);
 
-function resizeWindow() {
+function resizeWindow(data) {
     var height = window.innerHeight;
+
+    if (data && data.height)
+        height = data.height;
 
     $("#search-container").css('max-height', height - 100);
     $("#comment-list").css('max-height', height - 100 - 20);

@@ -53,15 +53,25 @@
                 })
                 .close();
         },
-        setHeight: function() {
-            try {
-                if (!this.popup) return;
-                var height = window.innerHeight * 0.9;
-                this.popup.style.setProperty('height', height + 'px', 'important');
-                this.popup.contentWindow.postMessage({ method: 'resize', data: true}, safari.extension.baseURI + "background/popup.html");
-            } catch(e) {
-                console.log(e);
+        refreshResizeQueue: function () {
+            if (this.resizeTimer) {
+                window.clearTimeout(this.resizeTimer);
+                this.resizeTimer = null;
             }
+
+            this.resizeTimer = window.setTimeout(PopupManager.resize, 500);
+        },
+        resize: function () {
+            var self = PopupManager;
+
+            var height = window.innerHeight * 0.9;
+            self.popup.style.setProperty('height', height + 'px', 'important');
+            self.popup.contentWindow.postMessage({ method: 'resize', data: {height : height}},
+                                                 safari.extension.baseURI + "background/popup.html");
+        },
+        setHeight: function() {
+            if (!this.popup) return;
+            this.refreshResizeQueue();
         },
         hide: function() {
             if (!this.popup) return;
@@ -184,8 +194,6 @@
 
     function includeFlash() {
         return Array.prototype.some.call(document.querySelectorAll('object, embed'), function(flash) {
-            console.log(flash);
-            console.log(is_in_view(flash));
             return is_in_view(flash);
         });
     }
