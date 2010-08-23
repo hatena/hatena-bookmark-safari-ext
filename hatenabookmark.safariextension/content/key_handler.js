@@ -32,6 +32,8 @@
         checkEquality: function (prefix, ev) {
             var key = String.fromCharCode(this.correctCharCode(ev.charCode));
 
+            console.log("Handled " + key);
+
             return (settings[prefix]["key"]   == key)
                 && (settings[prefix]["shift"] == ev.shiftKey)
                 && (settings[prefix]["ctrl"]  == ev.ctrlKey)
@@ -52,7 +54,6 @@
     };
 
     KeyManager.add("addBookmark", function () {
-        console.log("Add Book Mark");
         Connect().send("PopupManager.show", {
             url  : location.href,
             view : "bookmark"
@@ -60,7 +61,6 @@
     });
 
     KeyManager.add("showComment", function () {
-        console.log("Show Comment");
         Connect().send("PopupManager.show", {
             url  : location.href,
             view : "comment"

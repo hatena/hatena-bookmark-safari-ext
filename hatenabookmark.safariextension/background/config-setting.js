@@ -26,16 +26,16 @@
         'contextmenu.enabled': true,
         'content.fans.enabled': true,
         'content.bookmarkcounter.enabled': true,
-        'shortcut.addBookmark.key': 'c',
+        'shortcut.addBookmark.key': 'b',
         'shortcut.addBookmark.ctrl': true,
-        'shortcut.addBookmark.shift': true,
+        'shortcut.addBookmark.shift': false,
         'shortcut.addBookmark.alt': false,
-        'shortcut.addBookmark.command': false,
-        'shortcut.showComment.key': 'b',
+        'shortcut.addBookmark.meta': false,
+        'shortcut.showComment.key': 'c',
         'shortcut.showComment.ctrl': true,
         'shortcut.showComment.shift': true,
         'shortcut.showComment.alt': false,
-        'shortcut.showComment.command': false
+        'shortcut.showComment.meta': false
     };
 
     // ================================================== //
