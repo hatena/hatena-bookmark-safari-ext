@@ -8,11 +8,11 @@
         commands: {},
 
         start: function () {
-            window.addEventListener("keypress", this, true);
+            window.addEventListener("keydown", this, true);
         },
 
         stop: function () {
-            window.removeEventListener("keypress", this, true);
+            window.removeEventListener("keydown", this, true);
         },
 
         add: function (prefix, func) {
@@ -29,10 +29,25 @@
             return charCode + 96;
         },
 
-        checkEquality: function (prefix, ev) {
-            var key = String.fromCharCode(this.correctCharCode(ev.charCode));
+        correctKeyCode: function (keyCode) {
+            if (keyCode >= 0x61 && keyCode <= 0x7a)
+                return keyCode;
 
-            console.log("Handled " + key);
+            if (keyCode >= 0x41 && keyCode <= 0x5a)
+                return keyCode + 32;
+
+            return -1;
+        },
+
+        checkEquality: function (prefix, ev) {
+            var keyCode = this.correctKeyCode(ev.keyCode);
+
+            if (keyCode < 0)
+                return false;
+
+            var key = String.fromCharCode(keyCode);
+
+            // console.log("Handled " + key);
 
             return (settings[prefix]["key"]   == key)
                 && (settings[prefix]["shift"] == ev.shiftKey)
@@ -47,8 +62,14 @@
 
         handleEvent: function (ev) {
             for (var prefix in this.commands) {
-                if (this.checkEquality(prefix, ev))
-                    return this.execCommand(prefix, ev);
+                if (this.checkEquality(prefix, ev)) {
+                    this.execCommand(prefix, ev);
+
+                    ev.stopPropagation();
+                    ev.preventDefault();
+
+                    return;
+                }
             }
         }
     };

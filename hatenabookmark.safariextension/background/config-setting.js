@@ -28,7 +28,7 @@
         'content.bookmarkcounter.enabled': true,
         'shortcut.addBookmark.key': 'b',
         'shortcut.addBookmark.ctrl': true,
-        'shortcut.addBookmark.shift': false,
+        'shortcut.addBookmark.shift': true,
         'shortcut.addBookmark.alt': false,
         'shortcut.addBookmark.meta': false,
         'shortcut.showComment.key': 'c',
