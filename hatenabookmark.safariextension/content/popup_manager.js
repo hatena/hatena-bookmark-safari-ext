@@ -35,8 +35,7 @@
                 popup.src = self.getSrc(args);
                 popup.style.setProperty('display', 'block', 'important');
                 popup.style.setProperty('width', _width + 'px', 'important');
-                var height = window.innerHeight * 0.9;
-                popup.style.setProperty('height', height + 'px', 'important');
+                self.setHeight(popup);
             }
 
             Connect()
@@ -53,6 +52,16 @@
                         showPopup();
                 })
                 .close();
+        },
+        setHeight: function() {
+            try {
+                if (!this.popup) return;
+                var height = window.innerHeight * 0.9;
+                this.popup.style.setProperty('height', height + 'px', 'important');
+                this.popup.contentWindow.postMessage({ method: 'resize', data: true}, safari.extension.baseURI + "background/popup.html");
+            } catch(e) {
+                console.log(e);
+            }
         },
         hide: function() {
             if (!this.popup) return;
@@ -137,12 +146,17 @@
 
         switch (ev.data) {
         case "getInfo":
-            ev.source.postMessage(PageInformationManager.getInfo(ev), ev.origin);
+            ev.source.postMessage({ method: 'getInfo', data: PageInformationManager.getInfo(ev)}, ev.origin);
             break;
         case "closeIframe":
             PopupManager.hide(ev);
         }
     }, false);
+
+    window.addEventListener("resize", function (ev) {
+        PopupManager.setHeight();
+    });
+
 
     function extensionMessageHandler(event) {
         switch (event.name) {

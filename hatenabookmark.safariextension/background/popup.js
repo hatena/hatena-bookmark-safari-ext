@@ -12,6 +12,39 @@ if (!urlGiven) {
     };
 }
 
+window.addEventListener("message", function (ev) {
+    var uri    = URI.parse(request_uri.param('url'));
+    var origin = uri.schema + "://" + uri.host;
+    try {
+        var method = event.data.method;
+        var data = event.data.data;
+    } catch(error) {
+        return;
+    }
+
+    if (ev.origin !== origin)
+        return;
+
+    switch(method) {
+    case 'getInfo':
+        View.bookmark.updatePageData(data);
+        break;
+    case 'resize':
+        resizeWindow();
+        break;
+    }
+    // resize
+}, false);
+
+function resizeWindow() {
+    var height = window.innerHeight;
+
+    $("#search-container").css('max-height', height - 100);
+    $("#comment-list").css('max-height', height - 100 - 20);
+    $("#bookmark-edit-container").css({ 'max-height': height - 100, 'overflow-y': 'scroll'});
+}
+
+
 function closeWin() {
     window.parent.postMessage("closeIframe", request_uri.param("url"));
 }
@@ -595,16 +628,6 @@ var View = {
             var url = info.url;
 
             // TODO: 綺麗に抽象化したい
-            window.addEventListener("message", function (ev) {
-                var uri    = URI.parse(url);
-                var origin = uri.schema + "://" + uri.host;
-                var data   = event.data;
-
-                if (ev.origin !== origin)
-                    return;
-
-                View.bookmark.updatePageData(data);
-            }, false);
             window.parent.postMessage("getInfo", url);
 
             var lastCommentValueConf = Config.get('popup.bookmark.lastCommentValue');
@@ -1044,9 +1067,7 @@ var prepareUser = function() {
 }
 
 var ready = function() {
-    $("#search-container").css('max-height', window.innerHeight - 100);
-    $("#comment-list").css('max-height', window.innerHeight - 100 - 20);
-    $("#bookmark-edit-container").css({ 'max-height': window.innerHeight - 100, 'overflow-y': 'scroll'});
+    resizeWindow();
 
     if (!window.urlGiven) {
         if (request_uri.param('error')) {
