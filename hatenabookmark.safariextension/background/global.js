@@ -31,4 +31,10 @@ setInterval(function() {
 Model.Bookmark.afterSave = function() {
 }
 
+$(document).bind('BookmarksUpdated', function(event) {
+    console.log('BookmarksUpdated');
+    TabManager.trigger('change');
+});
+
+
 console.log('background loaded');
