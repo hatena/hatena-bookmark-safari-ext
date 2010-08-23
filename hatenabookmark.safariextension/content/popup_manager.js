@@ -71,6 +71,9 @@
                     + encodeURIComponent((document.querySelector('link[rel~="icon"]') || { href: '' }).href);
             }
 
+            if (args.error)
+                base += "&error=1";
+
             return base;
         }
     };
