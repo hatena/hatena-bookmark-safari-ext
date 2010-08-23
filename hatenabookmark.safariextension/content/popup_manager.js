@@ -161,7 +161,11 @@
     }
 
     function popupEmbeddable() {
-        return !!(document.body && document.body.localName.toLowerCase() !== "frameset" && !includeFlash());
+        return !!(document.body && document.body.localName.toLowerCase() !== "frameset" && !includeFlash() && !bodyIsInline());
+    }
+
+    function bodyIsInline() {
+        return window.getComputedStyle(document.body).display.toLowerCase() == 'inline';
     }
 
     function includeFlash() {
