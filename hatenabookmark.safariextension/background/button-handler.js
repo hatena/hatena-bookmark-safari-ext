@@ -70,11 +70,11 @@
         return buttons;
     }
 
-    function showPopup(view) {
+    function showPopup(view, url) {
         var tab  = safari.application.activeBrowserWindow.activeTab;
         var page = tab.page;
 
-        page.dispatchMessage("showPopup", {view: view});
+        page.dispatchMessage("showPopup", {view: view, url: url});
     }
 
     var URINormalizer = {
@@ -124,14 +124,19 @@
     }
 
     function performCommand(event) {
+        var url;
+        if (event.userInfo && event.userInfo.url) {
+            url = event.userInfo.url;
+        }
+
         switch (event.command) {
         case "bookmarkButtonComment":
         case "HatenaBookmarkShowBookmarkComment":
-            showPopup('comment');
+            showPopup('comment', url);
             break;
         case "bookmarkButtonBookmark":
         case "HatenaBookmarkAddBookmark":
-            showPopup('bookmark');
+            showPopup('bookmark', url);
             break;
         case "bookmarkButton":
             showPopup();
@@ -184,4 +189,15 @@
             });
         }
     });
+
+
+    safari.application.addEventListener("contextmenu", handleContextMenu, false);
+
+    function handleContextMenu(event) {
+        if (event.userInfo && event.userInfo.nodeName.toLowerCase() === "a") {
+            event.contextMenu.appendContextMenuItem("HatenaBookmarkAddBookmark", "リンク先をはてブに追加");
+            event.contextMenu.appendContextMenuItem("HatenaBookmarkShowBookmarkComment", "リンク先のはてブコメントを表示");
+        }
+    }
+
 })();

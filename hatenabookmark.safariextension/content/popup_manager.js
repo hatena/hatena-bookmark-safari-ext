@@ -174,4 +174,16 @@
             .recv(function () {})
             .close();
     }
+
+
+    // TODO: これがここにあるのはやばい
+    document.addEventListener("contextmenu", handleContextMenu, false);
+
+    function handleContextMenu(event) {
+        safari.self.tab.setContextMenuEventUserInfo(event, {
+            nodeName: event.target.nodeName,
+            url: event.target.href
+        });
+    }
+
 })();
