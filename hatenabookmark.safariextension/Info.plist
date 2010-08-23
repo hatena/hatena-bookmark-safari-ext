@@ -20,22 +20,6 @@
 		<array>
 			<dict>
 				<key>Command</key>
-				<string>HatenaBookmarkAddBookmark</string>
-				<key>Identifier</key>
-				<string>add-hatena-bookmark</string>
-				<key>Title</key>
-				<string>はてなブックマークに追加</string>
-			</dict>
-			<dict>
-				<key>Command</key>
-				<string>HatenaBookmarkShowBookmarkComment</string>
-				<key>Identifier</key>
-				<string>show-hatena-bookmark-comment</string>
-				<key>Title</key>
-				<string>はてブコメント表示</string>
-			</dict>
-			<dict>
-				<key>Command</key>
 				<string>HatenaBookmarkShowPopularPages</string>
 				<key>Identifier</key>
 				<string>show-hatena-bookmark-popular-pages</string>

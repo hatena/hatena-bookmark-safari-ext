@@ -195,8 +195,15 @@
 
     function handleContextMenu(event) {
         if (event.userInfo && event.userInfo.nodeName.toLowerCase() === "a") {
-            event.contextMenu.appendContextMenuItem("HatenaBookmarkAddBookmark", "リンク先をはてブに追加");
-            event.contextMenu.appendContextMenuItem("HatenaBookmarkShowBookmarkComment", "リンク先のはてブコメントを表示");
+            if (validateURL(event.userInfo.url)) {
+                event.contextMenu.appendContextMenuItem("HatenaBookmarkAddBookmark", "リンク先をはてブに追加");
+                event.contextMenu.appendContextMenuItem("HatenaBookmarkShowBookmarkComment", "リンク先のはてブコメントを表示");
+            }
+        } else {
+            if (validateURL(event.target.url)) {
+                event.contextMenu.appendContextMenuItem("HatenaBookmarkAddBookmark", "このページをはてブに追加");
+                event.contextMenu.appendContextMenuItem("HatenaBookmarkShowBookmarkComment", "このページのはてブコメントを表示");
+            }
         }
     }
 
