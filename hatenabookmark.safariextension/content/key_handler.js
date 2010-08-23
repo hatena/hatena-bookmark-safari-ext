@@ -47,8 +47,6 @@
 
             var key = String.fromCharCode(keyCode);
 
-            // console.log("Handled " + key);
-
             return (settings[prefix]["key"]   == key)
                 && (settings[prefix]["shift"] == ev.shiftKey)
                 && (settings[prefix]["ctrl"]  == ev.ctrlKey)
@@ -60,7 +58,27 @@
             this.commands[prefix](ev);
         },
 
+        inputtingText: function (ev) {
+            var elem = ev.target;
+            var tag  = elem.localName.toLowerCase();
+
+            if (tag === 'textarea')
+                return true;
+
+            if (tag === 'input') {
+                var type = elem.getAttribute('type');
+
+                if (!type || type === 'text' || type === 'password')
+                    return true;
+            }
+
+            return false;
+        },
+
         handleEvent: function (ev) {
+            if (this.inputtingText(ev))
+                return;
+
             for (var prefix in this.commands) {
                 if (this.checkEquality(prefix, ev)) {
                     this.execCommand(prefix, ev);
