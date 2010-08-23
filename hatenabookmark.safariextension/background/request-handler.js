@@ -37,7 +37,7 @@ Response(function (get, deferred) {
     });
 
     get("Model.Bookmark.search", function (ev, matched, dispatch) {
-        // searchwordã‚‚argsã«å…¥ã‚Œã‚‹ args.word
+        // searchwordç¹§ï¼¢rgsç¸ºï½«èœˆï½¥ç¹§å¾Œï½‹ args.word
         var args = ev.message;
         var word = args.word;
 
@@ -55,7 +55,7 @@ Response(function (get, deferred) {
     });
 
     get("UserManager.user", function (ev, matched, dispatch) {
-        // TODO: ”ñ“¯Šú“I‚É dispatch ‚µ‚Ä‚â‚ç‚È‚¢‚Æ‚¨‚©‚µ‚­‚È‚éH
+        // TODO: éåŒæœŸçš„ã« dispatch ã—ã¦ã‚„ã‚‰ãªã„ã¨ãŠã‹ã—ããªã‚‹ï¼Ÿ
         setTimeout(function () {
             dispatch(UserManager.user);
         }, 0);
@@ -127,5 +127,20 @@ Response(function (get, deferred) {
         return true;
     });
 
+    get("Config.get.shortcuts", function (ev, matched, dispatch) {
+        var commands = {
+            addBookmark: {},
+            showComment: {}
+        };
 
+        var keys = ['key', 'ctrl', 'shift', 'alt', 'meta'];
+
+        for (var command in commands) {
+            keys.forEach(function (key) {
+                commands[command][key] = Config.get("shortcut." + command + "." + key);
+            });
+        }
+
+        return commands;
+    });
 });
