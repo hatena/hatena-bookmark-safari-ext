@@ -316,9 +316,9 @@
 	</dict>
 	<dict>
 		<key>Key</key>
-		<string>shortcut.addBookmark.command</string>
+		<string>shortcut.addBookmark.meta</string>
 		<key>Title</key>
-		<string>Command</string>
+		<string>Meta</string>
 		<key>Type</key>
 		<string>CheckBox</string>
 	</dict>
@@ -424,9 +424,9 @@
 	</dict>
 	<dict>
 		<key>Key</key>
-		<string>shortcut.showComment.command</string>
+		<string>shortcut.showComment.meta</string>
 		<key>Title</key>
-		<string>Command</string>
+		<string>Meta</string>
 		<key>Type</key>
 		<string>CheckBox</string>
 	</dict>
