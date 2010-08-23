@@ -796,9 +796,9 @@ var View = {
 
         setByBookmark: function(b) {
             if (b) {
-                $('#bookmarked-notice').text('このエントリーは ' + b.dateYMDHM + ' にブックマークしました')
-                .removeClass('none');
-                $('#delete-button').removeClass('none');
+                $('#bookmarked-notice > #bookmarked-notice-message').text('このエントリーは ' + b.dateYMDHM + ' にブックマークしました');
+                $('#bookmarked-notice > #bookmark-delete-link').removeClass('none');
+                $('#bookmarked-notice').removeClass('none');
                 $('#edit-submit').attr('value', '編集');
                 this.updateComment(b.comment);
             }

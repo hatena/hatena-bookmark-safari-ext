@@ -149,7 +149,10 @@
         <div class="table-left"><a id="link-canonical"></a></div><div class="table-right"><img src="../images/page.gif"> <a id="canonical-users"></a></div>
       </div>
     </div>
-    <div id="bookmarked-notice" class="none"></div>
+    <div id="bookmarked-notice" class="none">
+        <span id="bookmarked-notice-message"></span>
+        <a id="bookmark-delete-link" class="none" onclick="deleteBookmark(); return false;">削除する</a>
+    </div>
     <div id="bookmark-error" class="none"></div>
 
     <div id="image-detect-container" class="none">
@@ -282,15 +285,15 @@
     </dl>
     <div id="buttons">
         <div class="table-row">
-            <div class="edit-cell">
-                <input class="none" onclick="deleteBookmark();" id="delete-button" type="button" value="削除" />
-            </div>
+            <!-- <div class="edit-cell"> -->
+            <!--     <input class="none" onclick="deleteBookmark();" id="delete-button" type="button" value="削除" /> -->
+            <!-- </div> -->
             <div class="edit-cell">
                 <input id="edit-submit" type="submit" value="追加" />
             </div>
-            <div class="edit-cell">
-                <input onclick="closeWin();" id="cancel" type="button" value="キャンセル" />
-            </div>
+            <!-- <div class="edit-cell"> -->
+            <!--     <input onclick="closeWin();" id="cancel" type="button" value="キャンセル" /> -->
+            <!-- </div> -->
         </div>
     </div>
     </form>

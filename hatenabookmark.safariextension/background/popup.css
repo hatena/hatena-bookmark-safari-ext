@@ -528,8 +528,12 @@ a.username {
     padding: 1px 0 1px 0;
 }
 
-#buttons div.edit-cell:first-child {
-  width: 100%;
+/* #buttons div.edit-cell:first-child { */
+/*   width: 100%; */
+/* } */
+
+#buttons div.table-row {
+    text-align : right;
 }
 
 .edit-left {
@@ -1097,4 +1101,13 @@ em a:visited {
 
 #search-tab {
   padding-left: 0;
+}
+
+/*  */
+
+#bookmark-delete-link {
+    text-decoration : underline;
+    padding-left    : 0.6em;
+    color           : blue;
+    cursor          : pointer;
 }
