@@ -54,7 +54,8 @@
 		<string>コメントの表示</string>
 		<key>Titles</key>
 		<array>
-			<string>表示・非表示を手動で切り替え</string>
+			<string>すべてのユーザーを表示</string>
+			<string>コメントのあるユーザーのみ表示</string>
 			<string>15件以下ならすべて表示</string>
 			<string>25件以下ならすべて表示</string>
 			<string>50件以下ならすべて表示</string>
@@ -63,7 +64,8 @@
 		<string>PopUpButton</string>
 		<key>Values</key>
 		<array>
-			<real>-1</real>
+			<real>9999999</real>
+			<real>1</real>
 			<real>15</real>
 			<real>25</real>
 			<real>50</real>

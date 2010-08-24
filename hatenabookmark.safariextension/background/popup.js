@@ -289,11 +289,7 @@ var View = {
             }
             var publicLen = bookmarks.length;
 
-            if (Config.get('popup.commentviewer.autodetect.threshold') >= 0) {
-                if (Config.get('popup.commentviewer.autodetect.threshold') < publicLen) {
-                    self.hideNoComment();
-                }
-            } else if (!Config.get('popup.commentviewer.togglehide')) {
+            if (Config.get('popup.commentviewer.autodetect.threshold') < publicLen) {
                 self.hideNoComment();
             }
 
