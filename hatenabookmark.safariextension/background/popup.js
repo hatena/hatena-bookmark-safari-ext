@@ -124,10 +124,17 @@ var createBookmarkList = function(bookmark) {
            html.link = E('a', { target: '_blank' }, Utils.truncate(bookmark.title, 56)))
     );
     html.appendChild(
-       html.commentDiv = E('div', {className: 'comment'},
-         html.tags      = E('span', {className: 'tags'}, bookmark.tags.join(', ')), ' ',
-         html.comment   = E('span', {className: 'comment'}, bookmark.body)
-       )
+        html.commentDiv = E(
+            'div', {className: 'comment'},
+            // html.tags = E('span', {className: 'tags'}, bookmark.tags.join(', ')),
+            html.tags = E.apply(null, ['span', {className: 'tags'}].concat(
+                bookmark.tags.map(function (tag) {
+                    return E('span', {className: 'search-tag'}, tag);
+                })
+            )),
+            ' ',
+            html.comment = E('span', {className: 'comment'}, bookmark.body)
+        )
     );
     html.appendChild(
        html.urlDiv = E('div', {className: 'infos'},

@@ -1124,3 +1124,17 @@ em a:visited {
   text-align: left;
   margin-bottom: 1em;
 }
+
+/* tags in search result */
+
+.search-tag {
+    cursor : pointer;
+}
+
+.search-tag:before {
+    content: ", ";
+}
+
+.search-tag:first-child:before {
+    content: "";
+}
