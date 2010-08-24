@@ -68,12 +68,6 @@
 	</dict>
 	<dict>
 		<key>Title</key>
-		<string>検索</string>
-		<key>Type</key>
-		<string>Group</string>
-	</dict>
-	<dict>
-		<key>Title</key>
 		<string>タグ</string>
 		<key>Type</key>
 		<string>Group</string>
