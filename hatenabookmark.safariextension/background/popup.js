@@ -627,7 +627,7 @@ var View = {
             var url = info.url;
 
             // TODO: 綺麗に抽象化したい
-            window.parent.postMessage("getInfo", url);
+            // window.parent.postMessage("getInfo", url);
 
             var lastCommentValueConf = Config.get('popup.bookmark.lastCommentValue');
             if (lastCommentValueConf && lastCommentValueConf.url == url) {
