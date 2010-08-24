@@ -12,7 +12,6 @@
         lastView: null,
         show: function(args) {
             var self = this;
-            var _width;
             function showPopup() {
                 if (self.popup && self.popup.style.display != 'none' && args && args.view == self.lastView) {
                     self.lastView = args && args.view;
@@ -34,24 +33,16 @@
                 var popup = self.popup;
                 popup.src = self.getSrc(args);
                 popup.style.setProperty('display', 'block', 'important');
-                popup.style.setProperty('width', _width + 'px', 'important');
                 self.setHeight(popup);
             }
 
-            Connect()
-                .send("Config.get", { key: "popup.window.width" })
-                .recv(function(event) {
-                    _width = event.message;
-
-                    if (args.view)
-                        Connect()
-                        .send("Config.set", { key: "popup.lastView", value : args.view })
-                        .recv(showPopup)
-                        .close();
-                    else
-                        showPopup();
-                })
+            if (args.view)
+                Connect()
+                .send("Config.set", { key: "popup.lastView", value : args.view })
+                .recv(showPopup)
                 .close();
+            else
+                showPopup();
         },
         refreshResizeQueue: function () {
             if (this.resizeTimer) {

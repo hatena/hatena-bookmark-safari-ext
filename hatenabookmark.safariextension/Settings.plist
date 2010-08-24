@@ -69,34 +69,6 @@
 			<real>50</real>
 		</array>
 	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<real>550</real>
-		<key>Key</key>
-		<string>popup.window.width</string>
-		<key>MaximumValue</key>
-		<real>2000</real>
-		<key>MinimumValue</key>
-		<real>300</real>
-		<key>Title</key>
-		<string>横幅</string>
-		<key>Titles</key>
-		<array>
-			<string>550px</string>
-			<string>640px</string>
-			<string>960px</string>
-			<string>1280px</string>
-		</array>
-		<key>Type</key>
-		<string>PopUpButton</string>
-		<key>Values</key>
-		<array>
-			<real>550</real>
-			<real>640</real>
-			<real>960</real>
-			<real>1280</real>
-		</array>
-	</dict>
 
 	<dict>
 		<key>Title</key>

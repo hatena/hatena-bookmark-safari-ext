@@ -4,10 +4,6 @@
     // safari.extension.settings
     // ================================================== //
     var extensionSettings = {
-        'popup.window.width': {
-            'default': 550,
-            type: 'unsignedInt'
-        },
         'popup.window.height': {
             'default': 450,
             type: 'unsignedInt'

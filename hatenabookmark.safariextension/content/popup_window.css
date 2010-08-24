@@ -6,7 +6,7 @@ iframe#hatena-bookmark-safari-popup-window {
     left: auto !important;
     bottom: auto !important;
     height: 590px;
-    width: 550px;
+    width: 550px !important;
     background: white !important;
     border: 0px !important;
     -webkit-box-shadow: 0px 3px 14px #555555 !important;
