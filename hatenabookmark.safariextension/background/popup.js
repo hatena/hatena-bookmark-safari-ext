@@ -261,15 +261,15 @@ var View = {
             this.list.removeClass('hide-nocomment');
             Config.set('popup.commentviewer.togglehide', true);
             this.commentToggle.attr('src', '../images/comment-viewer-toggle-on.png');
-            this.commentToggle.attr('title', 'コメントがないユーザを非表示');
-            this.commentToggle.attr('alt', 'コメントがないユーザを非表示');
+            this.commentToggle.attr('title', 'コメントがないユーザーを非表示');
+            this.commentToggle.attr('alt', 'コメントがないユーザーを非表示');
         },
         hideNoComment: function() {
             this.list.addClass('hide-nocomment');
             Config.set('popup.commentviewer.togglehide', false);
             this.commentToggle.attr('src', '../images/comment-viewer-toggle-off.png');
-            this.commentToggle.attr('title', 'すべてのユーザを表示');
-            this.commentToggle.attr('alt', 'すべてのユーザを表示');
+            this.commentToggle.attr('title', 'すべてのユーザーを表示');
+            this.commentToggle.attr('alt', 'すべてのユーザーを表示');
         },
         toggleNoComment: function() {
             if (this.list.hasClass('hide-nocomment')) {
