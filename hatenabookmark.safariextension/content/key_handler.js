@@ -19,16 +19,6 @@
             this.commands[prefix] = func;
         },
 
-        correctCharCode: function (charCode) {
-            if (charCode >= 0x61 && charCode <= 0x7a)
-                return charCode;
-
-            if (charCode >= 0x41 && charCode <= 0x5a)
-                return charCode + 32;
-
-            return charCode + 96;
-        },
-
         correctKeyCode: function (keyCode) {
             if (keyCode >= 0x61 && keyCode <= 0x7a)
                 return keyCode;
