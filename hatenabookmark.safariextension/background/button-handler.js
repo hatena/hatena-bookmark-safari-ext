@@ -221,13 +221,13 @@
             if (validateURL(event.target.url)) {
                 if (getBookmarkButtons().length == 0) {
                     // ブクマボタンでてないとき
-                    event.contextMenu.appendContextMenuItem("HatenaBookmarkAddBookmark", "このページをはてなブックマークに追加");
-                    event.contextMenu.appendContextMenuItem("HatenaBookmarkShowBookmarkComment", "このページのはてなブックマークコメントを表示");
+                    event.contextMenu.appendContextMenuItem("HatenaBookmarkAddBookmark", "はてなブックマークに追加");
+                    event.contextMenu.appendContextMenuItem("HatenaBookmarkShowBookmarkComment", "はてなブックマークコメントを表示");
                 }
                 console.log(getBookmarkButtons());
                 if (!getBookmarkButton('popularPagesButton')) {
                     // 人気エントリ表示ボタンがでてないときコンテキストメニュー出す
-                    event.contextMenu.appendContextMenuItem("HatenaBookmarkShowPopularPages", "このページの人気エントリを表示");
+                    event.contextMenu.appendContextMenuItem("HatenaBookmarkShowPopularPages", "サイトの人気エントリを表示");
                 }
             }
         }

@@ -34,7 +34,7 @@
 				<key>Palette Label</key>
 				<string>はてなブックマーク</string>
 				<key>Tool Tip</key>
-				<string>ポップアップを表示します</string>
+				<string>はてなブックマーク</string>
 			</dict>
 			<dict>
 				<key>Command</key>
@@ -46,11 +46,11 @@
 				<key>Include By Default</key>
 				<false/>
 				<key>Label</key>
-				<string>はてブコメント</string>
+				<string>はてなブックマークコメントを表示</string>
 				<key>Palette Label</key>
-				<string>はてブコメントを表示</string>
+				<string>はてなブックマークコメント</string>
 				<key>Tool Tip</key>
-				<string>はてブコメントを表示します</string>
+				<string>はてなブックマークコメントを表示します</string>
 			</dict>
 			<dict>
 				<key>Command</key>
@@ -62,11 +62,11 @@
 				<key>Include By Default</key>
 				<false/>
 				<key>Label</key>
-				<string>はてブ追加</string>
+				<string>はてなブックマークに追加</string>
 				<key>Palette Label</key>
-				<string>はてブ追加</string>
+				<string>はてなブックマークに追加</string>
 				<key>Tool Tip</key>
-				<string>はてブに追加します</string>
+				<string>現在のページをはてなブックマークに追加します</string>
 			</dict>
 			<dict>
 				<key>Command</key>
@@ -78,11 +78,11 @@
 				<key>Include By Default</key>
 				<false/>
 				<key>Label</key>
-				<string>このサイトの人気ページ</string>
+				<string>サイトの人気ページを表示</string>
 				<key>Palette Label</key>
-				<string>このサイトの人気ページを表示します</string>
+				<string>サイトの人気ページ</string>
 				<key>Tool Tip</key>
-				<string>人気ページ表示！</string>
+				<string>現在のサイトの人気ページを表示します</string>
 			</dict>
 		</array>
 	</dict>
