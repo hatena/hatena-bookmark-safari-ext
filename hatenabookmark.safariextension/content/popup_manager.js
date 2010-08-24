@@ -10,10 +10,26 @@
     var PopupManager = {
         popup: null,
         lastView: null,
+        hiddenFlashPairs: null,
+
+        // ============================================================ //
+        // Show / Hide
+        // ============================================================ //
+
+        hide: function() {
+            this.recoverHiddenFlashesVisibility();
+
+            if (!this.popup) return;
+            this.popup.style.setProperty('display', 'none', 'important');
+            this.popup.src = safari.extension.baseURI + "background/blank.html";
+        },
+
         show: function(args) {
             var self = this;
-            var _width;
-            function showPopup() {
+
+            function showPopup(opts) {
+                opts = opts || {};
+
                 if (self.popup && self.popup.style.display != 'none' && args && args.view == self.lastView) {
                     self.lastView = args && args.view;
                     self.hide();
@@ -34,25 +50,93 @@
                 var popup = self.popup;
                 popup.src = self.getSrc(args);
                 popup.style.setProperty('display', 'block', 'important');
-                popup.style.setProperty('width', _width + 'px', 'important');
+                popup.style.setProperty('width', opts.width + 'px', 'important');
                 self.setHeight(popup);
+
+                // Flash の overlap などを確認する
+                self.ensurePopupVisibility();
             }
 
             Connect()
                 .send("Config.get", { key: "popup.window.width" })
                 .recv(function(event) {
-                    _width = event.message;
+                    var opts = { width : event.message };
 
                     if (args.view)
                         Connect()
                         .send("Config.set", { key: "popup.lastView", value : args.view })
-                        .recv(showPopup)
+                        .recv(function (ev) { showPopup(opts); })
                         .close();
                     else
-                        showPopup();
+                        showPopup(opts);
                 })
                 .close();
         },
+
+        showInNewTab:
+        function showInNewTab(args) {
+            Connect()
+                .send("Abstract.tabs.create", {
+                    url      : PageInformationManager.getEntryPageURL(args.url || location.href),
+                    selected : true
+                })
+                .recv(function () {})
+                .close();
+        },
+
+        // ============================================================ //
+        // Visibility
+        // ============================================================ //
+
+        // ポップアップが正しく表示できるかを確認する
+        ensurePopupVisibility: function () {
+            var overlappedFlashes = this.getOverlappedFlashes();
+            var hiddenFlashPairs  = [];
+
+            console.dir(overlappedFlashes);
+
+            overlappedFlashes.forEach(function (flash) {
+                var pair = [flash, flash.style.visibility];
+                flash.style.setProperty("visibility", "hidden", "important");
+
+                hiddenFlashPairs.push(pair);
+            });
+
+            this.hiddenFlashPairs = hiddenFlashPairs;
+        },
+
+        recoverHiddenFlashesVisibility: function () {
+            if (!this.hiddenFlashPairs)
+                return;
+
+            this.hiddenFlashPairs.forEach(function (pair) {
+                var flash           = pair[0];
+                var savedVisibility = pair[1];
+
+                flash.style.visibility = savedVisibility;
+            });
+
+            this.hiddenFlashPairs = null;
+        },
+
+        // Flash と重ならないかをチェックし, 重なっている Flash を返す
+        getOverlappedFlashes: function () {
+            var self = this;
+            var popupRect = this.popup.getBoundingClientRect();
+
+            var overlappedFlashes = [];
+
+            return Array.prototype.slice.call(document.querySelectorAll('object, embed'))
+                // .filter(RectUtils.isInView)
+                .filter(function (flash) {
+                    return RectUtils.rectOverlapsRect(flash.getBoundingClientRect(), popupRect);
+                });
+        },
+
+        // ============================================================ //
+        // Resize
+        // ============================================================ //
+
         refreshResizeQueue: function () {
             if (this.resizeTimer) {
                 window.clearTimeout(this.resizeTimer);
@@ -61,6 +145,7 @@
 
             this.resizeTimer = window.setTimeout(PopupManager.resize, 500);
         },
+
         resize: function () {
             var self = PopupManager;
 
@@ -69,15 +154,16 @@
             self.popup.contentWindow.postMessage({ method: 'resize', data: {height : height}},
                                                  safari.extension.baseURI + "background/popup.html");
         },
+
         setHeight: function() {
             if (!this.popup) return;
             this.refreshResizeQueue();
         },
-        hide: function() {
-            if (!this.popup) return;
-            this.popup.style.setProperty('display', 'none', 'important');
-            this.popup.src = safari.extension.baseURI + "background/blank.html";
-        },
+
+        // ============================================================ //
+        // Handle information
+        // ============================================================ //
+
         getSrc: function(args) {
             args = args || {};
 
@@ -97,56 +183,10 @@
         }
     };
 
-    var PageInformationManager = {
-        getInfo: function() {
-            var res = {};
-
-            res.url   = encodeURI(location.href);
-            res.title = document.title;
-
-            var cannonical = this.getCannonical();
-            if (cannonical)
-                res.cannonical = cannonical;
-
-            var images = this.getImages();
-            if (images && images.length)
-                res.images = images;
-
-            return res;
-        },
-        getCannonical: function () {
-            var link = document.evaluate(
-                '/h:html/h:head/h:link[translate(@rel, "CANONICAL", "canonical") = "canonical"]',
-                document,
-                function () { return document.documentElement.namespaceURI || ""; },
-                XPathResult.FIRST_ORDERED_NODE_TYPE,
-                null
-            ).singleNodeValue;
-            if (!link || !link.href) return null;
-            var url = link.href;
-            if (location.href == url) return null;
-            return url;
-        },
-        getImages: function () {
-            var images = Array.prototype.filter.call(
-                document.getElementsByTagName("img"),
-                function (img) { return (img instanceof HTMLImageElement); }
-            );
-
-            var maxCount = 20;
-            if (images.length > maxCount) {
-                images = images.map(function (image, index) {
-                    var size = Math.min(image.naturalWidth,
-                                        image.naturalHeight);
-                    return { image: image, size: size, index: index };
-                }).sort(function (a, b) { return b.size - a.size; })
-                    .slice(0, maxCount)
-                    .sort(function(a, b) { return a.index - b.index; })
-                    .map(function (item) { return item.image; });
-            }
-            return images.filter(function(image) { return image && image.src; }).map(function(image) { return image.src; });
-        }
-    };
+    function extractOrigin(str) {
+        var matched = str.match(/([a-z-]+:\/\/[^\/]+)/);
+        return matched[1];
+    }
 
     // おいとく
     window.addEventListener("message", function (ev) {
@@ -167,6 +207,7 @@
         PopupManager.setHeight();
     });
 
+    // ====================================================================== //
 
     function extensionMessageHandler(event) {
         switch (event.name) {
@@ -174,51 +215,18 @@
             if (popupEmbeddable())
                 PopupManager.show(event.message);
             else
-                openEntryPage();
+                PopupManager.showInNewTab(event.message);
             break;
         }
     }
 
-    function extractOrigin(str) {
-        var matched = str.match(/([a-z-]+:\/\/[^\/]+)/);
-        return matched[1];
-    }
-
     function popupEmbeddable() {
-        return !!(document.body && document.body.localName.toLowerCase() !== "frameset" && !includeFlash() && !bodyIsInline());
+        return !!(document.body && document.body.localName.toLowerCase() !== "frameset" && !bodyIsInline());
     }
 
     function bodyIsInline() {
         return window.getComputedStyle(document.body).display.toLowerCase() == 'inline';
     }
-
-    function includeFlash() {
-        return Array.prototype.some.call(document.querySelectorAll('object, embed'), function(flash) {
-            return is_in_view(flash);
-        });
-    }
-
-    function is_in_view(elem) {
-        var rect = elem.getBoundingClientRect();
-        var ws = [1, rect.width-1];
-        var hs = [1, rect.height-1];
-        for(var w in ws ) for(var h in hs)
-            if (document.elementFromPoint(rect.left + ws[w], rect.top + hs[h]) === elem) return true;
-        return false;
-    }
-
-
-    function getEntryPageURL(url) {
-        return "http://b.hatena.ne.jp/entry/" + url.replace(/^.*:\/\//, "");
-    }
-
-    function openEntryPage() {
-        Connect()
-            .send("Abstract.tabs.create", { url: getEntryPageURL(location.href), selected: true })
-            .recv(function () {})
-            .close();
-    }
-
 
     // TODO: これがここにあるのはやばい
     document.addEventListener("contextmenu", handleContextMenu, false);
@@ -229,5 +237,4 @@
             url: decodeURI(event.target.href) // XXX: aタグのhrefがencodeされているが．内部的にさらにencodeしているので，ここで1回decodeしてる
         });
     }
-
 })();
