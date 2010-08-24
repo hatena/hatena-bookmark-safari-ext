@@ -292,7 +292,7 @@ ul.tab-ui li.tab-link {
 }
 
 ul.tab-ui li.tab-link a {
-  display: inline-block !important;
+  display: inline-block;
 }
 
 ul.tab-ui li.tab-link img {
