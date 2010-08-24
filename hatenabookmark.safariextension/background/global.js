@@ -1,5 +1,3 @@
-console.log('background loading');
-
 var isEulaAgreed = function() {
     return !!localStorage.eula;
 }
@@ -9,7 +7,6 @@ UserManager.bind('UserChange', function() {
 });
 
 Sync.bind('complete', function() {
-    // Manager.editBookmark('http://example.com/');
     $(document).trigger('BookmarksUpdated');
 });
 
@@ -28,13 +25,10 @@ setInterval(function() {
 }, 1000 * 60 * 15);
 
 // chrome webdatabase 5M 制限のため、tag 参照テーブルを作らない
+// chrome拡張がこういうことなのでおいとく
 Model.Bookmark.afterSave = function() {
 }
 
 $(document).bind('BookmarksUpdated', function(event) {
-    console.log('BookmarksUpdated');
     TabManager.trigger('change');
 });
-
-
-console.log('background loaded');
