@@ -1040,6 +1040,15 @@ var ready = function() {
     $('#search-form').bind('submit', searchFormSubmitHandler);
     $('#search-word').bind('keyup', searchIncSearchHandler);
     $('#search-word').bind('click', searchIncSearchHandler);
+    $('.search-tag').live('click', function (ev) {
+        var tag = ev.target.textContent;
+        var old = $('#search-word').attr('value');
+
+        if (old.indexOf(tag) < 0)
+            $('#search-word').attr('value', old + ' ' + tag);
+
+        searchFormSubmitHandler({});
+    });
     $('#image-detect-container-list img').live('click', function() {
         View.bookmark.imageSelect(this);
     });
