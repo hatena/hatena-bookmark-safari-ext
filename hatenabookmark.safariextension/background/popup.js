@@ -5,7 +5,7 @@ var BG = this;
 var request_uri = URI.parse(location.href);
 
 window.addEventListener("message", function (ev) {
-    var uri    = URI.parse(request_uri.param('url'));
+    var uri    = URI.parse(request_uri.param('parent_url'));
     var origin = uri.schema + "://" + uri.host;
     var method = event.data.method;
     var data = event.data.data;
@@ -47,7 +47,7 @@ function resizeWindow(data) {
 
 
 function closeWin() {
-    window.parent.postMessage("closeIframe", request_uri.param("url"));
+    window.parent.postMessage("closeIframe", request_uri.param("parent_url"));
 }
 
 function resetDB() {

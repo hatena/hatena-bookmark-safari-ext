@@ -158,7 +158,8 @@
             args = args || {};
 
             var base = safari.extension.baseURI + "background/popup.html"
-                + '?url=' + encodeURIComponent(args.url || location.href);
+                + '?url=' + encodeURIComponent(args.url || location.href)
+                + '&parent_url=' + encodeURIComponent(location.href);
 
             if (!args.url) {
                 base += '&title=' + encodeURIComponent(document.title)
