@@ -82,23 +82,27 @@
         }
     };
 
-    KeyManager.add("addBookmark", function () {
-        Connect().send("PopupManager.show", {
-            url  : location.href,
-            view : "bookmark"
-        }).recv(function () {}).close();
-    });
-
-    KeyManager.add("showComment", function () {
-        Connect().send("PopupManager.show", {
-            url  : location.href,
-            view : "comment"
-        }).recv(function () {}).close();
-    });
-
     Connect()
         .send("Config.get.shortcuts").recv(function (ev) {
             settings = ev.message;
+
+            if (settings["shortcut.addBookmark.key"] !== "disabled") {
+                KeyManager.add("addBookmark", function () {
+                    Connect().send("PopupManager.show", {
+                        url  : location.href,
+                        view : "bookmark"
+                    }).recv(function () {}).close();
+                });
+            }
+
+            if (settings["shortcut.showComment.key"] !== "disabled") {
+                KeyManager.add("showComment", function () {
+                    Connect().send("PopupManager.show", {
+                        url  : location.href,
+                        view : "comment"
+                    }).recv(function () {}).close();
+                });
+            }
 
             if (settings["shortcut.addBookmark.key"] !== "disabled" &&
                 settings["shortcut.showComment.key"] !== "disabled") {
