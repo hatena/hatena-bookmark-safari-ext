@@ -16,17 +16,6 @@
 	<string>1</string>
 	<key>Chrome</key>
 	<dict>
-		<key>Context Menu Items</key>
-		<array>
-			<dict>
-				<key>Command</key>
-				<string>HatenaBookmarkShowPopularPages</string>
-				<key>Identifier</key>
-				<string>show-hatena-bookmark-popular-pages</string>
-				<key>Title</key>
-				<string>サイトの人気ページを表示</string>
-			</dict>
-		</array>
 		<key>Database Quota</key>
 		<real>104857600</real>
 		<key>Global Page</key>
@@ -83,7 +72,7 @@
 				<key>Command</key>
 				<string>popularPagesButton</string>
 				<key>Identifier</key>
-				<string>popular-page-button</string>
+				<string>popular-pages-button</string>
 				<key>Image</key>
 				<string>images/caution.png</string>
 				<key>Include By Default</key>

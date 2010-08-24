@@ -40,9 +40,10 @@
     var identifiers = {
         bookmarkButton         : Extension.getIdentifier("bookmark-button"),
         bookmarkButtonComment  : Extension.getIdentifier("bookmark-button-comment"),
-        bookmarkButtonBookmark : Extension.getIdentifier("bookmark-button-bookmark")
+        bookmarkButtonBookmark : Extension.getIdentifier("bookmark-button-bookmark"),
+        popularPagesButton     : Extension.getIdentifier("popular-pages-button"),
     };
-    var identifiersInOrder = ['bookmarkButtonComment', 'bookmarkButton', 'bookmarkButtonBookmark'];
+    var bookmarkIdentifiersInOrder = ['bookmarkButtonComment', 'bookmarkButton', 'bookmarkButtonBookmark'];
 
     var buttonImages = {};
     buttonImages[Extension.getIdentifier("bookmark-button")] = {
@@ -73,11 +74,11 @@
         return bookmarkButton;
     }
 
-    // ブクマ拡張が出してるボタン全部
-    // 最初のボタンにブクマカウンタがでる
+    // ポップアップを出すボタン
+    // 最初のブクマボタンにブクマカウンタがでる
     function getBookmarkButtons() {
         var buttons = [];
-        identifiersInOrder.forEach(function(key) {
+        bookmarkIdentifiersInOrder.forEach(function(key) {
             safari.extension.toolbarItems.forEach(function (toolbarItem) {
                 if (toolbarItem.identifier === identifiers[key]) buttons.push(toolbarItem);
             });
@@ -208,13 +209,20 @@
     function handleContextMenu(event) {
         if (event.userInfo && event.userInfo.nodeName.toLowerCase() === "a") {
             if (validateURL(event.userInfo.url)) {
-                event.contextMenu.appendContextMenuItem("HatenaBookmarkAddBookmark", "リンク先をはてブに追加");
-                event.contextMenu.appendContextMenuItem("HatenaBookmarkShowBookmarkComment", "リンク先のはてブコメントを表示");
+                event.contextMenu.appendContextMenuItem("HatenaBookmarkShowBookmarkComment", "リンク先のはてなブックマークコメントを表示");
             }
         } else {
             if (validateURL(event.target.url)) {
-                event.contextMenu.appendContextMenuItem("HatenaBookmarkAddBookmark", "このページをはてブに追加");
-                event.contextMenu.appendContextMenuItem("HatenaBookmarkShowBookmarkComment", "このページのはてブコメントを表示");
+                if (getBookmarkButtons().length == 0) {
+                    // ブクマボタンでてないとき
+                    event.contextMenu.appendContextMenuItem("HatenaBookmarkAddBookmark", "このページをはてなブックマークに追加");
+                    event.contextMenu.appendContextMenuItem("HatenaBookmarkShowBookmarkComment", "このページのはてなブックマークコメントを表示");
+                }
+                console.log(getBookmarkButtons());
+                if (!getBookmarkButton('popularPagesButton')) {
+                    // 人気エントリ表示ボタンがでてないときコンテキストメニュー出す
+                    event.contextMenu.appendContextMenuItem("HatenaBookmarkShowPopularPages", "このページの人気エントリを表示");
+                }
             }
         }
     }
