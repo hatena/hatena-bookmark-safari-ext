@@ -1040,6 +1040,9 @@ var ready = function() {
             $("#reset-user-db").show();
             return false;
         });
+
+        // 検索ボタンの
+        $('#search-submit').attr('title', user.name + 'のブックマークを検索');
     }
 
     $('#search-form').bind('submit', searchFormSubmitHandler);
