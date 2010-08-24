@@ -1141,6 +1141,6 @@ em a:visited {
     content: "";
 }
 
-#bookmark-edit-container {
+#bookmark-edit-content-container {
     overflow-y: auto;
 }

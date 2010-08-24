@@ -42,7 +42,7 @@ function resizeWindow(data) {
 
     $("#search-result-container").css('max-height', baseHeight - searchHeaderHeight);
     $("#comment-list").css('max-height', (baseHeight - commentHeaderHeight - commentPadding) + "px");
-    $("#bookmark-edit-container").css('max-height',  baseHeight - bookmarkEditHeaderHeight);
+    $("#bookmark-edit-content-container").css('max-height',  baseHeight - bookmarkEditHeaderHeight);
 }
 
 
