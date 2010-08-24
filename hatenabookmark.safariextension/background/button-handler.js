@@ -1,9 +1,31 @@
 (function() {
     safari.application.addEventListener("command", performCommand, false);
     safari.application.addEventListener("validate", validateCommand, false);
+    safari.application.addEventListener("contextmenu", handleContextMenu, false);
 
-    function validateURL(url) {
-        return url && /^https?:\/\//.test(url);
+    function performCommand(event) {
+        var url;
+        if (event.userInfo && event.userInfo.url) {
+            url = event.userInfo.url;
+        }
+
+        switch (event.command) {
+        case "bookmarkButtonComment":
+        case "HatenaBookmarkShowBookmarkComment":
+            showPopup('comment', url);
+            break;
+        case "bookmarkButtonBookmark":
+        case "HatenaBookmarkAddBookmark":
+            showPopup('bookmark', url);
+            break;
+        case "bookmarkButton":
+            showPopup();
+            break;
+        case "popularPagesButton":
+        case "HatenaBookmarkShowPopularPages":
+            showPopularPages();
+            break;
+        }
     }
 
     function validateCommand(event) {
@@ -37,11 +59,35 @@
         }
     }
 
+    function handleContextMenu(event) {
+        if (event.userInfo && event.userInfo.nodeName.toLowerCase() === "a") {
+            if (validateURL(event.userInfo.url)) {
+                event.contextMenu.appendContextMenuItem("HatenaBookmarkShowBookmarkComment", "リンク先のはてなブックマークコメントを表示");
+            }
+        } else {
+            if (validateURL(event.target.url)) {
+                if (getBookmarkButtons().length == 0) {
+                    // ブクマボタンでてないとき
+                    event.contextMenu.appendContextMenuItem("HatenaBookmarkAddBookmark", "はてなブックマークに追加");
+                    event.contextMenu.appendContextMenuItem("HatenaBookmarkShowBookmarkComment", "はてなブックマークコメントを表示");
+                }
+                if (!getBookmarkButton('popularPagesButton')) {
+                    // 人気エントリ表示ボタンがでてないときコンテキストメニュー出す
+                    event.contextMenu.appendContextMenuItem("HatenaBookmarkShowPopularPages", "サイトの人気エントリを表示");
+                }
+            }
+        }
+    }
+
+    function validateURL(url) {
+        return url && /^https?:\/\//.test(url);
+    }
+
     var identifiers = {
         bookmarkButton         : Extension.getIdentifier("bookmark-button"),
         bookmarkButtonComment  : Extension.getIdentifier("bookmark-button-comment"),
         bookmarkButtonBookmark : Extension.getIdentifier("bookmark-button-bookmark"),
-        popularPagesButton     : Extension.getIdentifier("popular-pages-button"),
+        popularPagesButton     : Extension.getIdentifier("popular-pages-button")
     };
     var bookmarkIdentifiersInOrder = ['bookmarkButtonComment', 'bookmarkButton', 'bookmarkButtonBookmark'];
 
@@ -63,7 +109,6 @@
         done: safari.extension.baseURI + 'images/entrylist_checked.png',
         yet:  safari.extension.baseURI + 'images/entrylist.png'
     };
-
 
     // 指定したkeyのだけ
     function getBookmarkButton(key) {
@@ -144,31 +189,6 @@
         }
     }
 
-    function performCommand(event) {
-        var url;
-        if (event.userInfo && event.userInfo.url) {
-            url = event.userInfo.url;
-        }
-
-        switch (event.command) {
-        case "bookmarkButtonComment":
-        case "HatenaBookmarkShowBookmarkComment":
-            showPopup('comment', url);
-            break;
-        case "bookmarkButtonBookmark":
-        case "HatenaBookmarkAddBookmark":
-            showPopup('bookmark', url);
-            break;
-        case "bookmarkButton":
-            showPopup();
-            break;
-        case "popularPagesButton":
-        case "HatenaBookmarkShowPopularPages":
-            showPopularPages();
-            break;
-        }
-    }
-
     function shouldShowCounter (tab) {
         return tab.url
             && tab.url !== 'about:blank'
@@ -208,29 +228,5 @@
             });
         }
     });
-
-
-    safari.application.addEventListener("contextmenu", handleContextMenu, false);
-
-    function handleContextMenu(event) {
-        if (event.userInfo && event.userInfo.nodeName.toLowerCase() === "a") {
-            if (validateURL(event.userInfo.url)) {
-                event.contextMenu.appendContextMenuItem("HatenaBookmarkShowBookmarkComment", "リンク先のはてなブックマークコメントを表示");
-            }
-        } else {
-            if (validateURL(event.target.url)) {
-                if (getBookmarkButtons().length == 0) {
-                    // ブクマボタンでてないとき
-                    event.contextMenu.appendContextMenuItem("HatenaBookmarkAddBookmark", "はてなブックマークに追加");
-                    event.contextMenu.appendContextMenuItem("HatenaBookmarkShowBookmarkComment", "はてなブックマークコメントを表示");
-                }
-                console.log(getBookmarkButtons());
-                if (!getBookmarkButton('popularPagesButton')) {
-                    // 人気エントリ表示ボタンがでてないときコンテキストメニュー出す
-                    event.contextMenu.appendContextMenuItem("HatenaBookmarkShowPopularPages", "サイトの人気エントリを表示");
-                }
-            }
-        }
-    }
 
 })();
