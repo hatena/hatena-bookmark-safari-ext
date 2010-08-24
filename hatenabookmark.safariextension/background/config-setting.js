@@ -9,7 +9,6 @@
         'popup.tags.allTags.enabled': true,
         'background.bookmarkcounter.enabled': true,
         'popup.commentviewer.autodetect.threshold': 15,
-        'contextmenu.enabled': true,
         'content.fans.enabled': true,
         'shortcut.addBookmark.key': 'b',
         'shortcut.addBookmark.ctrl': true,
@@ -48,8 +47,6 @@
     if (safari.extension && safari.extension.settings) {
         Object.keys(extensionSettings).forEach(function (key) {
             var value = safari.extension.settings.getItem(key);
-            console.log("Sync " + key);
-            console.log(Config.get(key) + " => " + value);
             Config.set(key, value);
         });
     }
