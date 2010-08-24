@@ -28,7 +28,6 @@
     // ================================================== //
     var tmpSettings = {
         'popup.search.lastWord': '',
-        'popup.commentviewer.togglehide': false,
         'popup.tags.showAllTags': false,
         'popup.bookmark.confirmBookmark': false,
         'popup.bookmark.postTwitter': false,
