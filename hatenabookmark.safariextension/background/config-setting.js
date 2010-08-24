@@ -19,7 +19,6 @@
 
         'content.webinfo.enabled': true,
         'popup.tags.recommendTags.enabled': true,
-        'popup.tags.complete.enabled': true,
         'popup.tags.allTags.enabled': true,
         'background.bookmarkcounter.enabled': true,
         'popup.commentviewer.autodetect.threshold': 15,

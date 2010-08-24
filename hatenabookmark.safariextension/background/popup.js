@@ -712,14 +712,12 @@ var View = {
 
             this.form.show();
             this.commentEL.focus();
-            if (Config.get('popup.tags.allTags.enabled') || Config.get('popup.tags.complete.enabled')) {
+            if (Config.get('popup.tags.allTags.enabled')) {
                 Connect()
                     .send("HTTPCache.usertags.get", user.name).recv(function(event) {
                         var res = event.message;
-                        if (Config.get('popup.tags.complete.enabled')) {
-                            self.tagCompleter.addSuggestTags(res.tagsKeys);
-                            self.tagCompleter.tagsObject = res.tags;
-                        }
+                        self.tagCompleter.addSuggestTags(res.tagsKeys);
+                        self.tagCompleter.tagsObject = res.tags;
                         if (Config.get('popup.tags.allTags.enabled')) {
                             self.setUserTags(res)
                         }

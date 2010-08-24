@@ -131,16 +131,6 @@
 		<string>CheckBox</string>
 	</dict>
 	<dict>
-		<key>DefaultValue</key>
-		<true/>
-		<key>Key</key>
-		<string>popup.tags.complete.enabled</string>
-		<key>Title</key>
-		<string>タグ補完機能を利用する</string>
-		<key>Type</key>
-		<string>CheckBox</string>
-	</dict>
-	<dict>
 		<key>Title</key>
 		<string>ブックマークカウンター</string>
 		<key>Type</key>
