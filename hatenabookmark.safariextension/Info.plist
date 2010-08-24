@@ -96,6 +96,7 @@
 				<string>lib/PageInformationManager.js</string>
 				<string>lib/RectUtils.js</string>
 				<string>content/popup_manager.js</string>
+				<string>content/contextmenu_handler.js</string>
 				<string>content/widget_embedder.js</string>
 				<string>content/key_handler.js</string>
 			</array>

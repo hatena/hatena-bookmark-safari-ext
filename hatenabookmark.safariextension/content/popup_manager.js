@@ -218,14 +218,4 @@
     function bodyIsInline() {
         return window.getComputedStyle(document.body).display.toLowerCase() == 'inline';
     }
-
-    // TODO: これがここにあるのはやばい
-    document.addEventListener("contextmenu", handleContextMenu, false);
-
-    function handleContextMenu(event) {
-        safari.self.tab.setContextMenuEventUserInfo(event, {
-            nodeName: event.target.nodeName,
-            url: decodeURI(event.target.href) // XXX: aタグのhrefがencodeされているが．内部的にさらにencodeしているので，ここで1回decodeしてる
-        });
-    }
 })();
