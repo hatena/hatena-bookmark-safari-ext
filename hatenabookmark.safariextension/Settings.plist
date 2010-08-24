@@ -4,43 +4,46 @@
 <array>
 	<dict>
 		<key>Title</key>
-		<string>全体サイズ</string>
+		<string>ブックマークカウンター</string>
 		<key>Type</key>
 		<string>Group</string>
 	</dict>
 	<dict>
 		<key>DefaultValue</key>
-		<real>550</real>
+		<true/>
 		<key>Key</key>
-		<string>popup.window.width</string>
-		<key>MaximumValue</key>
-		<real>2000</real>
-		<key>MinimumValue</key>
-		<real>300</real>
+		<string>background.bookmarkcounter.enabled</string>
 		<key>Title</key>
-		<string>横幅</string>
-		<key>Titles</key>
-		<array>
-			<string>550px</string>
-			<string>640px</string>
-			<string>960px</string>
-			<string>1280px</string>
-		</array>
+		<string>ツールバーにブクマカウンタを表示する</string>
 		<key>Type</key>
-		<string>PopUpButton</string>
-		<key>Values</key>
-		<array>
-			<real>550</real>
-			<real>640</real>
-			<real>960</real>
-			<real>1280</real>
-		</array>
+		<string>CheckBox</string>
 	</dict>
+
 	<dict>
 		<key>Title</key>
-		<string>コメントビューワー</string>
+		<string>ポップアップ画面</string>
 		<key>Type</key>
 		<string>Group</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<true/>
+		<key>Key</key>
+		<string>popup.tags.allTags.enabled</string>
+		<key>Title</key>
+		<string>タグを表示する</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<true/>
+		<key>Key</key>
+		<string>popup.tags.recommendTags.enabled</string>
+		<key>Title</key>
+		<string>おすすめタグを表示する</string>
+		<key>Type</key>
+		<string>CheckBox</string>
 	</dict>
 	<dict>
 		<key>DefaultValue</key>
@@ -66,89 +69,24 @@
 			<real>50</real>
 		</array>
 	</dict>
+
 	<dict>
 		<key>Title</key>
-		<string>タグ</string>
+		<string>Webページ</string>
 		<key>Type</key>
 		<string>Group</string>
 	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<true/>
-		<key>Key</key>
-		<string>popup.tags.allTags.enabled</string>
-		<key>Title</key>
-		<string>タグを表示する</string>
-		<key>Titles</key>
-		<array>
-			<string>タグを表示する</string>
-			<string>タグを表示しない</string>
-		</array>
-		<key>Type</key>
-		<string>CheckBox</string>
-		<key>Values</key>
-		<array>
-			<real>1</real>
-			<real>0.0</real>
-		</array>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<true/>
-		<key>Key</key>
-		<string>popup.tags.recommendTags.enabled</string>
-		<key>Title</key>
-		<string>おすすめタグを表示する</string>
-		<key>Type</key>
-		<string>CheckBox</string>
-	</dict>
-	<dict>
-		<key>Title</key>
-		<string>ブックマークカウンター</string>
-		<key>Type</key>
-		<string>Group</string>
-	</dict>
+
+
 	<dict>
 		<key>DefaultValue</key>
 		<true/>
 		<key>Key</key>
 		<string>content.webinfo.enabled</string>
 		<key>Title</key>
-		<string>Webページ内にはてなブックマークの情報を表示する</string>
+		<string>検索結果やブログ記事にブックマーク数を表示</string>
 		<key>Type</key>
 		<string>CheckBox</string>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<true/>
-		<key>Key</key>
-		<string>background.bookmarkcounter.enabled</string>
-		<key>Title</key>
-		<string>ツールバーにブクマカウンタを表示する</string>
-		<key>Type</key>
-		<string>CheckBox</string>
-	</dict>
-	<dict>
-		<key>Title</key>
-		<string>コンテキストメニュー</string>
-		<key>Type</key>
-		<string>Group</string>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<true/>
-		<key>Key</key>
-		<string>contextmenu.enabled</string>
-		<key>Title</key>
-		<string>コンテキストメニューを利用する</string>
-		<key>Type</key>
-		<string>CheckBox</string>
-	</dict>
-	<dict>
-		<key>Title</key>
-		<string>右下</string>
-		<key>Type</key>
-		<string>Group</string>
 	</dict>
 	<dict>
 		<key>DefaultValue</key>
@@ -156,13 +94,15 @@
 		<key>Key</key>
 		<string>content.fans.enabled</string>
 		<key>Title</key>
-		<string>ページの右下にお気に入りユーザーを表示する</string>
+		<string>ブックマークしているお気に入りユーザーを表示</string>
 		<key>Type</key>
 		<string>CheckBox</string>
 	</dict>
+
+
 	<dict>
 		<key>Title</key>
-		<string>キーボードショートカット</string>
+		<string>ショートカットキー</string>
 		<key>Type</key>
 		<string>Group</string>
 	</dict>
@@ -270,7 +210,7 @@
 		<key>Key</key>
 		<string>shortcut.addBookmark.meta</string>
 		<key>Title</key>
-		<string>Meta</string>
+		<string>Command</string>
 		<key>Type</key>
 		<string>CheckBox</string>
 	</dict>
@@ -378,7 +318,7 @@
 		<key>Key</key>
 		<string>shortcut.showComment.meta</string>
 		<key>Title</key>
-		<string>Meta</string>
+		<string>Command</string>
 		<key>Type</key>
 		<string>CheckBox</string>
 	</dict>

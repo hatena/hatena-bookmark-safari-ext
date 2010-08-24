@@ -27,9 +27,7 @@
         show: function(args) {
             var self = this;
 
-            function showPopup(opts) {
-                opts = opts || {};
-
+            function showPopup() {
                 if (self.popup && self.popup.style.display != 'none' && args && args.view == self.lastView) {
                     self.lastView = args && args.view;
                     self.hide();
@@ -50,27 +48,19 @@
                 var popup = self.popup;
                 popup.src = self.getSrc(args);
                 popup.style.setProperty('display', 'block', 'important');
-                popup.style.setProperty('width', opts.width + 'px', 'important');
                 self.setHeight(popup);
 
                 // Flash の overlap などを確認する
                 self.ensurePopupVisibility();
             }
 
-            Connect()
-                .send("Config.get", { key: "popup.window.width" })
-                .recv(function(event) {
-                    var opts = { width : event.message };
-
-                    if (args.view)
-                        Connect()
-                        .send("Config.set", { key: "popup.lastView", value : args.view })
-                        .recv(function (ev) { showPopup(opts); })
-                        .close();
-                    else
-                        showPopup(opts);
-                })
+            if (args.view)
+                Connect()
+                .send("Config.set", { key: "popup.lastView", value : args.view })
+                .recv(showPopup)
                 .close();
+            else
+                showPopup();
         },
 
         showInNewTab:

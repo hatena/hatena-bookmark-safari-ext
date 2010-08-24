@@ -40,31 +40,6 @@ function closeWin() {
     window.parent.postMessage("closeIframe", request_uri.param("url"));
 }
 
-function saveWindowPositions(win) {
-    if (request_uri.param('debug')) return;
-    localStorage.bookmarkEditWindowPositions = JSON.stringify({
-        left: win.left,
-        top: win.top,
-        width: Math.max(100, win.width),
-        height: Math.max(100, win.height)
-    });
-}
-
-function loadWindowPosition(win) {
-    if (request_uri.param('debug') || request_uri.param('error')) return;
-    var pos;
-    try { pos = JSON.parse(localStorage.bookmarkEditWindowPositions); } catch (e) {};
-    if (!pos) {
-        pos = {
-            width: Config.get('popup.window.height'),
-            height: 400
-        };
-    }
-
-    Abstract.windows.update(win.id, pos);
-};
-
-
 function resetDB() {
     var user = UserManagerProxy.user;
     if (!user) return;
