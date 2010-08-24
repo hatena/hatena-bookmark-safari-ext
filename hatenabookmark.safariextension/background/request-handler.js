@@ -37,7 +37,6 @@ Response(function (get, deferred) {
     });
 
     get("Model.Bookmark.search", function (ev, matched, dispatch) {
-        // searchword繧Ｂrgs縺ｫ蜈･繧後ｋ args.word
         var args = ev.message;
         var word = args.word;
 
@@ -84,13 +83,13 @@ Response(function (get, deferred) {
 
     get("PopupManager.show", function (ev, matched, dispatch) {
         safari.application.activeBrowserWindow.activeTab.page.dispatchMessage("showPopup", ev.message);
-        return "dummy";
+        return true;
     });
 
     get("Config.set", function (ev, matched, dispatch) {
         var args = ev.message;
         Config.set(args.key, args.value);
-        return "dummy";
+        return true;
     });
 
     get("Config.get", function (ev, matched, dispatch) {
@@ -99,17 +98,15 @@ Response(function (get, deferred) {
     });
 
     get("LoginCheck", function (ev, matched, dispatch) {
-        console.log('login by url: ' + ev.message.url);
         UserManager.loginWithRetry(15 * 1000);
-        return "dummy";
+        return true;
     });
 
     get("Logout", function (ev, matched, dispatch) {
-        console.log('logout by url: ' + ev.message.url);
         setTimeout(function() {
             UserManager.logout();
         }, 200);
-        return "dummy";
+        return true;
     });
 
     get("Abstract.tabs.create", function (ev, matched, dispatch) {
@@ -135,7 +132,7 @@ Response(function (get, deferred) {
 
         var keys = ['key', 'ctrl', 'shift', 'alt', 'meta'];
 
-        for (var command in commands) {
+        for (var command in commands) if ( commands.hasOwnProperty(command) ) {
             keys.forEach(function (key) {
                 commands[command][key] = Config.get("shortcut." + command + "." + key);
             });
