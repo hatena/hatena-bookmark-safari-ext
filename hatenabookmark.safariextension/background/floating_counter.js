@@ -13,19 +13,7 @@
 
     function show(entry) {
         $(function() {
-            if (!(Config.get("content.bookmarkcounter.enabled") || Config.get("content.fans.enabled"))) return;
-
-            if (Config.get("content.bookmarkcounter.enabled")) {
-                $("#count a")
-                    .text(entry.count)
-                    .attr('href', 'http://b.hatena.ne.jp/entry/' + entryURL)
-                    .click(function() {
-                        Connect().send("PopupManager.show", { url : entryURL, view : "comment" }).recv(function (ev) {}).close();
-                        return false;
-                    });
-            } else {
-                $("#count").remove();
-            }
+            if (!Config.get("content.fans.enabled")) return;
 
             if (Config.get("content.fans.enabled")) {
                 entry.favorites.reverse().forEach(function (fav) {

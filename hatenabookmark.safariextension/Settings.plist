@@ -192,16 +192,6 @@
 		<key>DefaultValue</key>
 		<true/>
 		<key>Key</key>
-		<string>content.bookmarkcounter.enabled</string>
-		<key>Title</key>
-		<string>ページの右下にブクマカウンタを表示する</string>
-		<key>Type</key>
-		<string>CheckBox</string>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<true/>
-		<key>Key</key>
 		<string>content.fans.enabled</string>
 		<key>Title</key>
 		<string>ページの右下にお気に入りユーザーを表示する</string>
