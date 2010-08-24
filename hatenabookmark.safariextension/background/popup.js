@@ -199,7 +199,7 @@ var View = {
             self.wordPreview.empty();
             self.wordPreview.append(E('span',{},  E('em', {}, word), 'での検索結果'));
 
-            var max = Config.get('popup.search.result.threshold');
+            var max = 200;
             var el = list.get(0);
             var loop = function() {
                 self.current = Connect()

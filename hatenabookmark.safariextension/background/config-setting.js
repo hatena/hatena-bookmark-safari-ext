@@ -12,10 +12,6 @@
             'default': 450,
             type: 'unsignedInt'
         },
-        'popup.search.result.threshold': {
-            'default': 200,
-            type: 'unsignedInt'
-        },
 
         'content.webinfo.enabled': true,
         'popup.tags.recommendTags.enabled': true,

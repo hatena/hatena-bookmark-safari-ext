@@ -73,28 +73,6 @@
 		<string>Group</string>
 	</dict>
 	<dict>
-		<key>DefaultValue</key>
-		<real>200</real>
-		<key>Key</key>
-		<string>popup.search.result.threshold</string>
-		<key>Title</key>
-		<string>最大検索件数</string>
-		<key>Titles</key>
-		<array>
-			<string>100件</string>
-			<string>200件</string>
-			<string>300件</string>
-		</array>
-		<key>Type</key>
-		<string>PopUpButton</string>
-		<key>Values</key>
-		<array>
-			<real>100</real>
-			<real>200</real>
-			<real>300</real>
-		</array>
-	</dict>
-	<dict>
 		<key>Title</key>
 		<string>タグ</string>
 		<key>Type</key>
