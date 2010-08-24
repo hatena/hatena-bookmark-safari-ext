@@ -1031,9 +1031,8 @@ var ready = function() {
     }
 
     $('#search-form').bind('submit', searchFormSubmitHandler);
-    // if (Config.get('popup.search.incsearch')) {
-    //     $('#search-word').bind('keyup', searchIncSearchHandler);
-    // }
+    $('#search-word').bind('keyup', searchIncSearchHandler);
+    $('#search-word').bind('click', searchIncSearchHandler);
     $('#image-detect-container-list img').live('click', function() {
         View.bookmark.imageSelect(this);
     });
