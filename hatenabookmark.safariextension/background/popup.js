@@ -179,7 +179,12 @@ var View = {
             var start = 0;
 
             self.wordPreview.empty();
-            self.wordPreview.append(E('span',{},  E('em', {}, word), 'での検索結果'));
+            if (word.length > 0) {
+                self.wordPreview.append(E('span',{},  E('em', {}, word), 'での検索結果'));
+            } else {
+                var user = UserManagerProxy.user;
+                self.wordPreview.append(E('span',{},  user.name + 'のブックマーク'));
+            }
 
             var max = 200;
             var el = list.get(0);
