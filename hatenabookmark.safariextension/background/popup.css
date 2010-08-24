@@ -46,7 +46,7 @@
 }
 
 body {
-  overflow-x: hidden;
+  overflow: hidden;
   color: #222;
   min-height: 70px;
 }
@@ -358,7 +358,6 @@ ul.tab-ui li img {
   margin-right: 1px;
 }
 
-
 /* }}} */
 
 /* commnet {{{ */
@@ -366,10 +365,8 @@ ul.tab-ui li img {
 #comment-title-container {
   background: no-repeat 0px 2px;
   padding-left: 22px;
-  display: table-cell;
-  /*
-  display: inline-block;
-  */
+  display: block;
+  -webkit-box-flex: 1;
 }
 
 #comment-infos {
@@ -422,12 +419,9 @@ a.username {
 }
 
 #comment-title-right {
-  display: table-cell;
+  display: block;
   width: 190px;
   text-align: right;
-  /*
-  display: inline-block;
-  */
   margin-top: 2px;
 }
 
@@ -475,6 +469,13 @@ a.username {
   border-top: 1px solid #696969;
   padding: 3px 10px;
   text-shadow: 0px 1px 0px rgba(255,255,255,0.8);
+}
+
+#comment-header {
+  width      : auto;
+  display    : -webkit-box;
+  max-height : 180px;
+  overflow   : auto;
 }
 
 #bookmark-edit-header {
