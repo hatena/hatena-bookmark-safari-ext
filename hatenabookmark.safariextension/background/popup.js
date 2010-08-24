@@ -1,11 +1,9 @@
 Deferred.debug = true;
 
-var BG = this;
-
-var request_uri = URI.parse(location.href);
+var RequestURI = URI.parse(location.href);
 
 window.addEventListener("message", function (ev) {
-    var uri    = URI.parse(request_uri.param('parent_url'));
+    var uri    = URI.parse(RequestURI.param('parent_url'));
     var origin = uri.schema + "://" + uri.host;
     var method = event.data.method;
     var data = event.data.data;
@@ -47,7 +45,7 @@ function resizeWindow(data) {
 
 
 function closeWin() {
-    window.parent.postMessage("closeIframe", request_uri.param("parent_url"));
+    window.parent.postMessage("closeIframe", RequestURI.param("parent_url"));
 }
 
 function resetDB() {
@@ -74,9 +72,9 @@ function getInformation() {
     var d = new Deferred();
     setTimeout(function() {
         d.call({
-            url        : encodeURI(request_uri.param('url')),
-            faviconUrl : request_uri.param('faviconUrl'),
-            title      : request_uri.param('title')
+            url        : encodeURI(RequestURI.param('url')),
+            faviconUrl : RequestURI.param('faviconUrl'),
+            title      : RequestURI.param('title')
         });
     }, 0);
     return d;
@@ -293,7 +291,7 @@ var View = {
 
             if (UserManagerProxy.user && UserManagerProxy.user.ignores) {
                 var ignoreRegex = UserManagerProxy.user.ignores;
-                bookmarks = bookmarks.filter(function(b) { return ! ignoreRegex.test(b.user) });
+                bookmarks = bookmarks.filter(function(b) { return ! ignoreRegex.test(b.user); });
             }
             var publicLen = bookmarks.length;
 
@@ -607,10 +605,10 @@ var View = {
                 this.commentEL.get(0).setSelectionRange(cLength, cLength);
             }
 
-            if (request_uri.param('error')) {
+            if (RequestURI.param('error')) {
                 $('#bookmark-error').text('申し訳ありません、以下の URL のブックマークに失敗しました。しばらく時間をおいていただき、再度ブックマークください。')
                 .removeClass('none');
-                this.commentEL.attr('value', request_uri.param('comment'));
+                this.commentEL.attr('value', RequestURI.param('comment'));
             }
 
             // debug /
@@ -1001,16 +999,6 @@ var eulaAccept = function() {
         .close();
 }
 
-/*
-var setWindowSize = function(w, h) {
-    document.getElementById('search-container').style.maxHeight = '' + h + 'px';
-    document.getElementById('comment-list').style.maxHeight = '' + h + 'px';
-
-    document.getElementById('search-container').style.maxWidth = '' + w + 'px';
-    document.getElementById('comment-list').style.maxWidth = '' + w + 'px';
-}
-*/
-
 var prepareUser = function() {
     if (!localStorage.eula) {
         $('#main').hide();
@@ -1085,7 +1073,7 @@ var ready = function() {
         this.target = '_blank';
     });
     // $('a').each(function() { this.target = '_blank' });
-    if (request_uri.param('error')) {
+    if (RequestURI.param('error')) {
         ViewManager.show('bookmark');
         return;
     }
