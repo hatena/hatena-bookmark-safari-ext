@@ -4,9 +4,70 @@
 <array>
 	<dict>
 		<key>Title</key>
-		<string>全体サイズ</string>
+		<string>ブックマークカウンター</string>
 		<key>Type</key>
 		<string>Group</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<true/>
+		<key>Key</key>
+		<string>background.bookmarkcounter.enabled</string>
+		<key>Title</key>
+		<string>ツールバーにブクマカウンタを表示する</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+
+	<dict>
+		<key>Title</key>
+		<string>ポップアップ画面</string>
+		<key>Type</key>
+		<string>Group</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<true/>
+		<key>Key</key>
+		<string>popup.tags.allTags.enabled</string>
+		<key>Title</key>
+		<string>タグを表示する</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<true/>
+		<key>Key</key>
+		<string>popup.tags.recommendTags.enabled</string>
+		<key>Title</key>
+		<string>おすすめタグを表示する</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>15</real>
+		<key>Key</key>
+		<string>popup.commentviewer.autodetect.threshold</string>
+		<key>Title</key>
+		<string>コメントの表示</string>
+		<key>Titles</key>
+		<array>
+			<string>表示・非表示を手動で切り替え</string>
+			<string>15件以下ならすべて表示</string>
+			<string>25件以下ならすべて表示</string>
+			<string>50件以下ならすべて表示</string>
+		</array>
+		<key>Type</key>
+		<string>PopUpButton</string>
+		<key>Values</key>
+		<array>
+			<real>-1</real>
+			<real>15</real>
+			<real>25</real>
+			<real>50</real>
+		</array>
 	</dict>
 	<dict>
 		<key>DefaultValue</key>
@@ -36,119 +97,24 @@
 			<real>1280</real>
 		</array>
 	</dict>
+
 	<dict>
 		<key>Title</key>
-		<string>コメントビューワー</string>
+		<string>Webページ</string>
 		<key>Type</key>
 		<string>Group</string>
 	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<real>15</real>
-		<key>Key</key>
-		<string>popup.commentviewer.autodetect.threshold</string>
-		<key>Title</key>
-		<string>コメントの表示</string>
-		<key>Titles</key>
-		<array>
-			<string>表示・非表示を手動で切り替え</string>
-			<string>15件以下ならすべて表示</string>
-			<string>25件以下ならすべて表示</string>
-			<string>50件以下ならすべて表示</string>
-		</array>
-		<key>Type</key>
-		<string>PopUpButton</string>
-		<key>Values</key>
-		<array>
-			<real>-1</real>
-			<real>15</real>
-			<real>25</real>
-			<real>50</real>
-		</array>
-	</dict>
-	<dict>
-		<key>Title</key>
-		<string>タグ</string>
-		<key>Type</key>
-		<string>Group</string>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<true/>
-		<key>Key</key>
-		<string>popup.tags.allTags.enabled</string>
-		<key>Title</key>
-		<string>タグを表示する</string>
-		<key>Titles</key>
-		<array>
-			<string>タグを表示する</string>
-			<string>タグを表示しない</string>
-		</array>
-		<key>Type</key>
-		<string>CheckBox</string>
-		<key>Values</key>
-		<array>
-			<real>1</real>
-			<real>0.0</real>
-		</array>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<true/>
-		<key>Key</key>
-		<string>popup.tags.recommendTags.enabled</string>
-		<key>Title</key>
-		<string>おすすめタグを表示する</string>
-		<key>Type</key>
-		<string>CheckBox</string>
-	</dict>
-	<dict>
-		<key>Title</key>
-		<string>ブックマークカウンター</string>
-		<key>Type</key>
-		<string>Group</string>
-	</dict>
+
+
 	<dict>
 		<key>DefaultValue</key>
 		<true/>
 		<key>Key</key>
 		<string>content.webinfo.enabled</string>
 		<key>Title</key>
-		<string>Webページ内にはてなブックマークの情報を表示する</string>
+		<string>検索結果やブログ記事にブックマーク数を表示</string>
 		<key>Type</key>
 		<string>CheckBox</string>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<true/>
-		<key>Key</key>
-		<string>background.bookmarkcounter.enabled</string>
-		<key>Title</key>
-		<string>ツールバーにブクマカウンタを表示する</string>
-		<key>Type</key>
-		<string>CheckBox</string>
-	</dict>
-	<dict>
-		<key>Title</key>
-		<string>コンテキストメニュー</string>
-		<key>Type</key>
-		<string>Group</string>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<true/>
-		<key>Key</key>
-		<string>contextmenu.enabled</string>
-		<key>Title</key>
-		<string>コンテキストメニューを利用する</string>
-		<key>Type</key>
-		<string>CheckBox</string>
-	</dict>
-	<dict>
-		<key>Title</key>
-		<string>右下</string>
-		<key>Type</key>
-		<string>Group</string>
 	</dict>
 	<dict>
 		<key>DefaultValue</key>
@@ -156,13 +122,15 @@
 		<key>Key</key>
 		<string>content.fans.enabled</string>
 		<key>Title</key>
-		<string>ページの右下にお気に入りユーザーを表示する</string>
+		<string>ブックマークしているお気に入りユーザーを表示</string>
 		<key>Type</key>
 		<string>CheckBox</string>
 	</dict>
+
+
 	<dict>
 		<key>Title</key>
-		<string>キーボードショートカット</string>
+		<string>ショートカットキー</string>
 		<key>Type</key>
 		<string>Group</string>
 	</dict>
@@ -270,7 +238,7 @@
 		<key>Key</key>
 		<string>shortcut.addBookmark.meta</string>
 		<key>Title</key>
-		<string>Meta</string>
+		<string>Command</string>
 		<key>Type</key>
 		<string>CheckBox</string>
 	</dict>
@@ -378,7 +346,7 @@
 		<key>Key</key>
 		<string>shortcut.showComment.meta</string>
 		<key>Title</key>
-		<string>Meta</string>
+		<string>Command</string>
 		<key>Type</key>
 		<string>CheckBox</string>
 	</dict>
