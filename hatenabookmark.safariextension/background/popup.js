@@ -4,14 +4,6 @@ var BG = this;
 
 var request_uri = URI.parse(location.href);
 
-var urlGiven = request_uri.param('url') ? true : false;
-if (!urlGiven) {
-    // パラメータ URL が定義されていないとき
-    p = function(msg) {
-        BG.console.log(JSON.stringify(Array.prototype.slice.call(arguments, 0, arguments.length)));
-    };
-}
-
 window.addEventListener("message", function (ev) {
     var uri    = URI.parse(request_uri.param('url'));
     var origin = uri.schema + "://" + uri.host;
@@ -95,26 +87,13 @@ function resetAll() {
 // 今見ているページの情報を返す (Deferred).
 function getInformation() {
     var d = new Deferred();
-    if (!urlGiven) {
-        // TODO: おいとく
-        BG.Abstract.tabs.getSelected(null, function(tab) {
-            d.call({
-                url        : encodeURI(tab.url),
-                faviconUrl : tab.faviconUrl,
-                winId      : tab.windowId,
-                tabId      : tab.id,
-                title      : tab.title
-            });
+    setTimeout(function() {
+        d.call({
+            url        : encodeURI(request_uri.param('url')),
+            faviconUrl : request_uri.param('faviconUrl'),
+            title      : request_uri.param('title')
         });
-    } else {
-        setTimeout(function() {
-            d.call({
-                url        : encodeURI(request_uri.param('url')),
-                faviconUrl : request_uri.param('faviconUrl'),
-                title      : request_uri.param('title')
-            });
-        }, 0);
-    }
+    }, 0);
     return d;
 }
 
@@ -1007,17 +986,6 @@ var ViewManager = {
     }
 }
 
-/*
-if (!urlGiven) {
-    Abstract.windows.getCurrent(function(win) {
-        BG.console.log(win);
-        var height = Math.max(300, win.height - 150);
-        document.getElementById('comment-list').style.maxHeight = sprintf('%spx', height);
-        document.getElementById('search-container').style.maxHeight = sprintf('%spx', height);
-    });
-}
-*/
-
 var eulaAccept = function() {
     localStorage.eula = true;
 
@@ -1068,39 +1036,6 @@ var prepareUser = function() {
 var ready = function() {
     resizeWindow();
 
-    if (!window.urlGiven) {
-        if (request_uri.param('error')) {
-            //
-        } else {
-            // if (Config.get('popup.window.autosize')) {
-            //     document.body.style.width = '' + 500 + 'px';
-            // } else {
-            //     document.body.style.width = '' + Math.max(100, Config.get('popup.window.width')) + 'px';
-            // }
-
-            // 同期実行だとうまく幅を調整できないので遅らせる
-            setTimeout(function () {
-                var overflow = $('#header').width() - $('body').width();
-                if (overflow > 0) {
-                    var search = $('#search-word');
-                    search.width(Math.max(search.width() - overflow, 100));
-                }
-            }, 35);
-            /*
-            if (Config.get('popup.window.autosize')) {
-                Abstract.windows.getLastFocused(function(w) {
-                    var width = 500;
-                    var height = w.height - 300;
-                    height = Math.max(height, 300);
-                    setWindowSize(width, height);
-                });
-            } else {
-                setWindowSize(Config.get('popup.window.width'), Config.get('popup.window.height'));
-            }
-            */
-        }
-
-    }
     var user = UserManagerProxy.user;
     if (user) {
         var hicon = $('#header-usericon');
