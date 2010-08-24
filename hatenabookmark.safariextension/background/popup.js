@@ -1038,8 +1038,14 @@ var ready = function() {
     }
 
     $('#search-form').bind('submit', searchFormSubmitHandler);
-    $('#search-word').bind('keyup', searchIncSearchHandler);
-    $('#search-word').bind('click', searchIncSearchHandler);
+
+    var searchWord = $('#search-word');
+    searchWord.bind('input', searchIncSearchHandler);
+    searchWord.bind('click', function (ev) {
+        if (!searchWord.attr('value'))
+            searchIncSearchHandler();
+    });
+
     $('.search-tag').live('click', function (ev) {
         var tag = ev.target.textContent;
         var old = $('#search-word').attr('value');
@@ -1049,6 +1055,7 @@ var ready = function() {
 
         searchFormSubmitHandler({});
     });
+
     $('#image-detect-container-list img').live('click', function() {
         View.bookmark.imageSelect(this);
     });
