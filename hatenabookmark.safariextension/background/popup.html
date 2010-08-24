@@ -96,7 +96,7 @@
         <li class="tab-link">
         <a id="hatena-bookmark-link-top" title="はてなブックマークトップページ" alt="はてなブックマークトップページ" href="http://b.hatena.ne.jp/"><img src="../images/link-bookmark.png" /></a>
         <a id="header-usericon" href="http://b.hatena.ne.jp/my"></a>
-        <a id="header-helpicon" href="http://b.hatena.ne.jp/help/chrome_extentions"><img alt="help" title="help" width=16 height=16 src="../images/help.png" /></a>
+        <a id="header-helpicon" href="http://b.hatena.ne.jp/help/chrome_extentions"><img alt="ヘルプ" title="ヘルプ" width=16 height=16 src="../images/help.png" /></a>
         </li>
       </ul>
     </div>
@@ -330,12 +330,14 @@
       <a id="hatena-websearch" href="http://b.hatena.ne.jp/search?q=">はてなウェブ検索で検索</a>
     </div>
   </div>
-  <ul id="search-result"></ul>
+  <div id="search-result-container">
+    <ul id="search-result"></ul>
 
-  <a id="feels-wrong-button" href="http://b.hatena.ne.jp/help">おかしいなと感じたら</a>
-  <div id="reset-user-db">
-    <p class="notice">※ユーザー 『<span id="db-username"></span>』 のはてなブックマークのデータを再同期します。Web 上のはてなブックマークとのデータに差違が出た場合にご利用ください。</p>
-    <input type="button" onclick="resetDB();" value="再同期する" />
+    <a id="feels-wrong-button" href="http://b.hatena.ne.jp/help">おかしいなと感じたら</a>
+    <div id="reset-user-db">
+      <p class="notice">※ユーザー 『<span id="db-username"></span>』 のはてなブックマークのデータを再同期します。Web 上のはてなブックマークとのデータに差違が出た場合にご利用ください。</p>
+      <input type="button" onclick="resetDB();" value="再同期する" />
+    </div>
   </div>
 </div>
 </div>

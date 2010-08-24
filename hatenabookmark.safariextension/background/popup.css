@@ -806,7 +806,7 @@ dd#all-tags {
   display: none;
 }
 
-#search-container,
+#search-result-container,
 #comment-list {
  /* max-height: 470px; */
   overflow-y: auto;

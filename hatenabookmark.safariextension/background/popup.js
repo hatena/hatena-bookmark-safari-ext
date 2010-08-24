@@ -40,7 +40,7 @@ function resizeWindow(data) {
 
     var commentPadding = parseFloat($("#comment-list").css('padding-bottom'));
 
-    $("#search-container").css('max-height', baseHeight - searchHeaderHeight);
+    $("#search-result-container").css('max-height', baseHeight - searchHeaderHeight);
     $("#comment-list").css('max-height', (baseHeight - commentHeaderHeight - commentPadding) + "px");
     $("#bookmark-edit-container").css('max-height',  baseHeight - bookmarkEditHeaderHeight);
 }
@@ -969,6 +969,7 @@ var ViewManager = {
                     Config.set('popup.lastView', name);
                     if (current.tab) current.tab.addClass('current');
                     current.init();
+                    resizeWindow();
                 }, 0);
             }
         });
@@ -1044,7 +1045,7 @@ var ready = function() {
             $("#reset-user-db").show();
             setTimeout(function() {
                 // 念のため多めにスクロール
-                $("#search-container")[0].scrollTop += $("#reset-user-db").height() * 2;
+                $("#search-result-container")[0].scrollTop += $("#reset-user-db").height() * 2;
             }, 0);
             return false;
         });
