@@ -791,7 +791,7 @@ var View = {
                 $('#bookmarked-notice > #bookmarked-notice-message').text('このエントリーは ' + b.dateYMDHM + ' にブックマークしました');
                 $('#bookmarked-notice > #bookmark-delete-link').removeClass('none');
                 $('#bookmarked-notice').removeClass('none');
-                $('#edit-submit').attr('value', '編集');
+                $('#edit-submit').attr('value', '保存');
                 this.updateComment(b.comment);
             }
         },
