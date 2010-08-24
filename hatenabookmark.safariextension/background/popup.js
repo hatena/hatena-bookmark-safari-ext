@@ -30,9 +30,19 @@ function resizeWindow(data) {
     if (data && data.height)
         height = data.height;
 
-    $("#search-container").css('max-height', height - 100);
-    $("#comment-list").css('max-height', height - 100 - 20);
-    $("#bookmark-edit-container").css({ 'max-height': height - 100, 'overflow-y': 'scroll'});
+    var headerHeight             = $("#header").outerHeight(true);
+    var commentHeaderHeight      = $("#comment-header").outerHeight(true);
+    var searchHeaderHeight       = $("#search-header").outerHeight(true);
+    var bookmarkEditHeaderHeight = $("#bookmark-edit-header").outerHeight(true);
+
+    var magicHeight = 16;
+    var baseHeight  = height - headerHeight - magicHeight;
+
+    var commentPadding = parseFloat($("#comment-list").css('padding-bottom'));
+
+    $("#search-container").css('max-height', baseHeight - searchHeaderHeight);
+    $("#comment-list").css('max-height', (baseHeight - commentHeaderHeight - commentPadding) + "px");
+    $("#bookmark-edit-container").css('max-height',  baseHeight - bookmarkEditHeaderHeight);
 }
 
 

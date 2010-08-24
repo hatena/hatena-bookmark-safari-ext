@@ -392,7 +392,8 @@ ul.tab-ui li img {
 }
 
 #comment-list {
-  padding: 5px 0;
+    padding : 5px 0;
+    padding-bottom : 100px;
 }
 
 #comment-list li {
@@ -1137,4 +1138,8 @@ em a:visited {
 
 .search-tag:first-child:before {
     content: "";
+}
+
+#bookmark-edit-container {
+    overflow-y: auto;
 }
