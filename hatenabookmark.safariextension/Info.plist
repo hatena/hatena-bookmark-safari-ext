@@ -74,7 +74,7 @@
 				<key>Identifier</key>
 				<string>popular-pages-button</string>
 				<key>Image</key>
-				<string>images/caution.png</string>
+				<string>images/entrylist.png</string>
 				<key>Include By Default</key>
 				<false/>
 				<key>Label</key>

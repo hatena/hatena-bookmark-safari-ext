@@ -47,16 +47,21 @@
 
     var buttonImages = {};
     buttonImages[Extension.getIdentifier("bookmark-button")] = {
-        done: safari.extension.baseURI + 'images/edit-cancel.png',
+        done: safari.extension.baseURI + 'images/bookmark_checked.png',
         yet:  safari.extension.baseURI + 'images/bookmark.png'
     };
     buttonImages[Extension.getIdentifier("bookmark-button-comment")] = {
-        done: safari.extension.baseURI + 'images/close.gif',
+        done: safari.extension.baseURI + 'images/comment_checked.png',
         yet:  safari.extension.baseURI + 'images/comment.png'
     };
     buttonImages[Extension.getIdentifier("bookmark-button-bookmark")] = {
-        done: safari.extension.baseURI + 'images/chrome-b-checked.png',
+        done: safari.extension.baseURI + 'images/append_checked.png',
         yet:  safari.extension.baseURI + 'images/append.png'
+    };
+
+    buttonImages[Extension.getIdentifier("popular-pages-button")] = {
+        done: safari.extension.baseURI + 'images/entrylist_checked.png',
+        yet:  safari.extension.baseURI + 'images/entrylist.png'
     };
 
 
@@ -196,8 +201,9 @@
             // ブクマ済のとき画像変える
             if (!getBookmarkButtons()) return;
             UserManager.user.hasBookmark(activeTab.url).next(function(bool) {
-                getBookmarkButtons().forEach(function(button) {
-                    button.image = buttonImages[button.identifier][bool ? 'done' : 'yet'];
+                safari.extension.toolbarItems.forEach(function (button) {
+                    var url = buttonImages[button.identifier][bool ? 'done' : 'yet'];
+                    if (url) button.image = url;
                 });
             });
         }
