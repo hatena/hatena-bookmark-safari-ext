@@ -4,11 +4,6 @@
     // safari.extension.settings
     // ================================================== //
     var extensionSettings = {
-        'popup.window.height': {
-            'default': 450,
-            type: 'unsignedInt'
-        },
-
         'content.webinfo.enabled': true,
         'popup.tags.recommendTags.enabled': true,
         'popup.tags.allTags.enabled': true,
