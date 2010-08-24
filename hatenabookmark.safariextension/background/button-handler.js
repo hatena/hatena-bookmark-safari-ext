@@ -27,7 +27,7 @@
             case "HatenaBookmarkShowBookmarkComment":
             case "HatenaBookmarkShowPopularPages":
                 var tab  = safari.application.activeBrowserWindow.activeTab;
-                event.target.disabled = !(Config.get('contextmenu.enabled') && validateURL(tab.url));
+                event.target.disabled = !validateURL(tab.url);
                 break;
             default:
                 break;
