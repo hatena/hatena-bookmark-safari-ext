@@ -1038,6 +1038,10 @@ var ready = function() {
         $("#feels-wrong-button").click(function() {
             $("#feels-wrong-button").hide();
             $("#reset-user-db").show();
+            setTimeout(function() {
+                // 念のため多めにスクロール
+                $("#search-container")[0].scrollTop += $("#reset-user-db").height() * 2;
+            }, 0);
             return false;
         });
 
