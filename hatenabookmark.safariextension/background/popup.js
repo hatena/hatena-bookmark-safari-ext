@@ -983,6 +983,11 @@ var eulaAccept = function() {
     Config.set('popup.lastView', 'bookmark');
 
     Connect()
+        .send("Abstract.tabs.create", { url : 'http://b.hatena.ne.jp/', selected: true })
+        .recv(function () {})
+        .close();
+
+    Connect()
         .send("LoginCheck", { url : location.href })
         .recv(function () {
             $('#eula').hide();
