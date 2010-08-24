@@ -89,7 +89,7 @@
             if (settings["shortcut.addBookmark.key"] !== "disabled") {
                 KeyManager.add("addBookmark", function () {
                     Connect().send("PopupManager.show", {
-                        url  : location.href,
+                        url  : document.documentURI,
                         view : "bookmark"
                     }).recv(function () {}).close();
                 });
@@ -98,7 +98,7 @@
             if (settings["shortcut.showComment.key"] !== "disabled") {
                 KeyManager.add("showComment", function () {
                     Connect().send("PopupManager.show", {
-                        url  : location.href,
+                        url  : document.documentURI,
                         view : "comment"
                     }).recv(function () {}).close();
                 });

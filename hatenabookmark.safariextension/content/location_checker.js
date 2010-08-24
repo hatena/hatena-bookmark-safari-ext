@@ -1,6 +1,6 @@
 (function () {
     function locationMatched(patterns) {
-        var href = location.href;
+        var href = document.documentURI;
         return patterns.some(function (pat) { return href.indexOf(pat) === 0; });
     }
 
@@ -22,14 +22,14 @@
 
     if (locationMatched(LOGIN_CHECK_PATTERNS)) {
         Connect()
-            .send("LoginCheck", { url : location.href })
+            .send("LoginCheck", { url : document.documentURI })
             .recv(function () {})
             .close();
     }
 
     if (locationMatched(LOGOUT_CHECK_PATTERNS)) {
         Connect()
-            .send("Logout", { url : location.href })
+            .send("Logout", { url : document.documentURI })
             .recv(function () {})
             .close();
     }

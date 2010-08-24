@@ -1,5 +1,5 @@
 (function() {
-    var entryURL = encodeURI(decodeURIComponent(URI.parse(location.href).param('url')));
+    var entryURL = URI.parse(location.href).param('url');
 
     Connect()
         .send("HTTPCache.entry.get", entryURL).recv(function (event) {

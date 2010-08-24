@@ -2441,7 +2441,7 @@ Hatena.Star.AddButton = new Ten.Class({
         var uri = Hatena.Star.BaseURL + 'star.add.json?uri=' + encodeURIComponent(this.entry.uri) +
             '&title=' + encodeURIComponent(this.entry.title) +
             '&quote=' + encodeURIComponent(quote) +
-            '&location=' + encodeURIComponent(document.location.href);
+            '&location=' + encodeURIComponent(document.documentURI);
         if (Hatena.Star.Token) {
             uri += '&token=' + Hatena.Star.Token;
         }
@@ -3123,7 +3123,7 @@ Hatena.LoginWindow = new Ten.Class({
         var input = new Ten.Element('input',{
             type: 'hidden',
             name: 'location',
-            value: document.location.href
+            value: document.documentURI
         });
         form.appendChild(input);
     }

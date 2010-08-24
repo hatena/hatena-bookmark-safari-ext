@@ -5,13 +5,13 @@
         counter = document.createElement('iframe');
         counter.id = 'hatena-bookmark-safari-counter-window';
         counter.src = safari.extension.baseURI + "background/floating_counter.html"
-            + '?url=' + encodeURIComponent(location.href);
+            + '?url=' + encodeURIComponent(document.documentURI);
         document.body.appendChild(counter);
     }
 
     // キャッシュ作ろうとする
     Connect()
-        .send("HTTPCache.entry.get", location.href).recv(function (ev) {
+        .send("HTTPCache.entry.get", document.documentURI).recv(function (ev) {
         })
         .close();
 

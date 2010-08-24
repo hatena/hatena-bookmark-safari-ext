@@ -10,7 +10,7 @@ var SiteinfoRequestor = {
         var self = SiteinfoRequestor;
 
         Connect()
-            .send("SiteinfoManager.getSiteinfoForURL", location.href)
+            .send("SiteinfoManager.getSiteinfoForURL", document.documentURI)
             .recv(function(event) {
                 var siteinfo = event.message;
                 self.onGotSiteinfo(siteinfo);
@@ -176,7 +176,7 @@ extend(WidgetEmbedder.prototype, {
     getLink: function WE_getLink(paragraph) {
         var xpath = this.siteinfo.link || '.';
         if (xpath === '__location__') {
-            var url = location.href;
+            var url = document.documentURI;
             for (var node = paragraph; node; node = node.parentNode) {
                 if (node._hb_baseURL) {
                     url = node._hb_baseURL;

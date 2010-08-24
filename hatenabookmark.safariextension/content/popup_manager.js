@@ -67,7 +67,7 @@
         function showInNewTab(args) {
             Connect()
                 .send("Abstract.tabs.create", {
-                    url      : PageInformationManager.getEntryPageURL(args.url || location.href),
+                    url      : PageInformationManager.getEntryPageURL(args.url || document.documentURI),
                     selected : true
                 })
                 .recv(function () {})
@@ -158,8 +158,8 @@
             args = args || {};
 
             var base = safari.extension.baseURI + "background/popup.html"
-                + '?url=' + encodeURIComponent(args.url || location.href)
-                + '&parent_url=' + encodeURIComponent(location.href);
+                + '?url=' + encodeURIComponent(args.url || document.documentURI)
+                + '&parent_url=' + encodeURIComponent(document.documentURI);
 
             if (!args.url) {
                 base += '&title=' + encodeURIComponent(document.title)

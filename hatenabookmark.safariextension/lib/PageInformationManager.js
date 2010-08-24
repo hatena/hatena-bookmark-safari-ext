@@ -6,7 +6,7 @@ var PageInformationManager = {
     getInfo: function() {
         var res = {};
 
-        res.url   = encodeURI(location.href);
+        res.url   = document.documentURI;
         res.title = document.title;
 
         var cannonical = this.getCannonical();
@@ -29,7 +29,7 @@ var PageInformationManager = {
         ).singleNodeValue;
         if (!link || !link.href) return null;
         var url = link.href;
-        if (location.href == url) return null;
+        if (document.documentURI == url) return null;
         return url;
     },
     getImages: function () {

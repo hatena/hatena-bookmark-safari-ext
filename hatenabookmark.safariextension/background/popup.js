@@ -72,7 +72,7 @@ function getInformation() {
     var d = new Deferred();
     setTimeout(function() {
         d.call({
-            url        : encodeURI(RequestURI.param('url')),
+            url        : RequestURI.param('url'),
             faviconUrl : RequestURI.param('faviconUrl'),
             title      : RequestURI.param('title')
         });
