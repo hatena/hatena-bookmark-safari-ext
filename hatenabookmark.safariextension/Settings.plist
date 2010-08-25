@@ -186,7 +186,7 @@
 		<key>Secure</key>
 		<false/>
 		<key>Title</key>
-		<string>Ctrl</string>
+		<string>^ Ctrl</string>
 		<key>Type</key>
 		<string>CheckBox</string>
 	</dict>
@@ -196,7 +196,7 @@
 		<key>Key</key>
 		<string>shortcut.addBookmark.shift</string>
 		<key>Title</key>
-		<string>Shift</string>
+		<string>&#x21E7; Shift</string>
 		<key>Type</key>
 		<string>CheckBox</string>
 	</dict>
@@ -204,7 +204,7 @@
 		<key>Key</key>
 		<string>shortcut.addBookmark.alt</string>
 		<key>Title</key>
-		<string>Alt / Option</string>
+		<string>&#x2325; Option / Alt</string>
 		<key>Type</key>
 		<string>CheckBox</string>
 	</dict>
@@ -212,7 +212,7 @@
 		<key>Key</key>
 		<string>shortcut.addBookmark.meta</string>
 		<key>Title</key>
-		<string>Command</string>
+		<string>&#x2318; Command</string>
 		<key>Type</key>
 		<string>CheckBox</string>
 	</dict>
@@ -294,7 +294,7 @@
 		<key>Secure</key>
 		<false/>
 		<key>Title</key>
-		<string>Ctrl</string>
+		<string>^ Ctrl</string>
 		<key>Type</key>
 		<string>CheckBox</string>
 	</dict>
@@ -304,7 +304,7 @@
 		<key>Key</key>
 		<string>shortcut.showComment.shift</string>
 		<key>Title</key>
-		<string>Shift</string>
+		<string>&#x21E7; Shift</string>
 		<key>Type</key>
 		<string>CheckBox</string>
 	</dict>
@@ -312,7 +312,7 @@
 		<key>Key</key>
 		<string>shortcut.showComment.alt</string>
 		<key>Title</key>
-		<string>Alt / Option</string>
+		<string>&#x2325; Option / Alt</string>
 		<key>Type</key>
 		<string>CheckBox</string>
 	</dict>
@@ -320,7 +320,7 @@
 		<key>Key</key>
 		<string>shortcut.showComment.meta</string>
 		<key>Title</key>
-		<string>Command</string>
+		<string>&#x2318; Command</string>
 		<key>Type</key>
 		<string>CheckBox</string>
 	</dict>
