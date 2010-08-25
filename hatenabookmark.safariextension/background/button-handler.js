@@ -62,18 +62,18 @@
     function handleContextMenu(event) {
         if (event.userInfo && event.userInfo.nodeName.toLowerCase() === "a") {
             if (validateURL(event.userInfo.url)) {
-                event.contextMenu.appendContextMenuItem("HatenaBookmarkShowBookmarkComment", "リンク先のはてなブックマークコメントを表示");
+                event.contextMenu.appendContextMenuItem("HatenaBookmarkShowBookmarkComment", "リンクをコメントビューワーで表示");
             }
         } else {
             if (validateURL(event.target.url)) {
                 if (getBookmarkButtons().length == 0) {
                     // ブクマボタンでてないとき
                     event.contextMenu.appendContextMenuItem("HatenaBookmarkAddBookmark", "はてなブックマークに追加");
-                    event.contextMenu.appendContextMenuItem("HatenaBookmarkShowBookmarkComment", "はてなブックマークコメントを表示");
+                    event.contextMenu.appendContextMenuItem("HatenaBookmarkShowBookmarkComment", "コメントビューワーで表示");
                 }
                 if (!getBookmarkButton('popularPagesButton')) {
                     // 人気エントリ表示ボタンがでてないときコンテキストメニュー出す
-                    event.contextMenu.appendContextMenuItem("HatenaBookmarkShowPopularPages", "サイトの人気エントリを表示");
+                    event.contextMenu.appendContextMenuItem("HatenaBookmarkShowPopularPages", "サイトの人気エントリーを表示");
                 }
             }
         }

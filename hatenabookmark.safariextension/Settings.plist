@@ -14,7 +14,7 @@
 		<key>Key</key>
 		<string>background.bookmarkcounter.enabled</string>
 		<key>Title</key>
-		<string>ツールバーにブクマカウンタを表示する</string>
+		<string>ツールバーボタンにブックマーク数を表示する</string>
 		<key>Type</key>
 		<string>CheckBox</string>
 	</dict>
@@ -29,9 +29,9 @@
 		<key>DefaultValue</key>
 		<true/>
 		<key>Key</key>
-		<string>popup.tags.allTags.enabled</string>
+		<string>popup.tags.recommendTags.enabled</string>
 		<key>Title</key>
-		<string>タグを表示する</string>
+		<string>ブックマークに追加するとき、おすすめタグ一覧を表示</string>
 		<key>Type</key>
 		<string>CheckBox</string>
 	</dict>
@@ -39,9 +39,9 @@
 		<key>DefaultValue</key>
 		<true/>
 		<key>Key</key>
-		<string>popup.tags.recommendTags.enabled</string>
+		<string>popup.tags.allTags.enabled</string>
 		<key>Title</key>
-		<string>おすすめタグを表示する</string>
+		<string>ブックマークに追加するとき、自分のタグ一覧を表示</string>
 		<key>Type</key>
 		<string>CheckBox</string>
 	</dict>
@@ -51,14 +51,14 @@
 		<key>Key</key>
 		<string>popup.commentviewer.autodetect.threshold</string>
 		<key>Title</key>
-		<string>コメントの表示</string>
+		<string>コメントビューワー</string>
 		<key>Titles</key>
 		<array>
 			<string>すべてのユーザーを表示</string>
 			<string>コメントのあるユーザーのみ表示</string>
-			<string>15件以下ならすべて表示</string>
-			<string>25件以下ならすべて表示</string>
-			<string>50件以下ならすべて表示</string>
+			<string>15 件以下ならすべてのユーザーを表示</string>
+			<string>25 件以下ならすべてのユーザーを表示</string>
+			<string>50 件以下ならすべてのユーザーを表示</string>
 		</array>
 		<key>Type</key>
 		<string>PopUpButton</string>
@@ -74,7 +74,7 @@
 
 	<dict>
 		<key>Title</key>
-		<string>Webページ</string>
+		<string>Web ページ</string>
 		<key>Type</key>
 		<string>Group</string>
 	</dict>
@@ -104,7 +104,7 @@
 
 	<dict>
 		<key>Title</key>
-		<string>ショートカットキー</string>
+		<string>キーボードショートカット</string>
 		<key>Type</key>
 		<string>Group</string>
 	</dict>
@@ -114,10 +114,10 @@
 		<key>Key</key>
 		<string>shortcut.addBookmark.key</string>
 		<key>Title</key>
-		<string>ブックマーク追加</string>
+		<string>ブックマークに追加</string>
 		<key>Titles</key>
 		<array>
-			<string>無効</string>
+			<string>(なし)</string>
 			<string>A</string>
 			<string>B</string>
 			<string>C</string>
@@ -222,10 +222,10 @@
 		<key>Key</key>
 		<string>shortcut.showComment.key</string>
 		<key>Title</key>
-		<string>コメント表示</string>
+		<string>コメントビューワー</string>
 		<key>Titles</key>
 		<array>
-			<string>無効</string>
+			<string>(なし)</string>
 			<string>A</string>
 			<string>B</string>
 			<string>C</string>

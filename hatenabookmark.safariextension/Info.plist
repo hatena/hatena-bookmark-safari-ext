@@ -46,11 +46,11 @@
 				<key>Include By Default</key>
 				<false/>
 				<key>Label</key>
-				<string>はてなブックマークコメントを表示</string>
+				<string>コメントビューワーで表示</string>
 				<key>Palette Label</key>
-				<string>はてなブックマークコメント</string>
+				<string>コメントビューワー</string>
 				<key>Tool Tip</key>
-				<string>はてなブックマークコメントを表示します</string>
+				<string>現在のページをコメントビューワーで表示します</string>
 			</dict>
 			<dict>
 				<key>Command</key>
