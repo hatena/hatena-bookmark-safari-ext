@@ -114,9 +114,11 @@
     function getBookmarkButton(key) {
         if (!key) key = 'bookmarkButton';
         var bookmarkButton;
+        var activeWindow  = safari.application.activeBrowserWindow;
         safari.extension.toolbarItems.forEach(function (toolbarItem) {
             switch (toolbarItem.identifier) {
             case identifiers[key]:
+                if (toolbarItem.browserWindow === activeWindow) break;
                 bookmarkButton = toolbarItem;
                 return;
             }
@@ -128,9 +130,10 @@
     // 最初のブクマボタンにブクマカウンタがでる
     function getBookmarkButtons() {
         var buttons = [];
+        var activeWindow  = safari.application.activeBrowserWindow;
         bookmarkIdentifiersInOrder.forEach(function(key) {
             safari.extension.toolbarItems.forEach(function (toolbarItem) {
-                if (toolbarItem.identifier === identifiers[key]) buttons.push(toolbarItem);
+                if (toolbarItem.identifier === identifiers[key] && toolbarItem.browserWindow === activeWindow) buttons.push(toolbarItem);
             });
         });
         return buttons;
