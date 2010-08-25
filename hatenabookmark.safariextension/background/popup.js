@@ -1029,7 +1029,7 @@ var ready = function() {
             width: 16,
             height: 16,
         }));
-        hicon.show();
+        hicon[0].style.display = 'inline-block';
 
         // ユーザーDB初期化とかの
         $('#db-username').text(user.name);
