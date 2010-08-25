@@ -108,7 +108,7 @@ User.prototype = {
         });
     },
     link: function(path) {
-        return B_HTTP + this.name + '/' + (path ? path + '?editer=craddon' : '');
+        return B_HTTP + this.name + '/' + (path ? path + '?editer=safariext' : '');
     },
     get database() {
         return new Database('hatenabookmark-' + this.name, {
