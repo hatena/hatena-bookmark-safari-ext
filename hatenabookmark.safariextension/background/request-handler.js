@@ -140,4 +140,31 @@ Response(function (get, deferred) {
 
         return commands;
     });
+
+    get("BookmarkButton.inform", function (ev, matched, dispatch) {
+        var args   = ev.message;
+        var tabs   = safari.application.activeBrowserWindow.tabs;
+        var target = ev.target;
+
+        switch (args.timing) {
+        case "reset":
+            tabs.some(function (tab) {
+                if (tab !== target)
+                    return false;
+
+                if (tab === safari.application.activeBrowserWindow.activeTab)
+                    BookmarkButtonManager.disableButtons();
+            });
+            break;
+        case "loaded":
+            tabs.some(function (tab) {
+                if (tab !== target)
+                    return false;
+
+                if (tab === safari.application.activeBrowserWindow.activeTab)
+                    BookmarkButtonManager.enableButtons();
+            });
+            break;
+        }
+    });
 });

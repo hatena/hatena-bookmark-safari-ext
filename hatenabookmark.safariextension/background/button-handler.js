@@ -229,4 +229,14 @@
         }
     });
 
+    // export
+    window.BookmarkButtonManager = {
+        getBookmarkButtons: getBookmarkButtons,
+        disableButtons: function () {
+            getBookmarkButtons().forEach(function (button) { button.disabled = true; });
+        },
+        enableButtons: function () {
+            getBookmarkButtons().forEach(function (button) { button.disabled = false; });
+        }
+    };
 })();

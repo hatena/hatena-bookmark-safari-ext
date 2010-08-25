@@ -103,6 +103,7 @@
 			<key>Start</key>
 			<array>
 				<string>lib/Connect.js</string>
+				<string>content/bookmark_button_inform.js</string>
 				<string>content/location_checker.js</string>
 				<string>content/floating_counter.js</string>
 			</array>
