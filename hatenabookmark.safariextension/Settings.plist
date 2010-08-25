@@ -14,7 +14,7 @@
 		<key>Key</key>
 		<string>background.bookmarkcounter.enabled</string>
 		<key>Title</key>
-		<string>ツールバーボタンにブックマーク数を表示する</string>
+		<string>ツールバーボタンにブックマーク数を表示</string>
 		<key>Type</key>
 		<string>CheckBox</string>
 	</dict>
