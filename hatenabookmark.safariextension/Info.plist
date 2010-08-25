@@ -78,11 +78,11 @@
 				<key>Include By Default</key>
 				<false/>
 				<key>Label</key>
-				<string>サイトの人気ページを表示</string>
+				<string>サイトの人気エントリーを表示</string>
 				<key>Palette Label</key>
-				<string>サイトの人気ページ</string>
+				<string>サイトの人気エントリー</string>
 				<key>Tool Tip</key>
-				<string>現在のサイトの人気ページを表示します</string>
+				<string>現在のサイトの人気エントリーを表示します</string>
 			</dict>
 		</array>
 	</dict>
