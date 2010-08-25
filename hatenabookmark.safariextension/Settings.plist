@@ -21,7 +21,7 @@
 
 	<dict>
 		<key>Title</key>
-		<string>ポップアップ画面</string>
+		<string>ポップアップウィンドウ</string>
 		<key>Type</key>
 		<string>Group</string>
 	</dict>
