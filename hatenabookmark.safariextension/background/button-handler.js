@@ -223,8 +223,10 @@
         if (UserManager.user) {
             // ブクマ済のとき画像変える
             if (!getBookmarkButtons()) return;
+            var activeWindow  = safari.application.activeBrowserWindow;
             UserManager.user.hasBookmark(activeTab.url).next(function(bool) {
                 safari.extension.toolbarItems.forEach(function (button) {
+                    if (button.browserWindow !== activeWindow) return;
                     var url = buttonImages[button.identifier][bool ? 'done' : 'yet'];
                     if (url) button.image = url;
                 });
