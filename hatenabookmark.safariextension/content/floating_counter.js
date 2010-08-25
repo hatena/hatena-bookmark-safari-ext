@@ -1,5 +1,6 @@
 (function() {
     if (window.top !== window) return;
+    if (document.documentURI.indexOf('https://') === 0) return;
     var counter;
     function createCounter() {
         counter = document.createElement('iframe');
