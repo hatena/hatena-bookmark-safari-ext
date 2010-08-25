@@ -110,15 +110,21 @@
         yet:  safari.extension.baseURI + 'images/entrylist.png'
     };
 
+    function getCurrentToolbarItems() {
+        var activeWindow = safari.application.activeBrowserWindow;
+
+        return safari.extension.toolbarItems.filter(function (item) {
+            return item.browserWindow === activeWindow;
+        });
+    }
+
     // 指定したkeyのだけ
     function getBookmarkButton(key) {
         if (!key) key = 'bookmarkButton';
         var bookmarkButton;
-        var activeWindow  = safari.application.activeBrowserWindow;
-        safari.extension.toolbarItems.forEach(function (toolbarItem) {
+        getCurrentToolbarItems().forEach(function (toolbarItem) {
             switch (toolbarItem.identifier) {
             case identifiers[key]:
-                if (toolbarItem.browserWindow === activeWindow) break;
                 bookmarkButton = toolbarItem;
                 return;
             }
@@ -130,10 +136,9 @@
     // 最初のブクマボタンにブクマカウンタがでる
     function getBookmarkButtons() {
         var buttons = [];
-        var activeWindow  = safari.application.activeBrowserWindow;
         bookmarkIdentifiersInOrder.forEach(function(key) {
-            safari.extension.toolbarItems.forEach(function (toolbarItem) {
-                if (toolbarItem.identifier === identifiers[key] && toolbarItem.browserWindow === activeWindow) buttons.push(toolbarItem);
+            getCurrentToolbarItems().forEach(function (toolbarItem) {
+                if (toolbarItem.identifier === identifiers[key]) buttons.push(toolbarItem);
             });
         });
         return buttons;
@@ -223,10 +228,8 @@
         if (UserManager.user) {
             // ブクマ済のとき画像変える
             if (!getBookmarkButtons()) return;
-            var activeWindow  = safari.application.activeBrowserWindow;
             UserManager.user.hasBookmark(activeTab.url).next(function(bool) {
-                safari.extension.toolbarItems.forEach(function (button) {
-                    if (button.browserWindow !== activeWindow) return;
+                getCurrentToolbarItems().forEach(function (button) {
                     var url = buttonImages[button.identifier][bool ? 'done' : 'yet'];
                     if (url) button.image = url;
                 });
