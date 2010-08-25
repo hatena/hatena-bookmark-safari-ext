@@ -4,19 +4,25 @@
 }
 
 body {
-    overflow: hidden !important;
+  overflow: hidden !important;
+  line-height: 0;
 }
 
 #container {
-    display               : inline-block;
-    max-width             : 200px;
-    background            : blue;
+    display : inline-block;
+    max-width : 200px;
     -webkit-border-radius : 2px;
-    background-color      : white;
-    opacity               : 0.95;
-    padding               : 2px;
+    background : rgba(255, 255, 255, 0.5);;
+    padding-right: 2px;
 }
 
 img {
     vertical-align: middle;
+}
+
+span#favs a {
+  display: inline-block;
+  height: 16px;
+  overflow: hidden;
+  margin: 2px 0 2px 2px;
 }
