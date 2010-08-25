@@ -268,8 +268,8 @@ var View = {
         showNoComment: function() {
             this.list.removeClass('hide-nocomment');
             this.commentToggle.attr('src', '../images/comment-viewer-toggle-on.png');
-            this.commentToggle.attr('title', 'コメントがないユーザーを非表示');
-            this.commentToggle.attr('alt', 'コメントがないユーザーを非表示');
+            this.commentToggle.attr('title', 'コメントのあるユーザーのみ表示');
+            this.commentToggle.attr('alt', 'コメントのあるユーザーのみ表示');
         },
         hideNoComment: function() {
             this.list.addClass('hide-nocomment');
