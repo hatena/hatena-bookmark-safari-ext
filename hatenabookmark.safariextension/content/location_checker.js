@@ -5,7 +5,8 @@
     }
 
     var LOGIN_CHECK_PATTERNS = [
-        "http://b.hatena.ne.jp/guide/chrome_register",
+        "http://b.hatena.ne.jp/guide/safari_register",
+        "http://b.hatena.ne.jp/guide/safari_loggedin",
         "http://www.hatena.ne.jp/login",
         "https://www.hatena.ne.jp/login"
     ];

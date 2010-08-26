@@ -981,7 +981,7 @@ var eulaAccept = function() {
     Config.set('popup.lastView', 'bookmark');
 
     Connect()
-        .send("Abstract.tabs.create", { url : 'http://b.hatena.ne.jp/', selected: true })
+        .send("Abstract.tabs.create", { url : 'http://b.hatena.ne.jp/guide/safari_extension_installed', selected: true })
         .recv(function () {})
         .close();
 
