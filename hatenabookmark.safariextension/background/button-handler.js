@@ -144,11 +144,29 @@
         return buttons;
     }
 
+    function confirmReloadTab(message, tab) {
+        return !!(window.confirm(message) && (tab.url = tab.url));
+    }
+
     function showPopup(view, url) {
         var tab  = safari.application.activeBrowserWindow.activeTab;
         var page = tab.page;
 
         page.dispatchMessage("showPopup", {view: view, url: url});
+
+        var gotResponse = false;
+        function popupResponseHandler(ev) {
+            gotResponse = true;
+            safari.application.removeEventListener("message", popupResponseHandler, false);
+        }
+        safari.application.addEventListener("message", popupResponseHandler, false);
+
+        window.setTimeout(function () {
+            if (!gotResponse) {
+                confirmReloadTab("この機能を使うためにはページをリロードする必要があります。よろしいですか？",
+                                 safari.application.activeBrowserWindow.activeTab);
+            }
+        }, 500);
     }
 
     var URINormalizer = {
