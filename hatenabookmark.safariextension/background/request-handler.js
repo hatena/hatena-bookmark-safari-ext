@@ -132,7 +132,7 @@ Response(function (get, deferred) {
 
         var keys = ['key', 'ctrl', 'shift', 'alt', 'meta'];
 
-        for (var command in commands) if ( commands.hasOwnProperty(command) ) {
+        for (var command in commands) if (commands.hasOwnProperty(command)) {
             keys.forEach(function (key) {
                 commands[command][key] = Config.get("shortcut." + command + "." + key);
             });

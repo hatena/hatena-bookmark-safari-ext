@@ -5,14 +5,24 @@
     var settings;
 
     var KeyManager = {
+        started: false,
+
         commands: {},
 
         start: function () {
+            if (this.started)
+                return;
+
             window.addEventListener("keydown", this, true);
+            this.started = true;
         },
 
         stop: function () {
+            if (!this.started)
+                return;
+
             window.removeEventListener("keydown", this, true);
+            this.started = false;
         },
 
         add: function (prefix, func) {
@@ -65,6 +75,15 @@
             return false;
         },
 
+        smartChangeStatus: function () {
+            if (settings.addBookmark.key !== "disabled" ||
+                settings.showComment.key !== "disabled") {
+                KeyManager.start();
+            } else {
+                KeyManager.stop();
+            }
+        },
+
         handleEvent: function (ev) {
             if (this.inputtingText(ev))
                 return;
@@ -86,7 +105,7 @@
         .send("Config.get.shortcuts").recv(function (ev) {
             settings = ev.message;
 
-            if (settings["shortcut.addBookmark.key"] !== "disabled") {
+            if (settings.addBookmark.key !== "disabled") {
                 KeyManager.add("addBookmark", function () {
                     Connect().send("PopupManager.show", {
                         url  : document.documentURI,
@@ -95,7 +114,7 @@
                 });
             }
 
-            if (settings["shortcut.showComment.key"] !== "disabled") {
+            if (settings.showComment.key !== "disabled") {
                 KeyManager.add("showComment", function () {
                     Connect().send("PopupManager.show", {
                         url  : document.documentURI,
@@ -104,10 +123,7 @@
                 });
             }
 
-            if (settings["shortcut.addBookmark.key"] !== "disabled" &&
-                settings["shortcut.showComment.key"] !== "disabled") {
-                KeyManager.start();
-            }
+            KeyManager.smartChangeStatus();
         })
         .close();
 
@@ -126,6 +142,8 @@
             var commandKey  = fragments[2];
 
             settings[commandName][commandKey] = value;
+
+            KeyManager.smartChangeStatus();
         }
     }, false);
 })();
