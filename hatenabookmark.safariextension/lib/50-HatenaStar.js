@@ -679,7 +679,7 @@ Ten.Cookie = new Ten.Class({
             option.expires = this.defaultExpires;
         }
         if (/^\+?(\d+)([ymdh])$/.exec(option.expires)) {
-            var count = parseInt(RegExp.$1);
+            var count = parseInt(RegExp.$1, 10);
             var field = ({ y: 'FullYear', m: 'Month', d: 'Date', h: 'Hours' })[RegExp.$2];
 
             var date = new Date;
@@ -1220,8 +1220,8 @@ Ten.Geometry = new Ten.Class({
             func.getYScroll = function() { return document.body.scrollTop; }
         }
         if (window.opera) {
-            func.getDocumentHeight = function(w) { return parseInt(Ten.Style.getElementStyle(w.document.body, 'height')); }
-            func.getDocumentWidth = function(w) { return parseInt(Ten.Style.getElementStyle(w.document.body, 'width')); }
+            func.getDocumentHeight = function(w) { return parseInt(Ten.Style.getElementStyle(w.document.body, 'height'), 10); }
+            func.getDocumentWidth = function(w) { return parseInt(Ten.Style.getElementStyle(w.document.body, 'width'), 10); }
         } else if (document.all) {
             func.getDocumentHeight = function(w) { return w.document.body.scrollHeight; }
             func.getDocumentWidth = function(w) { return w.document.body.scrollWidth; }
@@ -3156,7 +3156,7 @@ Hatena.Star.AlertScreen = new Ten.Class({
         this.container.innerHTML = msg;
         var win = Ten.Geometry.getWindowSize();
         var scr = Ten.Geometry.getScroll();
-        var w = parseInt(this.constructor.style.width) + 20;
+        var w = parseInt(this.constructor.style.width, 10) + 20;
         if (pos.x + w > scr.x + win.w) pos.x = win.w + scr.x - w;
         this.show(pos);
     }
@@ -3235,8 +3235,8 @@ Hatena.Star.CommentScreen = new Ten.Class({
         }
         var win = Ten.Geometry.getWindowSize();
         var scr = Ten.Geometry.getScroll();
-        var w = parseInt(this.constructor.style.width) + 20;
-        var h = parseInt(this.constructor.style.height) + 20;
+        var w = parseInt(this.constructor.style.width, 10) + 20;
+        var h = parseInt(this.constructor.style.height, 10) + 20;
         if (pos.x + w > scr.x + win.w) pos.x = win.w + scr.x - w;
         if (pos.y + h > scr.y + win.h) pos.y = win.h + scr.y - h;
         this.show(pos);
@@ -3620,7 +3620,7 @@ Hatena.Star.WindowObserver = new Ten.Class({
         }
         c.observer = Ten.DOM.addEventListener('onload', function() {
             c.finishLoad();
-            if (!Ten.Browser.isFirefox || parseInt(Ten.Browser.version) > 2) {
+            if (!Ten.Browser.isFirefox || parseInt(Ten.Browser.version, 10) > 2) {
                 new Ten.Observer(document.body, 'onclick', function(event){
                     try{
                         var pallet = new Hatena.Star.Pallet();

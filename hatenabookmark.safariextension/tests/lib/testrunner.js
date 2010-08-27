@@ -423,7 +423,7 @@ function test(name, callback, testCount) {
             QUnit.ok( false, "Expected " + config.expected + " assertions, but " + config.assertions.length + " were run" );
         }
         
-        if (typeof testCount != 'undefined' && parseInt(testCount) != config.assertions.length) {
+        if (typeof testCount != 'undefined' && parseInt(testCount, 10) != config.assertions.length) {
             QUnit.ok( false, "Expected " + testCount + " assertions, but " + config.assertions.length + " were run(testCounts)" );
         }
 
@@ -593,7 +593,7 @@ function t(a,b,c) {
  * @result "data/test.php?foo=bar&10538358345554"
  */
 function url(value) {
-    return value + (/\?/.test(value) ? "&" : "?") + new Date().getTime() + "" + parseInt(Math.random()*100000);
+    return value + (/\?/.test(value) ? "&" : "?") + new Date().getTime() + "" + parseInt(Math.random()*100000, 10);
 }
 
 /**

@@ -374,11 +374,11 @@
                     }
                     if (typeof options.limit != 'undefined') {
                         stmt += ' LIMIT ?';
-                        bind.push(parseInt(options.limit));
+                        bind.push(parseInt(options.limit, 10));
                     }
                     if (typeof options.offset != 'undefined') {
                         stmt += ' OFFSET ?';
-                        bind.push(parseInt(options.offset));
+                        bind.push(parseInt(options.offset, 10));
                     }
                 }
                 return [stmt, bind];
