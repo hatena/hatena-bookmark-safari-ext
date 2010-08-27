@@ -83,8 +83,6 @@
             var overlappedFlashes = this.getOverlappedFlashes();
             var hiddenFlashPairs  = [];
 
-            console.dir(overlappedFlashes);
-
             overlappedFlashes.forEach(function (flash) {
                 var pair = [flash, flash.style.visibility];
                 flash.style.setProperty("visibility", "hidden", "important");
