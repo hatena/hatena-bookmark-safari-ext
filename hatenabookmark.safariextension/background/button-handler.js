@@ -164,7 +164,7 @@
 
         window.setTimeout(function () {
             if (!gotResponse) {
-                confirmReloadTab("この機能を使うためにはページをリロードする必要があります。よろしいですか？",
+                confirmReloadTab("この機能を使うためにはページを再読み込みする必要があります。\nこのページを再読み込みしてよろしいですか？",
                                  safari.application.activeBrowserWindow.activeTab);
             }
         }, 500);
