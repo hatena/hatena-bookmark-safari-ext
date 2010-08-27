@@ -1066,6 +1066,12 @@ var ready = function() {
 
     $('#search-form').bind('submit', searchFormSubmitHandler);
 
+    // とじるボタン
+    $('#close-form').bind('submit', function(ev) {
+        closeWin();
+        return false;
+    });
+
     var searchWord = $('#search-word');
     searchWord.bind('input', searchIncSearchHandler);
     searchWord.bind('click', function (ev) {
