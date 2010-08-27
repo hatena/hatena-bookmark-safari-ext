@@ -110,4 +110,22 @@
             }
         })
         .close();
+
+    safari.self.addEventListener("message", function (ev) {
+        if (ev.name === "keyboardShortcutChanged") {
+            var message = ev.message;
+            var key     = message.key;
+            var value   = message.newValue;
+
+            var fragments = key.split(".");
+
+            if (fragments.length !== 3)
+                return;
+
+            var commandName = fragments[1];
+            var commandKey  = fragments[2];
+
+            settings[commandName][commandKey] = value;
+        }
+    }, false);
 })();
