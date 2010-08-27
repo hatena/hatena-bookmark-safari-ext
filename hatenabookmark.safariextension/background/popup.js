@@ -1019,6 +1019,23 @@ var prepareUser = function() {
 var ready = function() {
     resizeWindow();
 
+    $(window).keydown(function(ev) {
+        if (ev.keyCode === 27) {
+            var elem = ev.target;
+            var tag  = elem.localName.toLowerCase();
+
+            if (tag === 'textarea') return;
+
+            if (tag === 'input') {
+                var type = elem.getAttribute('type');
+
+                if (!type || type === 'text' || type === 'password' || type === 'search')
+                    return;
+            }
+            closeWin();
+        }
+    });
+
     var user = UserManagerProxy.user;
     if (user) {
         var hicon = $('#header-usericon');
