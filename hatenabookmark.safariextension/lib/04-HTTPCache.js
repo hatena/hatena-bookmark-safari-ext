@@ -109,7 +109,7 @@ HTTPCache.counter.loadHandler = function(ev) {
 */
 
 HTTPCache.comment = new HTTPCache('commentCache', {
-    expire: 60 * 30,
+    expire: 60 * 15,
     baseURL: B_HTTP + 'entry/jsonlite/?url=',
     seriarizer: 'JSON',
     json: true,
@@ -118,7 +118,7 @@ HTTPCache.comment = new HTTPCache('commentCache', {
 });
 
 HTTPCache.entry = new HTTPCache('entryCache', {
-    expire: 60 * 15,
+    expire: 60 * 16,
     baseURL: B_HTTP + 'my.entry?url=',
     seriarizer: 'JSON',
     json: true,

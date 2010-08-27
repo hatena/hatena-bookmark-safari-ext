@@ -22,7 +22,7 @@ setInterval(function() {
     if (isEulaAgreed()) {
         UserManager.login();
     }
-}, 1000 * 60 * 15);
+}, 1000 * 60 * 29);
 
 // chrome webdatabase 5M 制限のため、tag 参照テーブルを作らない
 // chrome拡張がこういうことなのでおいとく
