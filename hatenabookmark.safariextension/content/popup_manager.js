@@ -201,6 +201,7 @@
     function extensionMessageHandler(event) {
         switch (event.name) {
         case "showPopup":
+            safari.self.tab.dispatchMessage("receivedShowPopup", true);
             if (popupEmbeddable())
                 PopupManager.show(event.message);
             else
