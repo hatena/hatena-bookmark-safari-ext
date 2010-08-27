@@ -41,6 +41,7 @@
             case "HatenaBookmarkShowPopularPages":
                 var tab  = safari.application.activeBrowserWindow.activeTab;
                 event.target.disabled = !validateURL(tab.url);
+                TabManager.trigger("change"); // XXX: badge更新したい
             }
             break;
         case "[object SafariExtensionContextMenuItem]":
