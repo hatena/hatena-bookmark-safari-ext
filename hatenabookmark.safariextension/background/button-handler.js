@@ -172,12 +172,18 @@
 
     var URINormalizer = {
         db: [
-            ["http://(\\w+)\\.hatena\\.(ne\\.jp|com)/([A-Za-z][\\w-]{1,30}[A-Za-z0-9])/", function (matched) {
-                return "http://" + matched[1] + ".hatena." + matched[2] + "/" + matched[3] + "/";
+            ["^https?://\\w+\\.(?:g\\.)?hatena\\.(?:ne\\.jp|com)/(?:[A-Za-z][\\w-]{1,30}[A-Za-z0-9])/", function (matched) {
+                return matched[0];
             }],
-            ["http://twitter.com/([^/]+)", function (matched) {
-                return "http://twitter.com/" + matched[1];
-            }]
+            ["^https?://twitter\\.com/\\w+", function (matched) {
+                return matched[0];
+            }],
+            ["^https?://(?:blog(?:\\.(?:livedoor\\.jp|goo\\.ne\\.jp|so-net\\.ne\\.jp|drecom\\.jp)|s\\.(?:dion\\.ne\\.jp|yahoo\\.co\\.jp))|ameblo\\.jp|diary\\.jp\\.aol\\.com|plaza\\.rakuten\\.co\\.jp|yaplog\\.jp)/[^/?#]+", function (matched) {
+                return matched[0] + '/';
+            }],
+            ["^(https?://[^/]+/)(?:~|%7[eE])([^/?#]+/)", function (matched) {
+                return matched[1] + '~' + matched[2];
+            }],
         ],
 
         takeHead: function (uri) {
