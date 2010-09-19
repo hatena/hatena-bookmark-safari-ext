@@ -1,4 +1,5 @@
-.hBookmark-widget-counter {
+.hBookmark-widget-counter,
+.hBookmark-widget-comments {
     background: none !important;
     text-decoration: none !important;
     margin: 0 0 0 2px;
@@ -6,7 +7,8 @@
     display: inline !important;
 }
 
-.hBookmark-widget-counter > img {
+.hBookmark-widget-counter > img,
+.hBookmark-widget-comments > img {
     border: none;
     vertical-align: middle;
 }
