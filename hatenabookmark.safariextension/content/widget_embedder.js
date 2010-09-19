@@ -127,8 +127,9 @@ extend(WidgetEmbedder.prototype, {
         var existing = this.getExistingWidgets(paragraph, link);
         var counter = existing.counter;
         var image = existing.counterImage;
+        var counterAdded = !counter;
         if (!counter) {
-            var point = this.getAnnotationPoint(paragraph, link);
+            var point = this.getAnnotationPoint(paragraph, link, existing);
             if (!point) return;
             counter = this.createCounter(url);
             image = counter.firstChild;
@@ -146,8 +147,16 @@ extend(WidgetEmbedder.prototype, {
                 image.removeEventListener('load', onCounterReady, false);
                 image.removeEventListener('error', onCounterReady, false);
                 image.removeEventListener('abort', onCounterReady, false);
-                if (image.naturalWidth <= 1) return;
+                if (image.naturalWidth <= 1) {
+                    // カウンタがもともと存在しなければ消す
+                    if (counterAdded) {
+                        counter.parentNode.removeChild(counter);
+                    }
+                    return;
+                }
             }
+            if (counterAdded)
+                counter.style.display = '';
             var fragment = document.createDocumentFragment();
             fragment.appendChild(document.createTextNode(' '));
             fragment.appendChild(self.createComments(url));
@@ -181,7 +190,15 @@ extend(WidgetEmbedder.prototype, {
         return (link && link.href) ? link : null;
     },
 
-    getAnnotationPoint: function WE_getAnnotationPoint(paragraph, link) {
+    getAnnotationPoint: function WE_getAnnotationPoint(paragraph, link, existing) {
+        var point = document.createRange();
+        var anchor = existing.entry || existing.comments || existing.addButton;
+        if (anchor) {
+            point.selectNode(anchor);
+            point.collapse(anchor !== existing.entry);
+            return point;
+        }
+
         var annotation = this.siteinfo.annotation
                          ? queryXPath(this.siteinfo.annotation, paragraph)
                          : link;
@@ -198,7 +215,6 @@ extend(WidgetEmbedder.prototype, {
                 position = 'last';
             }
         }
-        var point = document.createRange();
         if (position === 'before' || position === 'after')
             point.selectNode(annotation);
         else
@@ -273,7 +289,8 @@ extend(WidgetEmbedder.prototype, {
         var counter = E('a', {
             href: getEntryURL(url),
             title: WidgetEmbedder.messages.SHOW_ENTRY_TITLE,
-            'class': 'hBookmark-widget-counter'
+            'class': 'hBookmark-widget-counter',
+            style: 'display: none;',
         }, image);
         return counter;
     },
