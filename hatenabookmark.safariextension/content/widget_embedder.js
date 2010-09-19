@@ -123,11 +123,44 @@ extend(WidgetEmbedder.prototype, {
 
         var link = this.getLink(paragraph);
         if (!link || !/^https?:/.test(link.href)) return;
-        var point = this.getAnnotationPoint(paragraph, link);
-        if (!point) return;
-        var widgets = this.createWidgets(link);
-        point.insertNode(widgets);
-        point.detach();
+        var url = link.href;
+        var existing = this.getExistingWidgets(paragraph, link);
+        var counter = existing.counter;
+        var image = existing.counterImage;
+        if (!counter) {
+            var point = this.getAnnotationPoint(paragraph, link);
+            if (!point) return;
+            counter = this.createCounter(url);
+            image = counter.firstChild;
+            var fragment = document.createDocumentFragment();
+            fragment.appendChild(document.createTextNode(' '));
+            fragment.appendChild(counter);
+            point.insertNode(fragment);
+            point.detach();
+        }
+        if (existing.comments) return;
+
+        var self = this;
+        function onCounterReady() {
+            if (image) {
+                image.removeEventListener('load', onCounterReady, false);
+                image.removeEventListener('error', onCounterReady, false);
+                image.removeEventListener('abort', onCounterReady, false);
+                if (image.naturalWidth <= 1) return;
+            }
+            var fragment = document.createDocumentFragment();
+            fragment.appendChild(document.createTextNode(' '));
+            fragment.appendChild(self.createComments(url));
+            counter.parentNode.insertBefore(fragment, counter.nextSibling);
+        }
+
+        if (!image || image.complete) {
+            onCounterReady();
+        } else {
+            image.addEventListener('load', onCounterReady, false);
+            image.addEventListener('error', onCounterReady, false);
+            image.addEventListener('abort', onCounterReady, false);
+        }
     },
 
     getLink: function WE_getLink(paragraph) {
@@ -149,16 +182,6 @@ extend(WidgetEmbedder.prototype, {
     },
 
     getAnnotationPoint: function WE_getAnnotationPoint(paragraph, link) {
-        var existing = this.getExistingWidgets(paragraph, link);
-        if (existing.counter) return null;
-        var point = document.createRange();
-        var anchor = existing.entry || existing.comments || existing.addButton;
-        if (anchor) {
-            point.selectNode(anchor);
-            point.collapse(anchor !== existing.entry);
-            return point;
-        }
-
         var annotation = this.siteinfo.annotation
                          ? queryXPath(this.siteinfo.annotation, paragraph)
                          : link;
@@ -175,6 +198,7 @@ extend(WidgetEmbedder.prototype, {
                 position = 'last';
             }
         }
+        var point = document.createRange();
         if (position === 'before' || position === 'after')
             point.selectNode(annotation);
         else
@@ -190,14 +214,16 @@ extend(WidgetEmbedder.prototype, {
         const oldEntryURL = B_HTTP + 'entry/' + sharpEscapedURL;
         const imageAPIPrefix = B_STATIC_HTTP + 'entry/image/';
         const oldImageAPIPrefix = B_HTTP + 'entry/image/';
-        const addURL = B_HTTP + 'my/add.confirm?url=' + encodeURIComponent(url);
-        const oldAddURL = B_HTTP + 'append?' + sharpEscapedURL;
+        const addURL = B_HTTP + 'entry/add/' + sharpEscapedURL;
+        const oldAddURL = B_HTTP + 'my/add.confirm?url=' + encodeURIComponent(url);
+        const oldAddURL2 = B_HTTP + 'append?' + sharpEscapedURL;
         const entryImagePrefix = 'http://d.hatena.ne.jp/images/b_entry';
         var widgets = {
-            entry:     null,
-            counter:   null,
-            comments:  null,
-            addButton: null,
+            entry:        null,
+            counter:      null,
+            counterImage: null,
+            comments:     null,
+            addButton:    null,
         };
         queryXPathAll('descendant::a[@href]', paragraph).forEach(function (a) {
             switch (a.href) {
@@ -221,6 +247,7 @@ extend(WidgetEmbedder.prototype, {
                     if (src.indexOf(imageAPIPrefix) === 0 ||
                         src.indexOf(oldImageAPIPrefix) === 0) {
                         widgets.counter = a;
+                        widgets.counterImage = content;
                     } else if (src.indexOf(entryImagePrefix) === 0) {
                         widgets.entry = a;
                     }
@@ -229,6 +256,7 @@ extend(WidgetEmbedder.prototype, {
 
             case addURL:
             case oldAddURL:
+            case oldAddURL2:
                 widgets.addButton = a;
                 break;
             }
@@ -237,48 +265,30 @@ extend(WidgetEmbedder.prototype, {
         return widgets;
     },
 
-    createWidgets: function WE_createWidgets(link) {
-        var widgets = document.createDocumentFragment();
-        widgets.appendChild(document.createTextNode(' '));
-
-        var url = link.href;
-        var sharpEscapedURL = url.replace(/#/g, '%23');
-
-        var entryURL = getEntryURL(url);
-
-        // ============================================================ //
-
-        var counterImg = E('img', {
-            src   : B_STATIC_HTTP + 'entry/image/' + sharpEscapedURL,
-            alt   : WidgetEmbedder.messages.SHOW_ENTRY_TEXT,
-            style : 'display: none;'
+    createCounter: function WE_createCounter(url) {
+        var image = E('img', {
+            src: B_STATIC_HTTP + 'entry/image/' + url.replace(/#/g, '%20'),
+            alt: WidgetEmbedder.messages.SHOW_ENTRY_TEXT,
         });
-        widgets.appendChild(E('a', {
-            href    : entryURL,
-            title   : WidgetEmbedder.messages.SHOW_ENTRY_TITLE,
-            'class' : 'hBookmark-widget-counter'
-        }, counterImg));
+        var counter = E('a', {
+            href: getEntryURL(url),
+            title: WidgetEmbedder.messages.SHOW_ENTRY_TITLE,
+            'class': 'hBookmark-widget-counter'
+        }, image);
+        return counter;
+    },
 
-        console.log(WidgetEmbedder.messages);
-
-        // ============================================================ //
-
-        var commentsImg = E('img', {
-            src     : "http://b.st-hatena.com/images/b-comment-balloon.png",
-            alt     : WidgetEmbedder.messages.SHOW_COMMENTS_TEXT,
-            style   : 'display: none;',
-            'class' : "hBookmark-widget-comments-balloon"
+    createComments: function WE_createComments(url) {
+        var image = E('img', {
+            src: "http://b.st-hatena.com/images/b-comment-balloon.png",
+            alt: WidgetEmbedder.messages.SHOW_COMMENTS_TEXT,
         });
-
-        var commentsAnchor = E('a', {
-            href    : entryURL,
-            title   : WidgetEmbedder.messages.SHOW_COMMENTS_TITLE,
-            'class' : 'hBookmark-widget-comments'
-        }, commentsImg);
-
-        widgets.appendChild(commentsAnchor);
-
-        commentsAnchor.addEventListener("click", function (ev) {
+        var comments = E('a', {
+            href: getEntryURL(url),
+            title: WidgetEmbedder.messages.SHOW_COMMENTS_TITLE,
+            'class': 'hBookmark-widget-comments'
+        }, image);
+        comments.addEventListener("click", function (ev) {
             if (ev.button)
                 return;
 
@@ -291,30 +301,8 @@ extend(WidgetEmbedder.prototype, {
             });
 
             Connect().send("PopupManager.show", { url : url, view : "comment" }).recv(function (ev) {}).close();
-
         }, false);
-
-        // ============================================================ //
-
-        counterImg.addEventListener('load', function (ev) {
-            var img = event.target;
-            if (img.naturalWidth > 1) {
-                img.style.display = '';
-
-                commentsImg.style.display = '';
-            }
-            img.removeEventListener('load', arguments.callee, false);
-        }, false);
-
-        return widgets;
-    },
-
-    _onImageLoad: function WE_onImageLoad(event) {
-        var img = event.target;
-        if (img.naturalWidth > 1) {
-            img.style.display = '';
-        }
-        img.removeEventListener('load', arguments.callee, false);
+        return comments;
     },
 
     handleEvent: function WE_handleEvent(event) {
