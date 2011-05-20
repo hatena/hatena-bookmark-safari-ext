@@ -395,6 +395,9 @@ var View = {
         get postTwitterContainer()   { return $('#post-twitter-container'); },
         get postTwitter()            { return $('#post-twitter'); },
         get postTwitterHelp()        { return $('#post-twitter-help'); },
+        get postMixiCheckContainer() { return $('#post-mixi-check-container'); },
+        get postMixiCheck()          { return $('#post-mixi-check'); },
+        get postMixiCheckHelp()      { return $('#post-mixi-check-help'); },
         get container()              { return $('#bookmark-container'); },
         get tab()                    { return $('#bookmark-tab'); },
         get usericon()               { return $('#usericon') },
@@ -578,7 +581,20 @@ var View = {
             } else {
                 this.postTwitterContainer.remove();
             }
-            if (user.plususer && user.canUseTwitter) {
+            if (user.canUseMixiCheck) {
+                if (user.postMixiCheckChecked === 'on' ||
+                    (user.postMixiCheckChecked === 'inherit' &&
+                     Config.get('popup.bookmark.postMixiCheck'))) {
+                    this.postMixiCheck.attr('checked', 'checked');
+                }
+                this.postMixiCheck.bind('change', function() {
+                    Config.set('popup.bookmark.postMixiCheck', this.checked);
+                });
+                this.postMixiCheckHelp.remove();
+            } else {
+                this.postMixiCheckContainer.remove();
+            }
+            if (user.plususer && (user.canUseTwitter || user.canUseMixiCheck)) {
                 $('#private').click(Ten.Function.method(this, 'privateClickHandler'));
                 this.privateClickHandler();
             }
@@ -915,25 +931,27 @@ var View = {
         },
 
         privateClickHandler: function() {
-            var input = this.postTwitter.get(0);
-            var label = input.parentNode;
-            if (!label.enabledTitle) {
-                label.enabledTitle = label.title;
-                label.disabledTitle = label.title + '(非公開ブックマークは Twitter へ投稿されません。)';
-                input.defaultChecked = input.checked;
-            }
-            if ($('#private').get(0).checked) {
-                input.defaultChecked = input.checked;
-                input.checked = false;
-                input.disabled = true;
-                label.title = label.disabledTitle;
-                label.className = 'disabled';
-            } else {
-                input.checked = input.defaultChecked;
-                input.disabled = false;
-                label.title = label.enabledTitle;
-                label.className = '';
-            }
+            [this.postTwitter[0] || null, this.postMixiCheck[0] || null].forEach(function (input) {
+                if (!input) return;
+                var label = input.parentNode;
+                if (!label.enabledTitle) {
+                    label.enabledTitle = label.title;
+                    label.disabledTitle = label.title + '(非公開ブックマークは' + (input.name === 'post_twitter' ? ' Twitter ' : 'mixiチェック') + 'へ投稿されません。)';
+                    input.defaultChecked = input.checked;
+                }
+                if ($('#private').get(0).checked) {
+                    input.defaultChecked = input.checked;
+                    input.checked = false;
+                    input.disabled = true;
+                    label.title = label.disabledTitle;
+                    label.className = 'disabled';
+                } else {
+                    input.checked = input.defaultChecked;
+                    input.disabled = false;
+                    label.title = label.enabledTitle;
+                    label.className = '';
+                }
+            });
         },
     }
 };

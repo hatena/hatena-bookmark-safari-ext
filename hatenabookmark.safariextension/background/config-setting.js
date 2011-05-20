@@ -30,6 +30,7 @@
         'popup.tags.showAllTags': false,
         'popup.bookmark.confirmBookmark': false,
         'popup.bookmark.postTwitter': false,
+        'popup.bookmark.postMixiCheck': false,
         'popup.bookmark.addAsin': false,
         'popup.bookmark.lastCommentValue': {},
         'popup.lastView': 'comment'
