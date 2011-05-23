@@ -41,10 +41,13 @@
                 });
 
                 var icon = $("<img>");
+                var n = 0;
+                for (var i = 0; i < fav.name.length; i++)
+                    n += fav.name.charCodeAt(i);
                 icon.attr({
                     width: 16,
                     height: 16,
-                    src: "http://www.st-hatena.com/users/" + fav.name.substring(0, 2) + "/" + fav.name + "/profile_s.gif"
+                    src: "http://cdn" + (n % 5) + ".www.st-hatena.com/users/" + fav.name.substring(0, 2) + "/" + fav.name + "/profile_s.gif"
                 });
 
                 iconContainer.append(icon);

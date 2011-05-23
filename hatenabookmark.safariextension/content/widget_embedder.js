@@ -3,7 +3,7 @@
 // XXX ToDo: Consider about namespaces.
 
 const B_HTTP = 'http://b.hatena.ne.jp/';
-const B_STATIC_HTTP = 'http://b.st-hatena.com/';
+const B_STATIC_HTTP = 'http://cdn-ak.b.st-hatena.com/';
 
 var SiteinfoRequestor = {
     init: function SR_init() {
@@ -229,7 +229,7 @@ extend(WidgetEmbedder.prototype, {
         const sharpEscapedURL = url.replace(/#/g, '%23');
         const entryURL = getEntryURL(url);
         const oldEntryURL = B_HTTP + 'entry/' + sharpEscapedURL;
-        const imageAPIPrefix = B_STATIC_HTTP + 'entry/image/';
+        const imageAPIPrefix = 'http://b.st-hatena.com/entry/image/';
         const oldImageAPIPrefix = B_HTTP + 'entry/image/';
         const addURL = B_HTTP + 'entry/add/' + sharpEscapedURL;
         const oldAddURL = B_HTTP + 'my/add.confirm?url=' + encodeURIComponent(url);
@@ -284,7 +284,7 @@ extend(WidgetEmbedder.prototype, {
 
     createCounter: function WE_createCounter(url) {
         var image = E('img', {
-            src: B_STATIC_HTTP + 'entry/image/' + url.replace(/#/g, '%20'),
+            src: 'http://b.st-hatena.com/entry/image/' + url.replace(/#/g, '%20'),
             alt: WidgetEmbedder.messages.SHOW_ENTRY_TEXT,
         });
         var counter = E('a', {
@@ -298,7 +298,7 @@ extend(WidgetEmbedder.prototype, {
 
     createComments: function WE_createComments(url) {
         var image = E('img', {
-            src: "http://b.st-hatena.com/images/b-comment-balloon.png",
+            src: B_STATIC_HTTP + "images/b-comment-balloon.png",
             alt: WidgetEmbedder.messages.SHOW_COMMENTS_TEXT,
         });
         var comments = E('a', {
