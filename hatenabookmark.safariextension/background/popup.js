@@ -587,7 +587,7 @@ var View = {
                 $('#private').click(Ten.Function.method(this, 'privateClickHandler'));
                 this.privateClickHandler();
             }
-            if (!this.privateHelp.length && !this.postTwitterHelp.length) {
+            if (!this.privateHelp.length && !this.postTwitterHelp.length && !this.postMixiCheckHelp.length) {
                 this.optionHelpContainer.remove();
             }
             if (info.title) {
