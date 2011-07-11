@@ -156,8 +156,8 @@
               </div>
             </div>
             <div id="bookmarked-notice" class="none">
-              <span id="bookmarked-notice-message"></span>
-              <a id="bookmark-delete-link" class="none" onclick="if (confirm('このブックマークを削除します。よろしいですか？')) deleteBookmark(); return false;">削除する</a>
+              <span id="bookmarked-notice-text"></span>
+              <input id="delete-button" type="button" value="削除" onclick="if (confirm('このブックマークを削除します。よろしいですか？')) deleteBookmark();" />
             </div>
             <div id="bookmark-error" class="none"></div>
 
