@@ -550,7 +550,7 @@ var View = {
             if (user.plususer) {
                 this.plusInputs.removeClass('none');
             } else {
-                // XXX Setup tooltip help
+                this.setupOptionHelp('private');
                 this.plusInputs.remove();
             }
             if (user.canUseTwitter) {
@@ -563,7 +563,7 @@ var View = {
                     Config.set('popup.bookmark.postTwitter', this.checked);
                 });
             } else {
-                // XXX Setup tooltip help
+                this.setupOptionHelp('post-twitter');
             }
             if (user.canUseFacebook) {
                 if (user.postFacebookChecked === 'on' ||
@@ -575,7 +575,7 @@ var View = {
                     Config.set('popup.bookmark.postFacebook', this.checked);
                 });
             } else {
-                // XXX Setup tooltip help
+                this.setupOptionHelp('post-facebook');
             }
             if (user.canUseMixiCheck) {
                 if (user.postMixiCheckChecked === 'on' ||
@@ -587,7 +587,7 @@ var View = {
                     Config.set('popup.bookmark.postMixiCheck', this.checked);
                 });
             } else {
-                // XXX Setup tooltip help
+                this.setupOptionHelp('post-mixi-check');
             }
             $('#private').click(Ten.Function.method(this, 'privateClickHandler'));
             this.privateClickHandler();
@@ -932,6 +932,33 @@ var View = {
 
                 $('#asin-container').show();
             }
+        },
+
+        setupOptionHelp: function (checkId) {
+            var doc = $(document);
+            var checkIds = doc.data('option-help-check-ids');
+            if (checkIds) {
+                checkIds.push(checkId);
+                return;
+            }
+            checkIds = [checkId];
+            doc.data('option-help-check-ids', checkIds);
+            var isShowing = false;
+            doc.click(function (event) {
+                var target = event.target;
+                var idToShow = '';
+                if (target.id && checkIds.indexOf(target.id) >= 0) {
+                    if (target.checked)
+                        idToShow = 'option-help-' + target.id;
+                } else if ($(target).closest('.option-help-tooltip').length) {
+                    return;
+                }
+                if (!idToShow && !isShowing) return;
+                $('.option-help-tooltip').each(function () {
+                    $(this).css('display', (this.id === idToShow) ? '' : 'none');
+                });
+                isShowing = !!idToShow;
+            });
         },
 
         privateClickHandler: function() {
