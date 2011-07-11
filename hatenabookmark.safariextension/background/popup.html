@@ -178,13 +178,11 @@
                 <div class="table-row">
                   <div class="table-left">
                     <div class="table-row">
-                      <div class="edit-left edit-cell">タイトル:</div>
                       <div id="title" class="edit-cell loaded">
 
                         <div style="width: 100%; display: table-cell;">
                           <span id="title-toggle-button" class="edit-cell">
-                            <img onclick="
-                                          View.bookmark.titleEditToggle();" src="../images/edit-lock.png" class="loaded" id="title-editable-toggle">
+                            <img onclick="View.bookmark.titleEditToggle();" src="../images/edit-lock.png" class="loaded" id="title-editable-toggle">
                           </span>
 
                           <span class="edit-cell" id="title-text-container">
@@ -212,61 +210,12 @@
 
 
                     <div class="table-row">
-                      <div class="edit-left edit-cell">URL:</div>
                       <div class="edit-cell" id="url-container">
                         <div>
                           <a href="" id="url"></a>
                         </div>
                         <div>
                           <span id="users-count-container" class="none"><img src="../images/page.gif"><a id='users-count'></a></span><img id="comment-show"><span id="favorites"></span>
-                          <span id="type-counter"><span id="type-count">0</span> / 100</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="table-row">
-                      <div class="edit-left edit-cell">コメント:</div>
-                      <div class="edit-cell" id="bookmark-options">
-                        <div id="comment-area">
-                          <textarea rows="2" id="comment" name="comment"></textarea>
-                          <ul id="tag-complete-list">
-                          </ul>
-                        </div>
-                        <div id="checkbox-options">
-                          <input type="hidden" id="input-url" name="url" />
-                          <label for="confirm-bookmark" title="ブックマーク保存完了後、別ウィンドウではてなブックマークのエントリーページを表示します。">
-                            <input value="1" type="checkbox" id="confirm-bookmark" name="confirm_bookmark" />
-                            ブックマークを確認
-                          </label>
-                          <span id="post-twitter-container">
-                            <label id="post-twitter-label" for="post-twitter" title="ブックマークしたページを Twitter へ投稿する場合はチェックを入れてください。">
-                              <input value="1" type="checkbox" id="post-twitter" name="post_twitter" />
-                              <span class="label-text">Twitter へ投稿</span>
-                            </label>
-                          </span>
-                          <span id="post-mixi-check-container">
-                            <label id="post-mixi-check-label" for="post-mixi-check" title="ブックマークしたページをmixiチェックへ投稿する場合はチェックを入れてください。">
-                              <input value="1" type="checkbox" id="post-mixi-check" name="post_mixi_check" />
-                              <span class="label-text">mixiチェックへ投稿</span>
-                            </label>
-                          </span>
-                          <span id="plus-inputs" class="none">
-                            <input value="1" type="hidden" id="with_status_op" name="with_status_op" />
-                            <label id="private-label" for="private" title="ブックマークを他のユーザーに公開しない場合はチェックを入れてください。(閲覧許可ユーザーにも公開されません。) ">
-                              <input value="1" type="checkbox" id="private" name="private" />
-                              <span class="label-text">公開しない</span>
-                            </label>
-                            <label for="send_mail" title="ブックマークしたページを設定で指定したメールアドレスに送信する場合チェックを入れてください。">
-                              <input value="1" type="checkbox" id="send_mail" name="send_mail" />
-                              メールする
-                            </label>
-                          </span>
-                          <span id="asin-container">
-                            <input value="" type="hidden" id="asin" name="asin" disabled />
-                            <label for="add-asin">
-                              <input value="1" type="checkbox" id="add-asin" name="add_asin" disabled="disabled" />
-                              コレクションに追加
-                            </label>
-                          </span>
                         </div>
                       </div>
                     </div>
@@ -276,11 +225,63 @@
                     <div id="image-container">
                       <div id="image-current-container" onclick="View.bookmark.imageDetect();" ><img id="current-image" src="../images/noimages.png" /></div>
                     </div>
-                    <hr id="option-help-separator"/>
-                    <div id="option-help-container" title="有効にすることで使える、より便利な機能の紹介です。">
-                      <a id="post-twitter-help" class="option-help" href="http://b.hatena.ne.jp/guide/twitter?target=append&amp;ref=safari" title="Twitter 連携機能を設定すると、ブックマーク時に Twitter へも投稿することができます。"><img src="../images/add-twitter.png" alt="[Twitter]"></a>
-                      <a id="post-mixi-check-help" class="option-help" href="http://b.hatena.ne.jp/help/config_coop#mixi-check" title="mixiチェック連携機能を設定すると、ブックマーク時にmixiチェックへも投稿することができます。"><img src="../images/icon-mixi.png" alt="[mixiチェック]"></a>
-                      <a id="private-help" class="option-help" href="http://b.hatena.ne.jp/guide/plus?target=private&amp;ref=safari" title="はてなブックマークプラスにお申し込みいただくと、他のユーザーに公開しない非公開ブックマークがご利用いただけます。"><img src="../images/add-private.png" alt="[非公開]"></a>
+                  </div>
+                </div>
+
+                <div class="table-row">
+                  <div class="table-left">
+                    <div class="table-row">
+                      <div class="edit-cell" id="bookmark-options">
+                        <div id="comment-area">
+                          <textarea rows="2" id="comment" name="comment"></textarea>
+                          <ul id="tag-complete-list">
+                          </ul>
+                          <input type="hidden" id="input-url" name="url" />
+                        </div>
+                        <p id="type-counter"><span id="type-count">0</span> / 100</p>
+                        <dl id="checkbox-options">
+                          <dt>共有:</dt>
+                          <dd>
+                            <label id="post-twitter-label" for="post-twitter" title="ブックマークしたページを Twitter へ投稿する場合はチェックを入れてください。">
+                              <input value="1" type="checkbox" id="post-twitter" name="post_twitter" />
+                              <span class="label-text">Twitter</span>
+                            </label>
+                            <label id="post-facebook-label" for="post-facebook" title="ブックマークしたページを Facebook へ投稿する場合はチェックを入れてください。">
+                              <input value="1" type="checkbox" id="post-facebook" name="post_facebook" />
+                              <span class="label-text">Facebook</span>
+                            </label>
+                            <label id="post-mixi-check-label" for="post-mixi-check" title="ブックマークしたページをmixiチェックへ投稿する場合はチェックを入れてください。">
+                              <input value="1" type="checkbox" id="post-mixi-check" name="post_mixi_check" />
+                              <span class="label-text">mixiチェック</span>
+                            </label>
+                          </dd>
+                          <dt>オプション:</dt>
+                          <dd>
+                            <label for="confirm-bookmark" title="ブックマーク保存完了後、別ウィンドウではてなブックマークのエントリーページを表示します。">
+                              <input value="1" type="checkbox" id="confirm-bookmark" name="confirm_bookmark" />
+                              ブックマークを確認
+                            </label>
+                            <label id="private-label" for="private" title="ブックマークを他のユーザーに公開しない場合はチェックを入れてください。(閲覧許可ユーザーにも公開されません。) ">
+                              <input value="1" type="checkbox" id="private" name="private" />
+                              <span class="label-text">非公開</span>
+                            </label>
+                            <span id="plus-inputs" class="none">
+                              <input value="1" type="hidden" id="with_status_op" name="with_status_op" />
+                              <label for="send_mail" title="ブックマークしたページを設定で指定したメールアドレスに送信する場合チェックを入れてください。">
+                                <input value="1" type="checkbox" id="send_mail" name="send_mail" />
+                                <span class="label-text">メール</span>
+                              </label>
+                            </span>
+                            <span id="asin-container">
+                              <input value="" type="hidden" id="asin" name="asin" disabled />
+                              <label for="add-asin">
+                                <input value="1" type="checkbox" id="add-asin" name="add_asin" disabled="disabled" />
+                                コレクションに追加
+                              </label>
+                            </span>
+                          </dd>
+                        </dl>
+                      </div>
                     </div>
                   </div>
                 </div>

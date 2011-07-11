@@ -516,6 +516,7 @@ a.username {
 #edit {
     width:100%;
     display: table;
+    padding: 0 3px;
 }
 
 #edit > .table-row {
@@ -525,6 +526,17 @@ a.username {
 
 #edit > .table-row > .table-left {
     display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-flex: 1;
+}
+
+#edit > .table-row > .table-left > .table-row {
+    display: -webkit-box;
+    -webkit-box-orient: horizontal;
+}
+
+#edit > .table-row > .table-left > .table-row > .edit-cell {
+    display: block;
     -webkit-box-flex: 1;
 }
 
@@ -583,10 +595,6 @@ a.username {
   float: right;
 }
 
-#url-container {
-  padding-top: 0;
-}
-
 
 /* }}} */
 
@@ -641,6 +649,22 @@ a.username {
 #checkbox-options {
     padding: 3px;
     font-size: 90%;
+    line-height: 1.7;
+}
+
+#checkbox-options dt {
+    font-weight: bold;
+    margin-right: 3px;
+    display: inline;
+}
+
+#checkbox-options dd {
+    display: inline;
+}
+
+#checkbox-options dd + dt:before {
+    content: '\A';
+    white-space: pre;
 }
 
 #checkbox-options label {
@@ -656,40 +680,36 @@ a.username {
 }
 
 #post-twitter-label .label-text,
+#post-facebook-label .label-text,
 #post-mixi-check-label .label-text,
-#private-label .label-text {
-    background: -2px 50% no-repeat;
-    padding-left: 14px;
+#private-label .label-text,
+#send-mail-label .label-text {
+    background: 0px 50% no-repeat;
+    padding-left: 18px;
 }
 
 #post-twitter-label .label-text {
     background-image: url(../images/add-twitter.png);
 }
 
+#post-facebook-label .label-text {
+    background-image: url(../images/icon-facebook.png);
+}
+
 #post-mixi-check-label .label-text {
-    background: url(../images/icon-mixi.png) 0px 50% no-repeat;
-    padding-left: 18px;
+    background-image: url(../images/icon-mixi.png);
 }
 
 #private-label .label-text {
     background-image: url(../images/add-private.png);
 }
 
+#send-mail-label .label-text {
+    background-image: url(../images/icon-mail.png);
+}
+
 #asin-container {
     display: none;
-}
-
-#option-help-separator {
-    visibility: hidden;
-    display: -webkit-box;
-    -webkit-box-flex: 1;
-}
-
-#option-help-container {
-    background: #f3f3f3 url(../images/option-help-marker.png) left center no-repeat;
-    margin: 5px 3px 0px 0px;
-    padding: 2px 4px 2px 22px;
-    -webkit-border-radius: 3px;
 }
 
 #recommend-tags-container, #all-tags-container {
@@ -884,15 +904,15 @@ em #comment-users {
 
 /* loading */
 .loading {
-    display: none;
+    display: none !important;
 }
 
 body.data-loading * .loaded {
-    display: none;
+    display: none !important;
 }
 
 body.data-loading * .loading {
-    display: inline;
+    display: inline !important;
 }
 
 /* search-container {{{ */
