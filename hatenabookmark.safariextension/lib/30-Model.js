@@ -66,8 +66,8 @@ Bookmark.__defineGetter__('database', function() { return Model.getDatabase() })
 
 Bookmark.afterTrigger('createTable', function() {
     return Model.getDatabase().execute([
-        'CREATE INDEX "bookmarks_date" ON "bookmarks" ("date" DESC)',
-        'CREATE INDEX "bookmarks_date" ON "bookmarks" ("date" ASC)'
+        'CREATE INDEX IF NOT EXISTS "bookmarks_date" ON "bookmarks" ("date" DESC)',
+        //'CREATE INDEX "bookmarks_date" ON "bookmarks" ("date" ASC)'
     ]).error(function() { return true });
 });
 
