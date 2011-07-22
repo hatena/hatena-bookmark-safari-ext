@@ -10,6 +10,6 @@ var Extension = {
     },
 
     getIdentifier: function (name) {
-        return this.id + " " + name;
+        return (name.indexOf(" ") === -1) ? this.id + " " + name : name;
     }
 };

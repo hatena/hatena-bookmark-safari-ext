@@ -90,6 +90,12 @@
         bookmarkButtonBookmark : Extension.getIdentifier("bookmark-button-bookmark"),
         popularPagesButton     : Extension.getIdentifier("popular-pages-button")
     };
+    var simpleIdentifiers = {
+        bookmarkButton         : "bookmark-button",
+        bookmarkButtonComment  : "bookmark-button-comment",
+        bookmarkButtonBookmark : "bookmark-button-bookmark",
+        popularPagesButton     : "popular-pages-button"
+    };
     var bookmarkIdentifiersInOrder = ['bookmarkButtonComment', 'bookmarkButton', 'bookmarkButtonBookmark'];
 
     var buttonImages = {};
@@ -126,6 +132,7 @@
         getCurrentToolbarItems().forEach(function (toolbarItem) {
             switch (toolbarItem.identifier) {
             case identifiers[key]:
+            case simpleIdentifiers[key]:
                 bookmarkButton = toolbarItem;
                 return;
             }
@@ -139,7 +146,10 @@
         var buttons = [];
         bookmarkIdentifiersInOrder.forEach(function(key) {
             getCurrentToolbarItems().forEach(function (toolbarItem) {
-                if (toolbarItem.identifier === identifiers[key]) buttons.push(toolbarItem);
+                if (toolbarItem.identifier === identifiers[key] ||
+                    toolbarItem.identifier === simpleIdentifiers[key]) {
+                    buttons.push(toolbarItem);
+                }
             });
         });
         return buttons;
@@ -255,7 +265,7 @@
             if (!getBookmarkButtons()) return;
             UserManager.user.hasBookmark(activeTab.url).next(function(bool) {
                 getCurrentToolbarItems().forEach(function (button) {
-                    var url = buttonImages[button.identifier][bool ? 'done' : 'yet'];
+                    var url = buttonImages[Extension.getIdentifier(button.identifier)][bool ? 'done' : 'yet'];
                     if (url) button.image = url;
                 });
             });

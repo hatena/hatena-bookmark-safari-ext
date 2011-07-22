@@ -4,6 +4,8 @@
 <dict>
 	<key>Author</key>
 	<string>Hatena Co., Ltd.</string>
+	<key>Builder Version</key>
+	<string>534.50</string>
 	<key>CFBundleDisplayName</key>
 	<string>はてなブックマーク Safari 拡張</string>
 	<key>CFBundleIdentifier</key>
