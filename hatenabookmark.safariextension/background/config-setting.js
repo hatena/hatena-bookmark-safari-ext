@@ -31,6 +31,7 @@
         'popup.bookmark.confirmBookmark': false,
         'popup.bookmark.postTwitter': false,
         'popup.bookmark.postFacebook': false,
+        'popup.bookmark.postEvernote': false,
         'popup.bookmark.postMixiCheck': false,
         'popup.bookmark.addAsin': false,
         'popup.bookmark.lastCommentValue': {},
