@@ -394,6 +394,7 @@ var View = {
         get confirmBookmark()        { return $('#confirm-bookmark'); },
         get postTwitter()            { return $('#post-twitter'); },
         get postFacebook()           { return $('#post-facebook'); },
+        get postEvernote()           { return $('#post-evernote'); },
         get postMixiCheck()          { return $('#post-mixi-check'); },
         get container()              { return $('#bookmark-container'); },
         get tab()                    { return $('#bookmark-tab'); },
@@ -576,6 +577,18 @@ var View = {
                 });
             } else {
                 this.setupOptionHelp('post-facebook');
+            }
+            if (user.canUseEvernote) {
+                if (user.postEvernoteChecked === 'on' ||
+                    (user.postEvernoteChecked === 'inherit' &&
+                     Config.get('popup.bookmark.postEvernote'))) {
+                    this.postEvernote.attr('checked', 'checked');
+                }
+                this.postEvernote.bind('change', function() {
+                    Config.set('popup.bookmark.postEvernote', this.checked);
+                });
+            } else {
+                this.setupOptionHelp('post-evernote');
             }
             if (user.canUseMixiCheck) {
                 if (user.postMixiCheckChecked === 'on' ||
@@ -962,6 +975,8 @@ var View = {
         },
 
         privateClickHandler: function() {
+            // 非公開ブックマークの場合は twitter や facebook などへの共有は行わない
+            // (evernote への投稿は非公開ブックマークでも行う)
             [this.postTwitter[0], this.postFacebook[0], this.postMixiCheck[0]].forEach(function (input) {
                 if (!input) return;
                 var label = input.parentNode;

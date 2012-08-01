@@ -105,7 +105,7 @@
             <li id="search-tab">
               <form id="search-form">
                 <input type="image" id="search-submit" title="ブックマークを検索" src="../images/searchbutton.png" width=19 height=19 />
-                <input placeholder="検索ワードを入力" id="search-word" type="search" />
+                <input placeholder="マイブックマーク検索" id="search-word" type="search" />
               </form>
             </li>
             <li id="close-button">
@@ -248,6 +248,9 @@
                             <label id="post-facebook-label" for="post-facebook" title="ブックマークしたページを Facebook へ投稿する場合はチェックを入れてください。">
                               <input value="1" type="checkbox" id="post-facebook" name="post_facebook" /><span class="label-text">Facebook</span>
                             </label>
+                            <label id="post-evernote-label" for="post-evernote" title="ブックマークしたページを Evernote へ投稿する場合はチェックを入れてください。">
+                              <input value="1" type="checkbox" id="post-evernote" name="post_evernote" /><span class="label-text">Evernote</span>
+                            </label>
                             <label id="post-mixi-check-label" for="post-mixi-check" title="ブックマークしたページをmixiチェックへ投稿する場合はチェックを入れてください。">
                               <input value="1" type="checkbox" id="post-mixi-check" name="post_mixi_check" /><span class="label-text">mixiチェック</span>
                             </label>
@@ -261,6 +264,11 @@
                               <img src="../images/icon-facebook.png" alt="" width="16" height="16" />
                               Facebook連携機能を設定すると、ブックマーク時にFacebookへも投稿することができます。
                               <a href="http://b.hatena.ne.jp/help/config_coop#facebook" target="_blank">もっと詳しく</a>
+                            </p>
+                            <p id="option-help-post-evernote" class="option-help-tooltip" style="display: none;">
+                              <img src="../images/icon-evernote.png" alt="" width="16" height="16" />
+                              Evernote 連携機能を設定すると、ブックマーク時に Evernote へも投稿することができます。
+                              <a href="http://b.hatena.ne.jp/help/config_coop#evernote" target="_blank">もっと詳しく</a>
                             </p>
                             <p id="option-help-post-mixi-check" class="option-help-tooltip" style="display: none;">
                               <img src="../images/icon-mixi.png" alt="" width="16" height="16" />
@@ -359,7 +367,8 @@
         <div id="search-header">
           <div class="edit-cell"><span id="search-word-preview"></span><span id="search-preview-sep">-</span><span id="search-total-count"></span></div>
           <div class="edit-cell" id="search-header-right">
-            <a id="hatena-websearch" href="http://b.hatena.ne.jp/search?q=">はてなウェブ検索で検索</a>
+            <a id="hatena-websearch" href="http://b.hatena.ne.jp/search?q="
+              title="はてなブックマーク全体を対象に検索を行います">はてなブックマークで検索</a>
           </div>
         </div>
         <div id="search-result-container">
