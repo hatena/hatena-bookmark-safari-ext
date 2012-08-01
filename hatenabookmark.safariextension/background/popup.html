@@ -105,7 +105,7 @@
             <li id="search-tab">
               <form id="search-form">
                 <input type="image" id="search-submit" title="ブックマークを検索" src="../images/searchbutton.png" width=19 height=19 />
-                <input placeholder="検索ワードを入力" id="search-word" type="search" />
+                <input placeholder="マイブックマーク検索" id="search-word" type="search" />
               </form>
             </li>
             <li id="close-button">
@@ -367,7 +367,8 @@
         <div id="search-header">
           <div class="edit-cell"><span id="search-word-preview"></span><span id="search-preview-sep">-</span><span id="search-total-count"></span></div>
           <div class="edit-cell" id="search-header-right">
-            <a id="hatena-websearch" href="http://b.hatena.ne.jp/search?q=">はてなウェブ検索で検索</a>
+            <a id="hatena-websearch" href="http://b.hatena.ne.jp/search?q="
+              title="はてなブックマーク全体を対象に検索を行います">はてなブックマークで検索</a>
           </div>
         </div>
         <div id="search-result-container">
