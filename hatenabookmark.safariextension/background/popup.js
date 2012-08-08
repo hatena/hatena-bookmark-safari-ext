@@ -551,7 +551,6 @@ var View = {
             if (user.plususer) {
                 this.plusInputs.removeClass('none');
             } else {
-                this.setupOptionHelp('private');
                 this.plusInputs.remove();
             }
             if (user.canUseTwitter) {
