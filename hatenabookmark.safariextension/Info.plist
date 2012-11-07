@@ -5,7 +5,7 @@
 	<key>Author</key>
 	<string>Hatena Co., Ltd.</string>
 	<key>Builder Version</key>
-	<string>534.57.2</string>
+	<string>8536.26.14</string>
 	<key>CFBundleDisplayName</key>
 	<string>Hatena Bookmark Safari Extension</string>
 	<key>CFBundleIdentifier</key>
@@ -13,9 +13,9 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.2.2</string>
+	<string>1.2.3</string>
 	<key>CFBundleVersion</key>
-	<string>1.2.2</string>
+	<string>1.2.3</string>
 	<key>Chrome</key>
 	<dict>
 		<key>Database Quota</key>
