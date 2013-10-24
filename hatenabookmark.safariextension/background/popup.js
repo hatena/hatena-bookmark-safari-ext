@@ -22,6 +22,19 @@ window.addEventListener("message", function (ev) {
     // resize
 }, false);
 
+safari.self.addEventListener('message', function (messageEvent) {
+    switch (messageEvent.name) {
+    case 'respondEulaConfirmation':
+        if (messageEvent.message.accept) {
+            prepareUser();
+        } else {
+            $('#main').hide();
+            $('#eula').show();
+        }
+        break;
+    }
+}, false);
+
 function resizeWindow(data) {
     var height = window.innerHeight;
 
@@ -1042,8 +1055,12 @@ var ViewManager = {
     }
 }
 
+var requestEulaConfirmation = function () {
+    safari.self.tab.dispatchMessage('requestEulaConfirmation');
+};
+
 var eulaAccept = function() {
-    localStorage.eula = true;
+    safari.self.tab.dispatchMessage('acceptEULA', {accept: true});
 
     // XXX: ログインしようみたいなやつを出したい
     Config.set('popup.lastView', 'bookmark');
@@ -1058,7 +1075,7 @@ var eulaAccept = function() {
         .recv(function () {
             $('#eula').hide();
             setTimeout(function() {
-                prepareUser();
+                requestEulaConfirmation();
                 setTimeout(function() {
                     $('#main').show();
                 }, 20);
@@ -1068,12 +1085,6 @@ var eulaAccept = function() {
 }
 
 var prepareUser = function() {
-    if (!localStorage.eula) {
-        $('#main').hide();
-        $('#eula').show();
-        return;
-    }
-
     Connect()
         .send("UserManager.user").recv(function(event) {
             var user = event.message;
@@ -1179,4 +1190,4 @@ var ready = function() {
     }
 };
 
-$(document).bind('ready', prepareUser);
+$(document).bind('ready', requestEulaConfirmation);

@@ -1,5 +1,5 @@
 var isEulaAgreed = function() {
-    return !!localStorage.eula;
+    return localStorage.acceptEULA === 'true';
 }
 
 UserManager.bind('UserChange', function() {
@@ -32,3 +32,15 @@ Model.Bookmark.afterSave = function() {
 $(document).bind('BookmarksUpdated', function(event) {
     TabManager.trigger('change');
 });
+
+safari.application.addEventListener('message', function (messageEvent) {
+    switch (messageEvent.name) {
+    case 'acceptEULA':
+        localStorage.acceptEULA = true
+        break;
+    case 'requestEulaConfirmation':
+        var accept = localStorage.acceptEULA;
+        messageEvent.target.page.dispatchMessage('respondEulaConfirmation', { accept: accept });
+        break;
+    }
+}, false);
