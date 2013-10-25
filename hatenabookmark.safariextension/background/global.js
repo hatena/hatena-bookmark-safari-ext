@@ -36,7 +36,7 @@ $(document).bind('BookmarksUpdated', function(event) {
 safari.application.addEventListener('message', function (messageEvent) {
     switch (messageEvent.name) {
     case 'acceptEULA':
-        localStorage.acceptEULA = true
+        localStorage.acceptEULA = 'true';
         break;
     case 'requestEulaConfirmation':
         var accept = localStorage.acceptEULA;
