@@ -20,7 +20,7 @@
 
     function show(entry) {
         $(function() {
-            if (!Config.get("content.fans.enabled")) {
+            if (!Config.get("content.fans.enabled") || !Array.isArray(entry.favorites)) {
                 hideWindow();
                 return;
             }
